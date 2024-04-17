@@ -9,7 +9,8 @@ export interface ParsedMeta {
   name: string;
   season: number;
   episode: number;
-  resolution: string | null;
+  resolution: string;
+  misc: string;
   [key: string]: any;
 }
 
