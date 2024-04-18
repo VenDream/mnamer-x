@@ -1,3 +1,4 @@
+import { ENV_CONFIG } from '@/constants';
 import * as tmdb from '@/lib/tmdb-api';
 import {
   buildErrorResponse,
@@ -12,8 +13,11 @@ import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { ChatOpenAI } from '@langchain/openai';
 
 const chatModel = new ChatOpenAI({
-  model: 'gpt-3.5-turbo-0613',
+  model: ENV_CONFIG.LLM,
   temperature: 0,
+  configuration: {
+    baseURL: ENV_CONFIG.OPENAI_BASE_URL,
+  },
 });
 const outputParser = new StringOutputParser();
 const prompt = ChatPromptTemplate.fromMessages([
@@ -40,8 +44,9 @@ export async function GET() {
         if (isTv) {
           const { name, first_air_date } = mediaInfo as TMDBTv;
           const year = first_air_date.split('-')[0];
+          const se = `S${zeroPad(season)}E${zeroPad(episode)}`;
           data[+idx].formattedName =
-            `${name}.${year}.S${zeroPad(season)}E${zeroPad(episode)}.${resolution}.${misc}.${suffix}`;
+            `${name}.${year}.${se}.${resolution}.${misc}.${suffix}`;
         }
 
         if (isMovie) {

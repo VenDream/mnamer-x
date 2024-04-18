@@ -1,21 +1,22 @@
+import { ENV_CONFIG } from '@/constants';
 import axios from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
 const TMDB_CACHE = new Map<string, Record<string, any>>();
 
 const instance = axios.create({
-  baseURL: process.env.TMDB_API_HOST,
+  baseURL: ENV_CONFIG.TMDB_API_HOST,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 // add debug proxy if exists
-if (process.env.DEBUG_PROXY) {
-  const proxyAgent = new HttpsProxyAgent(process.env.DEBUG_PROXY);
+if (ENV_CONFIG.DEBUG_PROXY) {
+  const proxyAgent = new HttpsProxyAgent(ENV_CONFIG.DEBUG_PROXY);
   instance.defaults.httpAgent = proxyAgent;
   instance.defaults.httpsAgent = proxyAgent;
-  console.log('using proxy', process.env.DEBUG_PROXY);
+  console.log('using proxy', ENV_CONFIG.DEBUG_PROXY);
 }
 
 instance.interceptors.request.use(config => {
@@ -26,7 +27,7 @@ instance.interceptors.request.use(config => {
   config.params = {
     ...config.params,
     language: 'zh-CN',
-    api_key: process.env.TMDB_API_KEY,
+    api_key: ENV_CONFIG.TMDB_API_KEY,
   };
   return config;
 });
