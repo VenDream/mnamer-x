@@ -1,6 +1,6 @@
-export interface Response {
+export interface Response<T = Record<string, any>> {
   code: number;
-  data: Record<string, any> | null;
+  data: T | null;
   errormsg: string | null;
 }
 
@@ -12,6 +12,12 @@ export interface ParsedMeta {
   resolution: string;
   misc: string;
   [key: string]: any;
+}
+
+export interface ProcessResult {
+  input: string;
+  output: string;
+  meta: ParsedMeta;
 }
 
 export interface TMDBMovie {

@@ -12,8 +12,11 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { ChatOpenAI } from '@langchain/openai';
 
+console.log('env config: %O', ENV_CONFIG);
+
 const chatModel = new ChatOpenAI({
   model: ENV_CONFIG.LLM,
+  timeout: 10 * 1000,
   temperature: 0,
   configuration: {
     baseURL: ENV_CONFIG.OPENAI_BASE_URL,
@@ -26,10 +29,16 @@ const prompt = ChatPromptTemplate.fromMessages([
 ]);
 const llmChain = prompt.pipe(chatModel).pipe(outputParser);
 
-export async function GET() {
+export async function POST(req: Request) {
+  const { topic, files } = await req.json();
+
   try {
-    const response = await llmChain.invoke({ input: TEST_INPUT });
-    const data = JSON.parse(response) as ParsedMeta[];
+    const response = await llmChain.invoke({ input: files || TEST_INPUT });
+    const data = (JSON.parse(response) as ParsedMeta[]).filter(Boolean);
+    console.log('parsed meta data: %O', data);
+    if (!data || data.length <= 0) {
+      return Response.json(buildSuccessResponse([]));
+    }
     for (const [
       idx,
       { original, name, season, episode, resolution, misc },

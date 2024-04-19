@@ -31,7 +31,7 @@ export default function Home() {
       <div className="[&>p]:mt-2 [&>p]:text-sm [&>p]:text-muted-foreground">
         <p>
           <span className="font-bold">mnamer-x</span> leverages LLMs to name
-          your media files to be scraper-friendly.
+          your media files to be scrapers-friendly.
         </p>
         <p className="mt-2">Including:</p>
         <ul className="ml-6 list-disc text-sm text-muted-foreground">
@@ -50,7 +50,7 @@ export default function Home() {
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground">
-        Start your first <Link href="/tasks">task</Link> now.
+        Let us start the first <Link href="/tasks">task</Link> now.
       </p>
     </div>
   );

@@ -1,6 +1,8 @@
 import { ModeToggle } from '@/components/mode-toggle';
 import NavMenu from '@/components/nav-menu';
 import { ThemeProvider } from '@/components/theme-provider';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Toaster } from '@/components/ui/sonner';
 import { SITE_META } from '@/constants';
 import { cn } from '@/lib/utils';
 import { GitHubLogoIcon, Pencil2Icon } from '@radix-ui/react-icons';
@@ -52,12 +54,17 @@ export default function RootLayout({
               <ModeToggle></ModeToggle>
             </div>
           </header>
-          <article className="flex flex-1">
+          <article className="flex min-h-0 flex-1">
             <div className="hidden w-56 md:block">
-              <NavMenu></NavMenu>
+              <ScrollArea className="h-full border-r">
+                <NavMenu></NavMenu>
+              </ScrollArea>
             </div>
-            <div className="flex-1">{children}</div>
+            <div className="flex-1">
+              <ScrollArea className="h-full">{children}</ScrollArea>
+            </div>
           </article>
+          <Toaster richColors position="top-center"></Toaster>
         </ThemeProvider>
       </body>
     </html>
