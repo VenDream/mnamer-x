@@ -6,7 +6,7 @@ export default function MyLink(props: LinkProps) {
   return (
     <Link
       {...props}
-      className="underline underline-offset-2 hover:text-accent-foreground"
+      className="underline underline-offset-2 hover:text-blue-500"
     ></Link>
   );
 }

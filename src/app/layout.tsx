@@ -54,8 +54,8 @@ export default function RootLayout({
               <ModeToggle></ModeToggle>
             </div>
           </header>
-          <article className="flex min-h-0 flex-1">
-            <div className="hidden w-56 md:block">
+          <main className="flex min-h-0 flex-1">
+            <div className="hidden w-56 shrink-0 md:block">
               <ScrollArea className="h-full border-r">
                 <NavMenu></NavMenu>
               </ScrollArea>
@@ -63,7 +63,7 @@ export default function RootLayout({
             <div className="flex-1">
               <ScrollArea className="h-full">{children}</ScrollArea>
             </div>
-          </article>
+          </main>
           <Toaster richColors position="top-center"></Toaster>
         </ThemeProvider>
       </body>

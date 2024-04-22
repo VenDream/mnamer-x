@@ -27,7 +27,3 @@ export function buildErrorResponse(code: number, errormsg: string) {
 export function zeroPad(num: number, places = 2) {
   return String(num).padStart(places, '0');
 }
-
-export function getFileSuffix(fileName: string) {
-  return fileName.split('.').pop();
-}

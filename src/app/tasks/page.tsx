@@ -10,7 +10,11 @@ export default function Jobs() {
           <TabsTrigger value="manual">Manual</TabsTrigger>
           <TabsTrigger value="cloud-storage">Cloud Storage</TabsTrigger>
         </TabsList>
-        <TabsContent value="manual">
+        <TabsContent
+          value="manual"
+          forceMount
+          className="data-[state=inactive]:hidden"
+        >
           <ManualPage></ManualPage>
         </TabsContent>
         <TabsContent value="cloud-storage" className="flex items-center gap-2">
