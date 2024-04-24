@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { LoadingIcon } from '@/constants/custom-icons';
+import { rename } from '@/lib/client-api';
 import { ProcessResult, Response } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -43,6 +44,7 @@ import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import Result from './result';
 
 const formSchema = z.object({
   files: z
@@ -86,14 +88,11 @@ export default function Manual() {
   const submit = async (values: InputData) => {
     try {
       setIsSubmitting(true);
-      const response = await fetch('/api/naming', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
+      const response = await rename(values, {
+        // timeout: values.files.length * 10000,
+        // timeoutErrorMessage: 'Task failed due to timeout, please retry',
       });
-      const data = (await response.json()) as Response<ProcessResult[]>;
+      const data = (await response.data) as Response<ProcessResult[]>;
       const { code, data: result, errormsg } = data;
       if (code !== 0) {
         throw new Error(errormsg || 'failed to fetch');
@@ -102,7 +101,7 @@ export default function Manual() {
     } catch (err) {
       const error = err as Error;
       console.error(error);
-      toast.error(`Oops! Something went wrong: ${error.message}`);
+      toast.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -235,12 +234,7 @@ export default function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="w-full text-sm">
-            {result.map(r => JSON.stringify(r.output.meta || {}))}
-          </p>
-          <p className="w-full text-sm">
-            {result.map(r => JSON.stringify(r.output.tmdb || {}))}
-          </p>
+          <Result result={result}></Result>
         </CardContent>
         <CardFooter className="hidden"></CardFooter>
       </Card>

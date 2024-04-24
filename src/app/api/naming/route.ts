@@ -17,17 +17,17 @@ const prompt = ChatPromptTemplate.fromMessages([
 const llmChain = prompt.pipe(chatModel).pipe(outputParser);
 
 export async function POST(req: Request) {
-  const { files } = (await req.json()) as InputData;
+  const { files = [] } = (await req.json()) as InputData;
   const input = files.map(file => file.filename).join('\n');
   const output: ProcessResult[] = [];
 
   try {
-    const response = await llmChain.invoke({ input: input || TEST_INPUT });
+    const response = await llmChain.invoke({ input: TEST_INPUT || input });
     const parsedMeta = (JSON.parse(response) as ParsedMeta[]).filter(Boolean);
     console.log('parsed meta data: %O', parsedMeta);
     for (const [idx, data] of Object.entries(parsedMeta)) {
       let mediaInfo: TMDBData | null = null;
-      const { keyword } = files[+idx];
+      const { keyword } = files[+idx] || {};
 
       // try name first
       if (data.name) {

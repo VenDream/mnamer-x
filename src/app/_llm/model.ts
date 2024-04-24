@@ -12,8 +12,8 @@ switch (ENV_CONFIG.LLM_SERVER) {
     chatModel = new ChatOpenAI({
       model: ENV_CONFIG.LLM_MODEL,
       apiKey: ENV_CONFIG.OPENAI_API_KEY,
-      timeout: 10 * 1000,
       temperature: 0,
+      timeout: 10 * 1000,
       configuration: {
         baseURL: ENV_CONFIG.OPENAI_BASE_URL,
       },

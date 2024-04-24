@@ -15,13 +15,14 @@ export interface ParsedMeta {
   format: string;
 }
 
-export interface TMDBData {
+export interface TMDBTv {
   id: number;
   name: string;
   original_name: string;
   overview: string;
   media_type: 'movie' | 'tv';
   adult: boolean;
+  popularity: number;
   vote_count: number;
   vote_average: number;
   poster_path: string;
@@ -31,6 +32,26 @@ export interface TMDBData {
   original_language: string;
   genre_ids: number[];
 }
+
+export interface TMDBMovie {
+  id: number;
+  title: string;
+  original_title: string;
+  overview: string;
+  media_type: 'movie';
+  adult: boolean;
+  popularity: number;
+  vote_count: number;
+  vote_average: number;
+  poster_path: string;
+  backdrop_path: 'string';
+  release_date: string;
+  origin_country: string[];
+  original_language: string;
+  genre_ids: number[];
+}
+
+export type TMDBData = TMDBMovie | TMDBTv;
 
 export interface ProcessResult {
   input: string;
