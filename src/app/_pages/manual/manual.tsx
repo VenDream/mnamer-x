@@ -29,7 +29,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { ENV_CONFIG } from '@/constants';
 import { LoadingIcon } from '@/constants/custom-icons';
+import { MOCK_RESULT } from '@/constants/debug';
 import { rename } from '@/lib/client-api';
 import { ProcessResult, Response } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -60,7 +62,7 @@ export type InputData = z.infer<typeof formSchema>;
 
 export default function Manual() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [result, setResult] = useState<ProcessResult[]>([]);
+  const [result, setResult] = useState<ProcessResult[]>([] || MOCK_RESULT);
 
   const form = useForm<InputData>({
     resolver: zodResolver(formSchema),
@@ -74,6 +76,12 @@ export default function Manual() {
   });
 
   const addFile = () => {
+    if (fields.length >= ENV_CONFIG.MAX_FILES_PER_TASK) {
+      const max = ENV_CONFIG.MAX_FILES_PER_TASK;
+      const maxStr = `(${max} of ${max})`;
+      toast.error(`Maximum number of files exceeded ${maxStr}`);
+      return;
+    }
     append({ keyword: '', filename: '' });
   };
 
@@ -95,7 +103,7 @@ export default function Manual() {
       const data = (await response.data) as Response<ProcessResult[]>;
       const { code, data: result, errormsg } = data;
       if (code !== 0) {
-        throw new Error(errormsg || 'failed to fetch');
+        throw new Error(errormsg || 'Failed to fetch');
       }
       setResult(result || []);
     } catch (err) {
@@ -203,6 +211,9 @@ export default function Manual() {
                 >
                   <PlusCircledIcon className="mr-2"></PlusCircledIcon>
                   Add file
+                  <span className="ml-2 hidden text-muted-foreground md:block">
+                    ({fields.length}/{ENV_CONFIG.MAX_FILES_PER_TASK})
+                  </span>
                 </Button>
                 <Button
                   type="submit"

@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   const output: ProcessResult[] = [];
 
   try {
-    const response = await llmChain.invoke({ input: TEST_INPUT || input });
+    const response = await llmChain.invoke({ input: input || TEST_INPUT });
     const parsedMeta = (JSON.parse(response) as ParsedMeta[]).filter(Boolean);
     console.log('parsed meta data: %O', parsedMeta);
     for (const [idx, data] of Object.entries(parsedMeta)) {

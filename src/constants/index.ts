@@ -26,4 +26,8 @@ export const ENV_CONFIG = {
 
   TMDB_API_HOST: process.env.TMDB_API_HOST || 'https://api.themoviedb.org/3/',
   TMDB_API_KEY: process.env.TMDB_API_KEY,
+
+  MAX_FILES_PER_TASK: process.env.NEXT_PUBLIC_MAX_FILES_PER_TASK
+    ? +process.env.NEXT_PUBLIC_MAX_FILES_PER_TASK
+    : 30,
 };

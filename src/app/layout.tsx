@@ -1,5 +1,5 @@
 import { ModeToggle } from '@/components/mode-toggle';
-import NavMenu from '@/components/nav-menu';
+import NavMenu, { NavMenuForMobile } from '@/components/nav-menu';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Toaster } from '@/components/ui/sonner';
@@ -7,11 +7,11 @@ import { SITE_META } from '@/constants';
 import { cn } from '@/lib/utils';
 import { GitHubLogoIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter_Tight } from 'next/font/google';
 import Link from 'next/link';
 import './globals.css';
 
-const inter = Inter({ weight: '300', subsets: ['latin'] });
+const font = Inter_Tight({ subsets: ['latin'] });
 const title = SITE_META.title as string;
 
 export const metadata: Metadata = SITE_META;
@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          inter.className,
+          font.className,
           'flex h-screen w-screen flex-col overflow-hidden'
         )}
       >
@@ -52,6 +52,9 @@ export default function RootLayout({
                 <GitHubLogoIcon className="h-[1.4rem] w-[1.4rem]"></GitHubLogoIcon>
               </Link>
               <ModeToggle></ModeToggle>
+              <div className="block md:hidden">
+                <NavMenuForMobile></NavMenuForMobile>
+              </div>
             </div>
           </header>
           <main className="flex min-h-0 flex-1">
@@ -64,7 +67,16 @@ export default function RootLayout({
               <ScrollArea className="h-full">{children}</ScrollArea>
             </div>
           </main>
-          <Toaster richColors position="top-center"></Toaster>
+          <Toaster
+            toastOptions={{
+              className: 'text-xs py-3 px-4 rounded-sm items-start',
+              classNames: {
+                icon: 'positive top-[1px]',
+              },
+            }}
+            richColors
+            position="top-center"
+          ></Toaster>
         </ThemeProvider>
       </body>
     </html>

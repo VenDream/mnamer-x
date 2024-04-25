@@ -26,7 +26,7 @@ export interface TMDBTv {
   vote_count: number;
   vote_average: number;
   poster_path: string;
-  backdrop_path: 'string';
+  backdrop_path: string;
   first_air_date: string;
   origin_country: string[];
   original_language: string;
@@ -44,9 +44,8 @@ export interface TMDBMovie {
   vote_count: number;
   vote_average: number;
   poster_path: string;
-  backdrop_path: 'string';
+  backdrop_path: string;
   release_date: string;
-  origin_country: string[];
   original_language: string;
   genre_ids: number[];
 }
@@ -59,4 +58,5 @@ export interface ProcessResult {
     meta: ParsedMeta;
     tmdb: TMDBData | null;
   };
+  modified?: string;
 }

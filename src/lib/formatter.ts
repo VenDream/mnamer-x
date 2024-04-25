@@ -1,10 +1,12 @@
 import { ParsedMeta, ProcessResult, TMDBMovie, TMDBTv } from '@/types';
 import { zeroPad } from './utils';
 
+const UNRECOGNIZED_TIPS = 'Unable to recognize, please try adding keywords.';
+
 export default function getFormattedFilename(result: ProcessResult) {
   const { meta, tmdb } = result.output;
 
-  if (!tmdb) return 'Unable to recognize.';
+  if (!tmdb) return UNRECOGNIZED_TIPS;
 
   if (tmdb.media_type === 'movie') {
     return getFormattedMovieName(meta, tmdb as TMDBMovie);
@@ -12,7 +14,7 @@ export default function getFormattedFilename(result: ProcessResult) {
     return getFormattedTvName(meta, tmdb as TMDBTv);
   }
 
-  return 'Unable to recognize.';
+  return UNRECOGNIZED_TIPS;
 }
 
 function getFormattedMovieName(meta: ParsedMeta, movie: TMDBMovie) {
@@ -20,8 +22,9 @@ function getFormattedMovieName(meta: ParsedMeta, movie: TMDBMovie) {
   const { title, release_date } = movie;
 
   const year = release_date.split('-')[0];
-  let filename = `${title}.${year}.${resolution}`;
+  let filename = `${title}.${year}`;
 
+  if (resolution) filename += `.${resolution}`;
   if (misc) filename += `.${misc}`;
   if (format) filename += `.${format}`;
 
@@ -33,8 +36,9 @@ function getFormattedTvName(meta: ParsedMeta, tv: TMDBTv) {
   const { name, first_air_date } = tv;
 
   const year = first_air_date.split('-')[0];
-  let filename = `${name}.${year}.S${zeroPad(season, 2)}E${zeroPad(episode, 2)}.${resolution}`;
+  let filename = `${name}.${year}.S${zeroPad(season, 2)}E${zeroPad(episode, 2)}`;
 
+  if (resolution) filename += `.${resolution}`;
   if (misc) filename += `.${misc}`;
   if (format) filename += `.${format}`;
 

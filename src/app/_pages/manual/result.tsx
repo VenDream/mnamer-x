@@ -26,7 +26,7 @@ export default function Result(props: IProps) {
   });
 
   return (
-    <div className="rounded-md border">
+    <div className="border">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
@@ -36,6 +36,7 @@ export default function Result(props: IProps) {
                   <TableHead
                     key={header.id}
                     style={{ width: header.getSize() }}
+                    className="border-r text-xs last:border-none last:text-center"
                   >
                     {header.isPlaceholder
                       ? null
@@ -57,7 +58,10 @@ export default function Result(props: IProps) {
                 data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>
+                  <TableCell
+                    key={cell.id}
+                    className="border-r text-xs last:border-none"
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
@@ -65,7 +69,10 @@ export default function Result(props: IProps) {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell
+                colSpan={columns.length}
+                className="h-24 text-center text-xs"
+              >
                 No results.
               </TableCell>
             </TableRow>
