@@ -45,6 +45,7 @@ export async function POST(req: Request) {
           meta: data,
           tmdb: mediaInfo,
         },
+        modified: '',
       });
     }
     return Response.json(buildSuccessResponse(output));

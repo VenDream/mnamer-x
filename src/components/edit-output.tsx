@@ -16,13 +16,14 @@ import { PropsWithChildren, useState } from 'react';
 
 interface IProps extends PropsWithChildren<any> {
   output: string;
-  onSave: (modified: string) => void;
+  modified?: string;
   onClose?: () => void;
+  onSave: (modified: string) => void;
 }
 
 export function EditOutput(props: IProps) {
   const [open, setOpen] = useState(false);
-  const [modified, setModified] = useState(props.output);
+  const [modified, setModified] = useState(props.modified || props.output);
 
   return (
     <Dialog
@@ -66,6 +67,7 @@ export function EditOutput(props: IProps) {
               id="modified"
               value={modified}
               className="col-span-3 md:col-span-4"
+              placeholder="Leave it empty to use the original output"
               onChange={e => setModified(e.target.value)}
             />
           </div>

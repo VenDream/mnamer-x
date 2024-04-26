@@ -42,7 +42,7 @@ import {
   PlusCircledIcon,
   QuestionMarkCircledIcon,
 } from '@radix-ui/react-icons';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -93,6 +93,17 @@ export default function Manual() {
     remove(idx);
   };
 
+  const updateResult = useCallback(
+    (idx: number, patch: Partial<ProcessResult>) => {
+      setResult(prev => {
+        const next = [...prev];
+        next[idx] = { ...next[idx], ...patch };
+        return next;
+      });
+    },
+    []
+  );
+
   const submit = async (values: InputData) => {
     try {
       setIsSubmitting(true);
@@ -110,6 +121,7 @@ export default function Manual() {
       const error = err as Error;
       console.error(error);
       toast.error(error.message);
+      setResult([]);
     } finally {
       setIsSubmitting(false);
     }
@@ -245,7 +257,7 @@ export default function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          <Result result={result}></Result>
+          <Result result={result} updateResult={updateResult}></Result>
         </CardContent>
         <CardFooter className="hidden"></CardFooter>
       </Card>

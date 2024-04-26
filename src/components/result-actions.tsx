@@ -15,26 +15,28 @@ import {
   IdCardIcon,
   Pencil2Icon,
 } from '@radix-ui/react-icons';
-import { Row } from '@tanstack/react-table';
+import { Row, Table } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
 interface IProps {
   row: Row<ProcessResult>;
+  table: Table<ProcessResult>;
 }
 
 export default function ResultActions(props: IProps) {
+  const { table, row } = props;
+  const result = row.original;
+  const { modifyOutput } = table.options.meta!;
+  const isUnrecognized = !result.output.tmdb;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isUnrecognized = !props.row.original.output.tmdb;
-  const formatted = useMemo(
-    () => getFormattedFilename(props.row.original),
-    [props.row.original]
-  );
+  const formatted = useMemo(() => getFormattedFilename(result), [result]);
 
   if (isUnrecognized) return <span className="block text-center">-</span>;
 
   return (
-    <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+    <DropdownMenu modal={false} open={isMenuOpen} onOpenChange={setIsMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           size="sm"
@@ -57,10 +59,13 @@ export default function ResultActions(props: IProps) {
         </DropdownMenuItem>
         <EditOutput
           output={formatted}
+          modified={result.modified}
           onSave={modified => {
-            console.log(modified);
+            modifyOutput(row.index, modified);
           }}
-          onClose={() => setIsMenuOpen(false)}
+          onClose={() => {
+            setIsMenuOpen(false);
+          }}
         >
           <DropdownMenuItem
             className="cursor-pointer text-xs"

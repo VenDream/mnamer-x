@@ -45,8 +45,9 @@ const columns: ColumnDef<ProcessResult>[] = [
     header: 'Output',
     size: 250,
     cell({ row }) {
-      const isUnrecognized = !row.original.output.tmdb;
-      const formatted = getFormattedFilename(row.original);
+      const { output, modified } = row.original;
+      const isUnrecognized = !output.tmdb;
+      const formatted = modified || getFormattedFilename(row.original);
       const color = isUnrecognized ? 'text-muted-foreground' : 'text-green-500';
 
       return (
@@ -64,8 +65,8 @@ const columns: ColumnDef<ProcessResult>[] = [
   {
     header: 'Action',
     size: 50,
-    cell({ row }) {
-      return <ResultActions row={row}></ResultActions>;
+    cell({ table, row }) {
+      return <ResultActions row={row} table={table}></ResultActions>;
     },
   },
 ];

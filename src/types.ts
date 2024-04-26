@@ -60,3 +60,24 @@ export interface ProcessResult {
   };
   modified?: string;
 }
+
+export interface ProcessTask {
+  start: string;
+  end: string;
+  results: ProcessResult[];
+}
+
+export interface UserSettings {
+  formatTpl?: string;
+  llmMode: 'custom' | 'builtin';
+  formatSettings?: {
+    language?: string;
+  };
+  llmSettings?: {
+    baseUrl: string;
+    apiPath: string;
+    apiKey: string;
+    model: string;
+    temperature: number;
+  };
+}

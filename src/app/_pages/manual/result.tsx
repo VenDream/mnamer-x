@@ -12,16 +12,28 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { useCallback } from 'react';
 import columns from './result-columns';
 
 interface IProps {
   result: ProcessResult[];
+  updateResult: (idx: number, patch: Partial<ProcessResult>) => void;
 }
 
 export default function Result(props: IProps) {
+  const { result, updateResult } = props;
+
+  const modifyOutput = useCallback(
+    (idx: number, output: string) => {
+      updateResult(idx, { modified: output });
+    },
+    [updateResult]
+  );
+
   const table = useReactTable({
-    data: props.result,
+    data: result,
     columns,
+    meta: { modifyOutput },
     getCoreRowModel: getCoreRowModel(),
   });
 
