@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import getFormattedFilename from '@/lib/formatter';
+import { getFormattedFilename } from '@/lib/formatter';
 import { copyText } from '@/lib/utils';
 import { ProcessResult } from '@/types';
 import {
@@ -24,7 +24,7 @@ interface IProps {
   table: Table<ProcessResult>;
 }
 
-export default function ResultActions(props: IProps) {
+export function ResultActions(props: IProps) {
   const { table, row } = props;
   const result = row.original;
   const { modifyOutput } = table.options.meta!;
@@ -63,9 +63,7 @@ export default function ResultActions(props: IProps) {
           onSave={modified => {
             modifyOutput(row.index, modified);
           }}
-          onClose={() => {
-            setIsMenuOpen(false);
-          }}
+          onClose={() => setIsMenuOpen(false)}
         >
           <DropdownMenuItem
             className="cursor-pointer text-xs"

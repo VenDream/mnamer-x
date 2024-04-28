@@ -2,14 +2,18 @@ import { ProcessResult, ProcessTask, UserSettings } from '@/types';
 import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-// import type {} from '@redux-devtools/extension';
 
-export interface StoreState {
+type StoreState = {
   history: ProcessTask[];
   settings: UserSettings;
-}
+};
 
-const useStore = create<StoreState>()(
+type StoreActions = {
+  addTask: (task: ProcessTask) => void;
+  updateTaskResult: (idx: number, patch: Partial<ProcessResult>) => void;
+};
+
+const useStore = create<StoreState & StoreActions>()(
   devtools(
     persist(
       immer(set => ({
@@ -20,18 +24,16 @@ const useStore = create<StoreState>()(
             language: 'zh-CN',
           },
         },
-        addTask: (task: ProcessTask) => {
-          set(state => {
+        addTask: task => {
+          set((state: StoreState) => {
             state.history.push(task);
           });
         },
-        updateTaskResult: (idx: number, patch: Partial<ProcessResult>) => {
-          set(state => {
-            // const task = state.history[idx];
-            state.history[idx] = {
-              ...state.history[idx],
-              ...patch,
-            };
+        updateTaskResult: (idx, patch) => {
+          set((state: StoreState) => {
+            const task = state.history[idx];
+            task.results = { ...task.results, ...patch };
+            state.history[idx] = task;
           });
         },
       })),
@@ -43,4 +45,4 @@ const useStore = create<StoreState>()(
   )
 );
 
-export default useStore;
+export { useStore };

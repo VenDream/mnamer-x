@@ -61,7 +61,14 @@ export interface ProcessResult {
   modified?: string;
 }
 
+export enum TASK_TYPE {
+  MANUAL = 'manual',
+  WEB_DAV = 'web-dav',
+  CLOUD_STORAGE = 'cloud-storage',
+}
+
 export interface ProcessTask {
+  type: TASK_TYPE;
   start: string;
   end: string;
   results: ProcessResult[];

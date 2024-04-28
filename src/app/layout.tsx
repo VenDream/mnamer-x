@@ -1,5 +1,5 @@
 import { ModeToggle } from '@/components/mode-toggle';
-import NavMenu, { NavMenuForMobile } from '@/components/nav-menu';
+import { NavMenu, NavMenuForMobile } from '@/components/nav-menu';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Toaster } from '@/components/ui/sonner';

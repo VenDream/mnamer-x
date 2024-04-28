@@ -1,4 +1,4 @@
-import Link from '@/components/link';
+import { UnderlineLink } from '@/components/link';
 
 interface Scraper {
   name: string;
@@ -40,9 +40,9 @@ export default function Home() {
               key={scraper.name}
               className="mt-2 underline underline-offset-2"
             >
-              <Link href={scraper.site} target="_blank">
+              <UnderlineLink href={scraper.site} target="_blank">
                 {scraper.name}
-              </Link>
+              </UnderlineLink>
             </li>
           ))}
           <li className="mt-2">And more...</li>
@@ -50,7 +50,8 @@ export default function Home() {
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground">
-        Let us start the first <Link href="/tasks">task</Link> now.
+        Let us start the first <UnderlineLink href="/tasks">task</UnderlineLink>{' '}
+        now.
       </p>
     </div>
   );

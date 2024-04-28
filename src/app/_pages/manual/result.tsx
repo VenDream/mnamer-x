@@ -13,14 +13,14 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useCallback } from 'react';
-import columns from './result-columns';
+import { columns } from './result-columns';
 
 interface IProps {
   result: ProcessResult[];
   updateResult: (idx: number, patch: Partial<ProcessResult>) => void;
 }
 
-export default function Result(props: IProps) {
+export function Result(props: IProps) {
   const { result, updateResult } = props;
 
   const modifyOutput = useCallback(

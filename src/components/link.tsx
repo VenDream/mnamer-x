@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 type LinkProps = Parameters<typeof Link>[0];
 
-export default function MyLink(props: LinkProps) {
+export function UnderlineLink(props: LinkProps) {
   return (
     <Link
       {...props}

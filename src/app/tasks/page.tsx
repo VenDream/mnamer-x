@@ -1,38 +1,37 @@
 import CloudStorage from '@/app/_pages/cloud-storage';
-import ManualPage from '@/app/_pages/manual';
+import Manual from '@/app/_pages/manual';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TASK_TYPE } from '@/types';
 import WebDAV from '../_pages/web-dav';
 
-export default function Jobs() {
+const TASK_TYPES = Object.values(TASK_TYPE);
+const TASK_PAGES: Record<TASK_TYPE, React.ReactNode> = {
+  [TASK_TYPE.MANUAL]: <Manual />,
+  [TASK_TYPE.WEB_DAV]: <WebDAV />,
+  [TASK_TYPE.CLOUD_STORAGE]: <CloudStorage />,
+};
+
+export default function Tasks() {
   return (
     <div className="p-4">
       <Tabs defaultValue="manual" className="w-full">
         <TabsList className="w-full justify-start md:max-w-screen-lg">
-          <TabsTrigger value="manual">Manual</TabsTrigger>
-          <TabsTrigger value="web-dav">WebDAV</TabsTrigger>
-          <TabsTrigger value="cloud-storage">CloudStorage</TabsTrigger>
+          {TASK_TYPES.map(type => (
+            <TabsTrigger key={type} value={type}>
+              {type.toUpperCase()}
+            </TabsTrigger>
+          ))}
         </TabsList>
-        <TabsContent
-          value="manual"
-          forceMount
-          className="data-[state=inactive]:hidden"
-        >
-          <ManualPage></ManualPage>
-        </TabsContent>
-        <TabsContent
-          value="web-dav"
-          forceMount
-          className="data-[state=inactive]:hidden"
-        >
-          <WebDAV></WebDAV>
-        </TabsContent>
-        <TabsContent
-          value="cloud-storage"
-          forceMount
-          className="data-[state=inactive]:hidden"
-        >
-          <CloudStorage></CloudStorage>
-        </TabsContent>
+        {TASK_TYPES.map(type => (
+          <TabsContent
+            key={type}
+            value={type}
+            forceMount
+            className="data-[state=inactive]:hidden"
+          >
+            {TASK_PAGES[type]}
+          </TabsContent>
+        ))}
       </Tabs>
     </div>
   );

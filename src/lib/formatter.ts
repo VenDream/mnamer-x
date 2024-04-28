@@ -3,7 +3,7 @@ import { zeroPad } from './utils';
 
 const UNRECOGNIZED_TIPS = 'Unable to recognize, please try adding keywords.';
 
-export default function getFormattedFilename(result: ProcessResult) {
+export function getFormattedFilename(result: ProcessResult) {
   const { meta, tmdb } = result.output;
 
   if (!tmdb) return UNRECOGNIZED_TIPS;

@@ -53,7 +53,7 @@ const NAV_ROUTES: NavRoute[] = [
   },
 ];
 
-export default function NavMenu() {
+export function NavMenu() {
   const pathname = usePathname();
 
   return (

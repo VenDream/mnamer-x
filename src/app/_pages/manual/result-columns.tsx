@@ -1,11 +1,11 @@
-import ResultActions from '@/components/result-actions';
+import { ResultActions } from '@/components/result-actions';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import getFormattedFilename from '@/lib/formatter';
+import { getFormattedFilename } from '@/lib/formatter';
 import { cn, zeroPad } from '@/lib/utils';
 import { ProcessResult } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
@@ -71,4 +71,4 @@ const columns: ColumnDef<ProcessResult>[] = [
   },
 ];
 
-export default columns;
+export { columns };

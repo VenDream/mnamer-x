@@ -1,5 +1,6 @@
 import { Response } from '@/types';
 import { clsx, type ClassValue } from 'clsx';
+import dayjs from 'dayjs';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -39,4 +40,8 @@ export function copyText(text: string) {
     document.execCommand('copy');
     document.body.removeChild(textarea);
   }
+}
+
+export function getCurrentDatetime() {
+  return dayjs().format('YYYY-MM-DD HH:mm:ss');
 }

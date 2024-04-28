@@ -31,9 +31,10 @@ import {
 } from '@/components/ui/tooltip';
 import { ENV_CONFIG } from '@/constants';
 import { LoadingIcon } from '@/constants/custom-icons';
-import { MOCK_RESULT } from '@/constants/debug';
 import { rename } from '@/lib/client-api';
-import { ProcessResult, Response } from '@/types';
+import { getCurrentDatetime } from '@/lib/utils';
+import { useStore } from '@/store';
+import { ProcessResult, ProcessTask, Response, TASK_TYPE } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   CaretSortIcon,
@@ -46,7 +47,7 @@ import { useCallback, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import Result from './result';
+import { Result } from './result';
 
 const formSchema = z.object({
   files: z
@@ -62,7 +63,9 @@ export type InputData = z.infer<typeof formSchema>;
 
 export default function Manual() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [result, setResult] = useState<ProcessResult[]>([] || MOCK_RESULT);
+  const [results, setResults] = useState<ProcessResult[]>([]);
+  const addTask = useStore(state => state.addTask);
+  const updateTaskResult = useStore(state => state.updateTaskResult);
 
   const form = useForm<InputData>({
     resolver: zodResolver(formSchema),
@@ -95,33 +98,39 @@ export default function Manual() {
 
   const updateResult = useCallback(
     (idx: number, patch: Partial<ProcessResult>) => {
-      setResult(prev => {
+      setResults(prev => {
         const next = [...prev];
         next[idx] = { ...next[idx], ...patch };
         return next;
       });
+      updateTaskResult(idx, patch);
     },
-    []
+    [updateTaskResult]
   );
 
   const submit = async (values: InputData) => {
     try {
       setIsSubmitting(true);
-      const response = await rename(values, {
-        // timeout: values.files.length * 10000,
-        // timeoutErrorMessage: 'Task failed due to timeout, please retry',
-      });
+      const start = getCurrentDatetime();
+      const response = await rename(values);
       const data = (await response.data) as Response<ProcessResult[]>;
-      const { code, data: result, errormsg } = data;
+      const { code, data: results, errormsg } = data;
       if (code !== 0) {
         throw new Error(errormsg || 'Failed to fetch');
       }
-      setResult(result || []);
+      setResults(results || []);
+      const task: ProcessTask = {
+        type: TASK_TYPE.MANUAL,
+        start,
+        end: getCurrentDatetime(),
+        results: results || [],
+      };
+      addTask(task);
     } catch (err) {
       const error = err as Error;
       console.error(error);
       toast.error(error.message);
-      setResult([]);
+      setResults([]);
     } finally {
       setIsSubmitting(false);
     }
@@ -257,7 +266,7 @@ export default function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          <Result result={result} updateResult={updateResult}></Result>
+          <Result result={results} updateResult={updateResult}></Result>
         </CardContent>
         <CardFooter className="hidden"></CardFooter>
       </Card>
