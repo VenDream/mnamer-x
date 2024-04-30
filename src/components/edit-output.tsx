@@ -43,7 +43,7 @@ export function EditOutput(props: IProps) {
           <DialogTitle className="flex items-center justify-start">
             <Pencil2Icon className="mr-2 text-lg"></Pencil2Icon>Edit output
           </DialogTitle>
-          <DialogDescription className="text-left text-xs">
+          <DialogDescription className="text-left">
             Modify the output to what you prefer.
           </DialogDescription>
         </DialogHeader>

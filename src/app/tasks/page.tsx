@@ -14,6 +14,7 @@ const TASK_PAGES: Record<TASK_TYPE, React.ReactNode> = {
 export default function Tasks() {
   return (
     <div className="p-4">
+      <h1 className="mb-4 text-xl">Task Execution</h1>
       <Tabs defaultValue="manual" className="w-full">
         <TabsList className="w-full justify-start md:max-w-screen-lg">
           {TASK_TYPES.map(type => (

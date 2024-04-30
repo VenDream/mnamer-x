@@ -65,6 +65,7 @@ export default function Manual() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [results, setResults] = useState<ProcessResult[]>([]);
   const addTask = useStore(state => state.addTask);
+  const taskIdx = useStore(state => state.history.length - 1);
   const updateTaskResult = useStore(state => state.updateTaskResult);
 
   const form = useForm<InputData>({
@@ -103,9 +104,9 @@ export default function Manual() {
         next[idx] = { ...next[idx], ...patch };
         return next;
       });
-      updateTaskResult(idx, patch);
+      updateTaskResult(taskIdx, idx, patch);
     },
-    [updateTaskResult]
+    [taskIdx, updateTaskResult]
   );
 
   const submit = async (values: InputData) => {

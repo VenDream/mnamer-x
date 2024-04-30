@@ -10,7 +10,11 @@ type StoreState = {
 
 type StoreActions = {
   addTask: (task: ProcessTask) => void;
-  updateTaskResult: (idx: number, patch: Partial<ProcessResult>) => void;
+  updateTaskResult: (
+    tidx: number,
+    ridx: number,
+    patch: Partial<ProcessResult>
+  ) => void;
 };
 
 const useStore = create<StoreState & StoreActions>()(
@@ -29,11 +33,12 @@ const useStore = create<StoreState & StoreActions>()(
             state.history.push(task);
           });
         },
-        updateTaskResult: (idx, patch) => {
+        updateTaskResult: (tidx, ridx, patch) => {
           set((state: StoreState) => {
-            const task = state.history[idx];
-            task.results = { ...task.results, ...patch };
-            state.history[idx] = task;
+            const task = state.history[tidx];
+            const result = task.results[ridx];
+            task.results[ridx] = { ...result, ...patch };
+            state.history[tidx] = task;
           });
         },
       })),
@@ -45,4 +50,7 @@ const useStore = create<StoreState & StoreActions>()(
   )
 );
 
+type BoundStore = typeof useStore;
+
 export { useStore };
+export type { BoundStore };

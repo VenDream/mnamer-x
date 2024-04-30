@@ -65,10 +65,9 @@ export function NavMenu() {
             key={path}
             href={path}
             className={cn(
-              'flex items-center gap-2 rounded-md p-2 hover:bg-slate-100 dark:hover:bg-slate-800',
+              'flex items-center gap-2 rounded-md p-2 hover:bg-accent',
               {
-                'bg-slate-100': isActive,
-                'dark:bg-slate-800': isActive,
+                'bg-accent': isActive,
                 'cursor-default': isActive,
               }
             )}
@@ -83,6 +82,7 @@ export function NavMenu() {
 }
 
 export function NavMenuForMobile() {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -94,11 +94,21 @@ export function NavMenuForMobile() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {NAV_ROUTES.map(({ path, label, icon: Icon }) => {
+          const isActive = path === pathname;
           return (
-            <DropdownMenuItem key={path} onClick={() => setIsMenuOpen(false)}>
+            <DropdownMenuItem
+              key={path}
+              onClick={() => setIsMenuOpen(false)}
+              className={cn('transition-none', {
+                'bg-accent': isActive,
+                'cursor-default': isActive,
+              })}
+            >
               <Link
                 href={path}
-                className={cn('flex w-full items-center gap-1 rounded-md')}
+                className={cn('flex w-full items-center gap-1 rounded-md', {
+                  'cursor-default': isActive,
+                })}
               >
                 <Icon className="mr-1"></Icon>
                 {label}

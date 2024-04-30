@@ -1,14 +1,46 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { LoadingIcon } from '@/constants/custom-icons';
 import { useStore } from '@/store';
+import { useEffect, useState } from 'react';
+import { Result } from '../_pages/manual/result';
 
 export default function History() {
+  const [isHydrated, setIsHydrated] = useState(false);
   const tasks = useStore(state => state.history);
+  const updateTaskResult = useStore(state => state.updateTaskResult);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   return (
-    <div className="flex h-full w-full p-4">
-      <Button variant="outline">Total Tasks: {tasks.length}</Button>
+    <div className="p-4">
+      <h1 className="mb-4 text-xl">Task History</h1>
+      {isHydrated ? (
+        <div className="flex w-full flex-col gap-4 md:max-w-screen-lg">
+          {tasks.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No tasks have been performed yet.
+            </p>
+          ) : (
+            tasks.map((task, tidx) => (
+              <Result
+                key={tidx}
+                result={task.results}
+                updateResult={(ridx, patch) => {
+                  updateTaskResult(tidx, ridx, patch);
+                }}
+              />
+            ))
+          )}
+        </div>
+      ) : (
+        <span className="flex items-center gap-2">
+          <LoadingIcon className="text-lg"></LoadingIcon>
+          Loading...
+        </span>
+      )}
     </div>
   );
 }

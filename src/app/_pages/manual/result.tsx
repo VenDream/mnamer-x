@@ -42,13 +42,13 @@ export function Result(props: IProps) {
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} className="hover:bg-transparent">
               {headerGroup.headers.map(header => {
                 return (
                   <TableHead
                     key={header.id}
                     style={{ width: header.getSize() }}
-                    className="border-r text-xs last:border-none last:text-center"
+                    className="h-8 border-r bg-accent/50 text-xs last:border-none last:text-center dark:border-accent"
                   >
                     {header.isPlaceholder
                       ? null

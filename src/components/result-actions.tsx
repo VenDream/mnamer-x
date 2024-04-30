@@ -40,7 +40,7 @@ export function ResultActions(props: IProps) {
       <DropdownMenuTrigger asChild>
         <Button
           size="sm"
-          variant="outline"
+          variant="ghost"
           className="m-auto flex h-6 w-8 items-center justify-center p-1"
         >
           <DotsHorizontalIcon></DotsHorizontalIcon>
