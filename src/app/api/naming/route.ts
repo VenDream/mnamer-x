@@ -27,23 +27,30 @@ export async function POST(req: Request) {
     const parsedMeta = (JSON.parse(response) as ParsedMeta[]).filter(Boolean);
     console.log('parsed meta data: %O', parsedMeta);
     for (const [idx, data] of Object.entries(parsedMeta)) {
-      let mediaInfo: TMDBData | null = null;
+      let result: Awaited<ReturnType<typeof tmdb.searchMedia>> | null = null;
+      let mediaDetail: TMDBData | null = null;
       const { keyword } = files[+idx] || {};
 
       // try name first
       if (data.name) {
-        mediaInfo = await tmdb.searchMedia(data.name);
+        result = await tmdb.searchMedia(data.name);
       }
       // then try keyword
-      if (!mediaInfo && keyword) {
-        mediaInfo = await tmdb.searchMedia(keyword);
+      if (!mediaDetail && keyword) {
+        result = await tmdb.searchMedia(keyword);
+      }
+
+      if (result?.type === 'tv') {
+        mediaDetail = await tmdb.getTvDetail(result.id);
+      } else if (result?.type === 'movie') {
+        mediaDetail = await tmdb.getMovieDetail(result.id);
       }
 
       output.push({
         input: data.original,
         output: {
           meta: data,
-          tmdb: mediaInfo,
+          tmdb: mediaDetail,
         },
         modified: '',
       });

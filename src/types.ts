@@ -15,39 +15,37 @@ export interface ParsedMeta {
   format: string;
 }
 
-export interface TMDBTv {
+export type TMDBMediaType = 'movie' | 'tv';
+
+export interface TMDBBase {
   id: number;
-  name: string;
-  original_name: string;
+  genres: string[];
+  media_type: TMDBMediaType;
   overview: string;
-  media_type: 'movie' | 'tv';
   adult: boolean;
   popularity: number;
   vote_count: number;
   vote_average: number;
   poster_path: string;
   backdrop_path: string;
-  first_air_date: string;
   origin_country: string[];
   original_language: string;
   genre_ids: number[];
+  content_ratings: string;
 }
 
-export interface TMDBMovie {
-  id: number;
+export interface TMDBTv extends TMDBBase {
+  name: string;
+  original_name: string;
+  media_type: 'tv';
+  first_air_date: string;
+}
+
+export interface TMDBMovie extends TMDBBase {
   title: string;
   original_title: string;
-  overview: string;
   media_type: 'movie';
-  adult: boolean;
-  popularity: number;
-  vote_count: number;
-  vote_average: number;
-  poster_path: string;
-  backdrop_path: string;
   release_date: string;
-  original_language: string;
-  genre_ids: number[];
 }
 
 export type TMDBData = TMDBMovie | TMDBTv;

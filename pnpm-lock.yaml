@@ -2,8 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@hookform/resolvers': ^3.3.4
-  '@langchain/core': ^0.1.60
-  '@langchain/groq': ^0.0.8
+  '@langchain/core': ^0.1.62
+  '@langchain/groq': ^0.0.9
   '@langchain/mistralai': ^0.0.19
   '@langchain/openai': ^0.0.28
   '@radix-ui/react-accordion': ^1.1.2
@@ -45,8 +45,8 @@ specifiers:
   cmdk: ^1.0.0
   cz-conventional-changelog: ^3.3.0
   date-fns: ^3.6.0
-  dayjs: ^1.11.10
-  embla-carousel-react: ^8.0.2
+  dayjs: ^1.11.11
+  embla-carousel-react: ^8.0.4
   eslint: ^8
   eslint-config-next: 14.2.3
   eslint-config-prettier: ^9.1.0
@@ -65,7 +65,7 @@ specifiers:
   react: ^18
   react-day-picker: ^8.10.1
   react-dom: ^18
-  react-hook-form: ^7.51.3
+  react-hook-form: ^7.51.4
   react-resizable-panels: ^2.0.19
   sonner: ^1.4.41
   tailwind-merge: ^2.3.0
@@ -73,13 +73,13 @@ specifiers:
   tailwindcss-animate: ^1.0.7
   typescript: ^5
   vaul: ^0.9.0
-  zod: ^3.23.4
+  zod: ^3.23.6
   zustand: ^4.5.2
 
 dependencies:
-  '@hookform/resolvers': 3.3.4_react-hook-form@7.51.3
-  '@langchain/core': 0.1.60
-  '@langchain/groq': 0.0.8
+  '@hookform/resolvers': 3.3.4_react-hook-form@7.51.4
+  '@langchain/core': 0.1.62
+  '@langchain/groq': 0.0.9
   '@langchain/mistralai': 0.0.19
   '@langchain/openai': 0.0.28
   '@radix-ui/react-accordion': 1.1.2_pririwar4m3afwc3lk45uql2te
@@ -117,8 +117,8 @@ dependencies:
   clsx: 2.1.1
   cmdk: 1.0.0_pririwar4m3afwc3lk45uql2te
   date-fns: 3.6.0
-  dayjs: 1.11.10
-  embla-carousel-react: 8.0.2_react@18.2.0
+  dayjs: 1.11.11
+  embla-carousel-react: 8.0.4_react@18.2.0
   https-proxy-agent: 7.0.4
   immer: 10.1.1
   input-otp: 1.2.4_biqbaboplfbrettd7655fr4n2y
@@ -128,13 +128,13 @@ dependencies:
   react: 18.2.0
   react-day-picker: 8.10.1_gsah3ikbvjvsxi45xcfecp6zpq
   react-dom: 18.2.0_react@18.2.0
-  react-hook-form: 7.51.3_react@18.2.0
+  react-hook-form: 7.51.4_react@18.2.0
   react-resizable-panels: 2.0.19_biqbaboplfbrettd7655fr4n2y
   sonner: 1.4.41_biqbaboplfbrettd7655fr4n2y
   tailwind-merge: 2.3.0
   tailwindcss-animate: 1.0.7_tailwindcss@3.4.3
   vaul: 0.9.0_pririwar4m3afwc3lk45uql2te
-  zod: 3.23.4
+  zod: 3.23.6
   zustand: 4.5.2_4pq344ut2zg5xkasr755z35fr4
 
 devDependencies:
@@ -336,12 +336,12 @@ packages:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
     dev: false
 
-  /@hookform/resolvers/3.3.4_react-hook-form@7.51.3:
+  /@hookform/resolvers/3.3.4_react-hook-form@7.51.4:
     resolution: {integrity: sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.51.3_react@18.2.0
+      react-hook-form: 7.51.4_react@18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.11.14:
@@ -679,20 +679,20 @@ packages:
       ws:
         optional: true
     dependencies:
-      '@langchain/core': 0.1.60
+      '@langchain/core': 0.1.62
       '@langchain/openai': 0.0.28
       expr-eval: 2.0.2
       flat: 5.0.2
       langsmith: 0.1.14
       uuid: 9.0.1
-      zod: 3.23.4
-      zod-to-json-schema: 3.22.5_zod@3.23.4
+      zod: 3.23.6
+      zod-to-json-schema: 3.22.5_zod@3.23.6
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@langchain/core/0.1.60:
-    resolution: {integrity: sha512-3EJW4ir0tFe17AakpXCgO9flSoDjFELpSQs2w/CMZ5FBlHYxo3ODgVQAZvlHy97khEVgcnvlL3EDhPE7IdNibA==}
+  /@langchain/core/0.1.62:
+    resolution: {integrity: sha512-PsBM/x0wxVvVPawKak2MFjxEneogipf212yO+rLf+2M3RDepCpYCdn1NBWgfmC+AWpmBYx/8zM7Y4QW7Kg2Wjw==}
     engines: {node: '>=18'}
     dependencies:
       ansi-styles: 5.2.0
@@ -705,19 +705,19 @@ packages:
       p-queue: 6.6.2
       p-retry: 4.6.2
       uuid: 9.0.1
-      zod: 3.23.4
-      zod-to-json-schema: 3.22.5_zod@3.23.4
+      zod: 3.23.6
+      zod-to-json-schema: 3.22.5_zod@3.23.6
     dev: false
 
-  /@langchain/groq/0.0.8:
-    resolution: {integrity: sha512-xqbe35K+12fiYtC/uqkaTT4AXxqL5uvhCrHzc+nBoFkTwM6YfTFE1ch95RZ5G2JnK1U9pKAre/trUSzlU1/6Kg==}
+  /@langchain/groq/0.0.9:
+    resolution: {integrity: sha512-/QGGgazYdxlN8FCmPfEVDO9Hg55POvQdnoou+b3lsugmwP1TYPRtqLW6JY7Atb36X4vjEJwiMCnntDXdT7vgaw==}
     engines: {node: '>=18'}
     dependencies:
-      '@langchain/core': 0.1.60
+      '@langchain/core': 0.1.62
       '@langchain/openai': 0.0.28
       groq-sdk: 0.3.2
-      zod: 3.23.4
-      zod-to-json-schema: 3.22.5_zod@3.23.4
+      zod: 3.23.6
+      zod-to-json-schema: 3.22.5_zod@3.23.6
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -726,11 +726,11 @@ packages:
     resolution: {integrity: sha512-Uin/jve1NCZLAFa9dpOKzE3Y2+uSnMJQX5ria9vO3lnTGRlvBwcMhyGDoTYdI+gnQgHH4ceBoIBzJDlVG+WVWw==}
     engines: {node: '>=18'}
     dependencies:
-      '@langchain/core': 0.1.60
+      '@langchain/core': 0.1.62
       '@mistralai/mistralai': 0.1.3
       uuid: 9.0.1
-      zod: 3.23.4
-      zod-to-json-schema: 3.22.5_zod@3.23.4
+      zod: 3.23.6
+      zod-to-json-schema: 3.22.5_zod@3.23.6
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -739,11 +739,11 @@ packages:
     resolution: {integrity: sha512-2s1RA3/eAnz4ahdzsMPBna9hfAqpFNlWdHiPxVGZ5yrhXsbLWWoPcF+22LCk9t0HJKtazi2GCIWc0HVXH9Abig==}
     engines: {node: '>=18'}
     dependencies:
-      '@langchain/core': 0.1.60
+      '@langchain/core': 0.1.62
       js-tiktoken: 1.0.11
       openai: 4.35.0
-      zod: 3.23.4
-      zod-to-json-schema: 3.22.5_zod@3.23.4
+      zod: 3.23.6
+      zod-to-json-schema: 3.22.5_zod@3.23.6
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -752,7 +752,7 @@ packages:
     resolution: {integrity: sha512-3hPesWomnmVeYMppEGYbyv0v/sRUugUdlFBNn9m1ueJYHAIKbvCErkWxNUH3guyKKYgJVrkvZoQxcd9faucSaw==}
     engines: {node: '>=18'}
     dependencies:
-      '@langchain/core': 0.1.60
+      '@langchain/core': 0.1.62
       js-tiktoken: 1.0.11
     dev: false
 
@@ -2921,8 +2921,8 @@ packages:
     resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
     dev: false
 
-  /dayjs/1.11.10:
-    resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
+  /dayjs/1.11.11:
+    resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
     dev: false
 
   /debug/3.2.7:
@@ -3045,26 +3045,26 @@ packages:
   /eastasianwidth/0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  /embla-carousel-react/8.0.2_react@18.2.0:
-    resolution: {integrity: sha512-RHe1GKLulOW8EDN+cJgbFbVVfRXcaLT2/89dyVw3ONGgVpZjD19wB87I1LUZ1aCzOSrTccx0PFSQanK4OOfGPA==}
+  /embla-carousel-react/8.0.4_react@18.2.0:
+    resolution: {integrity: sha512-3NlOmBmRhaGhtI0It9243yg9fz2wPRML5gGLDIE69Oyb/CuGsJnxpcgG74j905NQBDgReTEfFJwzOtIFAjeBfg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.1 || ^18.0.0
     dependencies:
-      embla-carousel: 8.0.2
-      embla-carousel-reactive-utils: 8.0.2_embla-carousel@8.0.2
+      embla-carousel: 8.0.4
+      embla-carousel-reactive-utils: 8.0.4_embla-carousel@8.0.4
       react: 18.2.0
     dev: false
 
-  /embla-carousel-reactive-utils/8.0.2_embla-carousel@8.0.2:
-    resolution: {integrity: sha512-nLZqDkQdO0hvOP49/dUwjkkepMnUXgIzhyRuDjwGqswpB4Ibnc5M+w7rSQQAM+uMj0cPaXnYOTlv8XD7I/zVNw==}
+  /embla-carousel-reactive-utils/8.0.4_embla-carousel@8.0.4:
+    resolution: {integrity: sha512-7lWM+8hanIF2roTAjxwfqfr0+VTbr9rYVlAs0r5PwPOVpz1G3/+bRelgAYvwcfWVm5Vydo2pKXVfFOPQjznF7w==}
     peerDependencies:
-      embla-carousel: 8.0.2
+      embla-carousel: 8.0.4
     dependencies:
-      embla-carousel: 8.0.2
+      embla-carousel: 8.0.4
     dev: false
 
-  /embla-carousel/8.0.2:
-    resolution: {integrity: sha512-bogsDO8xosuh/l3PxIvA5AMl3+BnRVAse9sDW/60amzj4MbGS5re4WH5eVEXiuH8G1/3G7QUAX2QNr3Yx8z5rA==}
+  /embla-carousel/8.0.4:
+    resolution: {integrity: sha512-INndmilrV9KY4Wnb4F2tI55DuQnFjf3GPOaPDT2LGYiKhIWVNUhv1nz/RI7CZ6WoIZ8MYHP4t6Qm/cqpcGHknA==}
     dev: false
 
   /emoji-regex/10.3.0:
@@ -4059,7 +4059,7 @@ packages:
     dev: true
 
   /ini/4.1.1:
-    resolution: {integrity: sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g==, tarball: https://repo.tuzhanai.com/repository/tubit-npm-group/ini/-/ini-4.1.1.tgz}
+    resolution: {integrity: sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dev: true
     optional: true
@@ -4597,7 +4597,7 @@ packages:
     dependencies:
       '@anthropic-ai/sdk': 0.9.1
       '@langchain/community': 0.0.49
-      '@langchain/core': 0.1.60
+      '@langchain/core': 0.1.62
       '@langchain/openai': 0.0.28
       '@langchain/textsplitters': 0.0.0
       axios: 1.6.8
@@ -4612,8 +4612,8 @@ packages:
       p-retry: 4.6.2
       uuid: 9.0.1
       yaml: 2.4.1
-      zod: 3.23.4
-      zod-to-json-schema: 3.22.5_zod@3.23.4
+      zod: 3.23.6
+      zod-to-json-schema: 3.22.5_zod@3.23.6
     transitivePeerDependencies:
       - '@aws-crypto/sha256-js'
       - '@aws-sdk/client-bedrock-agent-runtime'
@@ -5521,8 +5521,8 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-hook-form/7.51.3_react@18.2.0:
-    resolution: {integrity: sha512-cvJ/wbHdhYx8aviSWh28w9ImjmVsb5Y05n1+FW786vEZQJV5STNM0pW6ujS+oiBecb0ARBxJFyAnXj9+GHXACQ==}
+  /react-hook-form/7.51.4_react@18.2.0:
+    resolution: {integrity: sha512-V14i8SEkh+V1gs6YtD0hdHYnoL4tp/HX/A45wWQN15CYr9bFRmmRdYStSO5L65lCCZRF+kYiSKhm9alqbcdiVA==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
@@ -6455,16 +6455,16 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zod-to-json-schema/3.22.5_zod@3.23.4:
+  /zod-to-json-schema/3.22.5_zod@3.23.6:
     resolution: {integrity: sha512-+akaPo6a0zpVCCseDed504KBJUQpEW5QZw7RMneNmKw+fGaML1Z9tUNLnHHAC8x6dzVRO1eB2oEMyZRnuBZg7Q==}
     peerDependencies:
       zod: ^3.22.4
     dependencies:
-      zod: 3.23.4
+      zod: 3.23.6
     dev: false
 
-  /zod/3.23.4:
-    resolution: {integrity: sha512-/AtWOKbBgjzEYYQRNfoGKHObgfAZag6qUJX1VbHo2PRBgS+wfWagEY2mizjfyAPcGesrJOcx/wcl0L9WnVrHFw==}
+  /zod/3.23.6:
+    resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
     dev: false
 
   /zustand/4.5.2_4pq344ut2zg5xkasr755z35fr4:

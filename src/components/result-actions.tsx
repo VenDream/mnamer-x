@@ -1,4 +1,5 @@
 import { EditOutput } from '@/components/edit-output';
+import { TmdbInfo } from '@/components/tmdb-info';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -28,7 +29,8 @@ export function ResultActions(props: IProps) {
   const { table, row } = props;
   const result = row.original;
   const { modifyOutput } = table.options.meta!;
-  const isUnrecognized = !result.output.tmdb;
+  const tmdbData = result.output.tmdb;
+  const isUnrecognized = !tmdbData;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const formatted = useMemo(() => getFormattedFilename(result), [result]);
@@ -73,10 +75,15 @@ export function ResultActions(props: IProps) {
             Edit
           </DropdownMenuItem>
         </EditOutput>
-        <DropdownMenuItem className="cursor-pointer text-xs">
-          <IdCardIcon className="mr-1"></IdCardIcon>
-          View TMDB meta
-        </DropdownMenuItem>
+        <TmdbInfo data={tmdbData} onClose={() => setIsMenuOpen(false)}>
+          <DropdownMenuItem
+            className="cursor-pointer text-xs"
+            onSelect={e => e.preventDefault()}
+          >
+            <IdCardIcon className="mr-1"></IdCardIcon>
+            View TMDB info
+          </DropdownMenuItem>
+        </TmdbInfo>
       </DropdownMenuContent>
     </DropdownMenu>
   );

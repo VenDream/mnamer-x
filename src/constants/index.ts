@@ -14,6 +14,7 @@ export enum LLM_SERVER {
 
 // env configs
 export const ENV_CONFIG = {
+  DEBUG_MODE: process.env.NEXT_PUBLIC_DEBUG_MODE === 'true',
   DEBUG_PROXY: process.env.DEBUG_PROXY,
 
   OPENAI_BASE_URL: process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1/',

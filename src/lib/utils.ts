@@ -45,3 +45,10 @@ export function copyText(text: string) {
 export function getCurrentDatetime() {
   return dayjs().format('YYYY-MM-DD HH:mm:ss');
 }
+
+export function pick<T = Record<string, any>>(
+  obj: Record<string, any>,
+  keys: string[]
+) {
+  return keys.reduce((a, c) => ({ ...a, [c]: obj[c] }), {} as T);
+}
