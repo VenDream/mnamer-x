@@ -7,7 +7,7 @@ import {
 } from '@/types';
 import { zeroPad } from './utils';
 
-const UNRECOGNIZED_TIPS = 'Unable to recognize, please try adding keywords.';
+const UNRECOGNIZED_TIPS = 'Unable to recognize.';
 
 export function getFormattedFilename(result: ProcessResult) {
   const { meta, tmdb } = result.output;

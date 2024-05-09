@@ -57,6 +57,7 @@ specifiers:
   input-otp: ^1.2.4
   langchain: ^0.1.36
   lint-staged: ^15.2.2
+  lucide-react: ^0.378.0
   next: 14.2.3
   next-themes: ^0.3.0
   postcss: ^8
@@ -123,6 +124,7 @@ dependencies:
   immer: 10.1.1
   input-otp: 1.2.4_biqbaboplfbrettd7655fr4n2y
   langchain: 0.1.36_axios@1.6.8
+  lucide-react: 0.378.0_react@18.2.0
   next: 14.2.3_biqbaboplfbrettd7655fr4n2y
   next-themes: 0.3.0_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -4838,6 +4840,14 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /lucide-react/0.378.0_react@18.2.0:
+    resolution: {integrity: sha512-u6EPU8juLUk9ytRcyapkWI18epAv3RU+6+TC23ivjR0e+glWKBobFeSgRwOIJihzktILQuy6E0E80P2jVTDR5g==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /md5/2.3.0:
     resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==}

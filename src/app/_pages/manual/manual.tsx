@@ -30,7 +30,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { ENV_CONFIG } from '@/constants';
-import { LoadingIcon } from '@/constants/custom-icons';
 import { rename } from '@/lib/client-api';
 import { getCurrentDatetime } from '@/lib/utils';
 import { useStore } from '@/store';
@@ -43,6 +42,7 @@ import {
   PlusCircledIcon,
   QuestionMarkCircledIcon,
 } from '@radix-ui/react-icons';
+import { LoaderIcon } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -53,6 +53,7 @@ const formSchema = z.object({
   files: z
     .array(
       z.object({
+        year: z.string().optional(),
         keyword: z.string().optional(),
         filename: z.string().min(1, { message: 'Filename is required' }),
       })
@@ -71,7 +72,7 @@ export default function Manual() {
   const form = useForm<InputData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      files: [{ keyword: '', filename: '' }],
+      files: [{ year: '', keyword: '', filename: '' }],
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -86,7 +87,7 @@ export default function Manual() {
       toast.error(`Maximum number of files exceeded ${maxStr}`);
       return;
     }
-    append({ keyword: '', filename: '' });
+    append({ year: '', keyword: '', filename: '' });
   };
 
   const removeFile = (idx: number) => {
@@ -170,48 +171,65 @@ export default function Manual() {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    name={`files.${index}.keyword`}
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem className="md:w-[50%]">
-                        <Collapsible className="space-y-2">
-                          <div className="flex items-center text-sm text-muted-foreground">
-                            <TooltipProvider delayDuration={100}>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <QuestionMarkCircledIcon className="mr-1"></QuestionMarkCircledIcon>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>
-                                    keyword helps to identify media file more
-                                    accurately
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                            keyword
-                            <CollapsibleTrigger asChild className="ml-1">
-                              <Button type="button" variant="ghost" size="icon">
-                                <CaretSortIcon className="h-4 w-4" />
-                                <span className="sr-only">Toggle</span>
-                              </Button>
-                            </CollapsibleTrigger>
-                          </div>
-                          <CollapsibleContent>
+                  <Collapsible className="space-y-2">
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <QuestionMarkCircledIcon className="mr-1"></QuestionMarkCircledIcon>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              additional info helps to improve the media
+                              recognition accuracy
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                      additional info
+                      <CollapsibleTrigger asChild className="ml-1">
+                        <Button type="button" variant="ghost" size="icon">
+                          <CaretSortIcon className="h-4 w-4" />
+                          <span className="sr-only">Toggle</span>
+                        </Button>
+                      </CollapsibleTrigger>
+                    </div>
+                    <CollapsibleContent className="space-y-2">
+                      <FormField
+                        name={`files.${index}.year`}
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem className="md:w-[50%]">
                             <FormControl>
                               <Input
+                                type="number"
+                                min={1900}
+                                max={new Date().getFullYear()}
                                 disabled={isSubmitting}
-                                placeholder="e.g.: Violet Evergarden"
+                                placeholder="release year, e.g.: 2008"
                                 {...field}
                               ></Input>
                             </FormControl>
-                            <FormMessage />
-                          </CollapsibleContent>
-                        </Collapsible>
-                      </FormItem>
-                    )}
-                  />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        name={`files.${index}.keyword`}
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem className="md:w-[50%]">
+                            <FormControl>
+                              <Input
+                                disabled={isSubmitting}
+                                placeholder="keyword, e.g.: Violet Evergarden"
+                                {...field}
+                              ></Input>
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </CollapsibleContent>
+                  </Collapsible>
                   <Button
                     type="button"
                     size="icon"
@@ -245,7 +263,10 @@ export default function Manual() {
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
-                      <LoadingIcon className="text-lg"></LoadingIcon>
+                      <LoaderIcon
+                        size={15}
+                        className="animate-spin"
+                      ></LoaderIcon>
                       Processing...
                     </span>
                   ) : (

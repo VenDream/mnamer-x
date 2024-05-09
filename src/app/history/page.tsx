@@ -1,7 +1,7 @@
 'use client';
 
-import { LoadingIcon } from '@/constants/custom-icons';
 import { useStore } from '@/store';
+import { LoaderIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Result } from '../_pages/manual/result';
 
@@ -37,7 +37,7 @@ export default function History() {
         </div>
       ) : (
         <span className="flex items-center gap-2">
-          <LoadingIcon className="text-lg"></LoadingIcon>
+          <LoaderIcon size={15} className="animate-spin"></LoaderIcon>
           Loading data...
         </span>
       )}

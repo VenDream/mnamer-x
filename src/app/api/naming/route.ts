@@ -29,15 +29,15 @@ export async function POST(req: Request) {
     for (const [idx, data] of Object.entries(parsedMeta)) {
       let result: Awaited<ReturnType<typeof tmdb.searchMedia>> | null = null;
       let mediaDetail: TMDBData | null = null;
-      const { keyword } = files[+idx] || {};
+      const { year, keyword } = files[+idx] || {};
 
       // try name first
       if (data.name) {
-        result = await tmdb.searchMedia(data.name);
+        result = await tmdb.searchMedia(data.name, year);
       }
       // then try keyword
       if (!mediaDetail && keyword) {
-        result = await tmdb.searchMedia(keyword);
+        result = await tmdb.searchMedia(keyword, year);
       }
 
       if (result?.type === 'tv') {

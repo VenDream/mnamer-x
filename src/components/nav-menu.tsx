@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ProcessIcon, SettingsIcon } from '@/constants/custom-icons';
 import { cn } from '@/lib/utils';
 import {
   CounterClockwiseClockIcon,
@@ -15,6 +14,7 @@ import {
   HomeIcon,
   InfoCircledIcon,
 } from '@radix-ui/react-icons';
+import { BotIcon, Settings2 as SettingsIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
@@ -34,7 +34,7 @@ const NAV_ROUTES: NavRoute[] = [
   {
     path: '/tasks',
     label: 'Tasks',
-    icon: ProcessIcon,
+    icon: BotIcon,
   },
   {
     path: '/history',
@@ -72,7 +72,7 @@ export function NavMenu() {
               }
             )}
           >
-            <Icon></Icon>
+            <Icon className="h-[15px] w-[15px]"></Icon>
             {label}
           </Link>
         );
@@ -110,7 +110,7 @@ export function NavMenuForMobile() {
                   'cursor-default': isActive,
                 })}
               >
-                <Icon className="mr-1"></Icon>
+                <Icon className="mr-1 h-[15px] w-[15px]"></Icon>
                 {label}
               </Link>
             </DropdownMenuItem>

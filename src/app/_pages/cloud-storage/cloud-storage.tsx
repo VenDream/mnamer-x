@@ -1,10 +1,10 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { ConstructionIcon } from '@/constants/custom-icons';
+import { ConstructionIcon } from 'lucide-react';
 
 export default function CloudStorage() {
   return (
     <Alert>
-      <ConstructionIcon></ConstructionIcon>
+      <ConstructionIcon size={20}></ConstructionIcon>
       <AlertTitle>WIP</AlertTitle>
       <AlertDescription>
         Development in progress, stay tuned :)

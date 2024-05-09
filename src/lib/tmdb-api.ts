@@ -68,14 +68,26 @@ instance.interceptors.request.use(config => {
  *
  * @export
  * @param {string} keyword keyword
+ * @param {string} [year] year
  */
-export async function searchMedia(keyword: string) {
+export async function searchMedia(keyword: string, year?: string) {
   console.log('searching tmdb media info with keyword: %s', keyword);
   const resp = await instance.get('/search/multi', {
     params: { query: keyword, include_adult: true, page: 1 },
   });
-  const media = resp?.data?.results?.[0] as TMDBBase;
-  return { id: media.id, type: media.media_type };
+  const results = (resp?.data?.results || []) as TMDBBase[];
+  // pick the first result by default
+  let result = results[0];
+  // use year to pick a more precise result if possible
+  if (year) {
+    result =
+      results.find(r => {
+        return r.media_type === 'movie'
+          ? (r as TMDBMovie).release_date?.includes(year)
+          : (r as TMDBTv).first_air_date?.includes(year);
+      }) || result;
+  }
+  return { id: result.id, type: result.media_type };
 }
 
 /**
