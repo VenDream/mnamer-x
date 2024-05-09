@@ -6,6 +6,7 @@ export const SYSTEM_AGENT_PROMPT = `
 - "第x季"指的是季度，不算作名称
 - "0x"一般指的是集数，而非季数
 - 电影名/剧名可能带有描述语，如：xx:xx ，注意要包括进去
+- 每一个输入必须要有一个输出
 
 你需要以JSON数组的格式返回，每个JSON对象的格式如下：
 {{
@@ -19,13 +20,10 @@ export const SYSTEM_AGENT_PROMPT = `
   "format": "mp4"    // string, 文件后缀名，无法识别则赋值为空字符串
 }}
 
-记住：
-- 你需要严格按照上面的格式进行回答，不能添加其他任何内容或者修饰符号，不需要添加markdown标记
-- 每一个输入必须要有一个输出
-- 返回的格式必须为JSON数组
-
-下面，开始识别以下文件名：
+现在开始识别以下文件名：
 {input}
+
+{format_instructions}
 `;
 
 export const TEST_INPUT = `

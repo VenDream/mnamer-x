@@ -73,7 +73,7 @@ export function TmdbInfo(props: IProps) {
               }
             ></Image>
             <div className="absolute flex h-full w-4/5 flex-col justify-center gap-2 rounded-lg bg-gradient-to-r from-black/80">
-              <div className="relative ml-[5%] h-2/3 w-2/5">
+              <div className="relative ml-[5%] h-2/3 w-2/5 overflow-hidden">
                 <Image
                   fill
                   alt="POSTER"
@@ -92,12 +92,15 @@ export function TmdbInfo(props: IProps) {
                 <div className="flex items-center space-x-2 text-sm text-white/70">
                   <span>{original_name || original_title}</span>
                   {origin_country.map(oc => (
-                    <span key={oc} className="border border-white/70 px-1">
+                    <span
+                      key={oc}
+                      className="border border-white/70 px-1 leading-4"
+                    >
                       {oc.toUpperCase()}
                     </span>
                   ))}
                   {content_ratings && (
-                    <span className="border border-white/70 px-1">
+                    <span className="border border-white/70 px-1 leading-4">
                       {content_ratings}
                     </span>
                   )}
@@ -112,12 +115,15 @@ export function TmdbInfo(props: IProps) {
             <div className="flex items-center space-x-2 text-xs text-foreground/70">
               <span>{original_name || original_title}</span>
               {origin_country.map(oc => (
-                <span key={oc} className="border border-foreground/70 px-1">
+                <span
+                  key={oc}
+                  className="border border-foreground/70 px-1 leading-4"
+                >
                   {oc.toUpperCase()}
                 </span>
               ))}
               {content_ratings && (
-                <span className="border border-foreground/70 px-1">
+                <span className="border border-foreground/70 px-1 leading-4">
                   {content_ratings}
                 </span>
               )}

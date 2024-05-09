@@ -3,13 +3,13 @@ import { InputData } from '@/app/_pages/manual/manual';
 import * as tmdb from '@/lib/tmdb-api';
 import { buildErrorResponse, buildSuccessResponse } from '@/lib/utils';
 import { SYSTEM_AGENT_PROMPT, TEST_INPUT } from '@/prompts';
-import { ParsedMeta, ProcessResult, TMDBData } from '@/types';
-import { StringOutputParser } from '@langchain/core/output_parsers';
+import { ProcessResult, TMDBData } from '@/types';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { CustomOutputParser } from './output-parser';
 
 if (!chatModel) throw new Error('ERR_LLM_MODEL_NOT_FOUND');
 
-const outputParser = new StringOutputParser();
+const outputParser = new CustomOutputParser();
 const prompt = ChatPromptTemplate.fromMessages([
   ['system', SYSTEM_AGENT_PROMPT],
   ['user', '{input}'],
@@ -22,10 +22,10 @@ export async function POST(req: Request) {
   const output: ProcessResult[] = [];
 
   try {
-    const response = await llmChain.invoke({ input: input || TEST_INPUT });
-    console.log('llm response: %O', response);
-    const parsedMeta = (JSON.parse(response) as ParsedMeta[]).filter(Boolean);
-    console.log('parsed meta data: %O', parsedMeta);
+    const parsedMeta = await llmChain.invoke({
+      input: input || TEST_INPUT,
+      format_instructions: outputParser.getFormatInstructions(),
+    });
     for (const [idx, data] of Object.entries(parsedMeta)) {
       let result: Awaited<ReturnType<typeof tmdb.searchMedia>> | null = null;
       let mediaDetail: TMDBData | null = null;

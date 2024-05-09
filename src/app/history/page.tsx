@@ -38,7 +38,7 @@ export default function History() {
       ) : (
         <span className="flex items-center gap-2">
           <LoadingIcon className="text-lg"></LoadingIcon>
-          Loading...
+          Loading data...
         </span>
       )}
     </div>

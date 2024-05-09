@@ -50,7 +50,7 @@ export function EditOutput(props: IProps) {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4 md:grid-cols-5">
             <Label htmlFor="original" className="text-right">
-              Output
+              System Output
             </Label>
             <Input
               id="original"
@@ -61,13 +61,13 @@ export function EditOutput(props: IProps) {
           </div>
           <div className="grid grid-cols-4 items-center gap-4 md:grid-cols-5">
             <Label htmlFor="modified" className="text-right">
-              Modified
+              Your Modified
             </Label>
             <Input
               id="modified"
               value={modified}
               className="col-span-3 md:col-span-4"
-              placeholder="Leave it empty to use the original output"
+              placeholder="Leave it empty to use the system output"
               onChange={e => setModified(e.target.value)}
             />
           </div>

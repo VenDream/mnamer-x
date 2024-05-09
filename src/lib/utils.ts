@@ -52,3 +52,7 @@ export function pick<T = Record<string, any>>(
 ) {
   return keys.reduce((a, c) => ({ ...a, [c]: obj[c] }), {} as T);
 }
+
+export function stripJsonCodeBlockMarkup(text: string) {
+  return text.replace('```json\n', '').replace('\n```', '');
+}

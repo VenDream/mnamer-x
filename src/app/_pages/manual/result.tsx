@@ -48,7 +48,7 @@ export function Result(props: IProps) {
                   <TableHead
                     key={header.id}
                     style={{ width: header.getSize() }}
-                    className="h-8 border-r bg-accent/50 text-xs last:border-none last:text-center dark:border-accent"
+                    className="h-8 border-r bg-accent/50 text-xs last:border-none last:text-center dark:border-accent md:text-sm"
                   >
                     {header.isPlaceholder
                       ? null
@@ -72,7 +72,7 @@ export function Result(props: IProps) {
                 {row.getVisibleCells().map(cell => (
                   <TableCell
                     key={cell.id}
-                    className="border-r text-xs last:border-none"
+                    className="border-r text-xs last:border-none md:text-sm"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

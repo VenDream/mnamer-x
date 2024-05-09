@@ -50,7 +50,7 @@ export default function Home() {
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground">
-        Let us start the first <UnderlineLink href="/tasks">task</UnderlineLink>
+        Let us start the first <UnderlineLink href="/tasks">task</UnderlineLink>{' '}
         now.
       </p>
     </div>

@@ -69,7 +69,7 @@ export default function RootLayout({
           </main>
           <Toaster
             toastOptions={{
-              className: 'text-xs py-3 px-4 rounded-sm items-start',
+              className: 'text-xs md:text-sm py-3 px-4 rounded-sm items-start',
               classNames: {
                 icon: 'positive top-[1px]',
               },

@@ -50,7 +50,7 @@ export function ResultActions(props: IProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
-          className="cursor-pointer text-xs"
+          className="cursor-pointer text-xs md:text-sm"
           onClick={() => {
             copyText(formatted);
             toast.success('Copied to clipboard');
@@ -68,7 +68,7 @@ export function ResultActions(props: IProps) {
           onClose={() => setIsMenuOpen(false)}
         >
           <DropdownMenuItem
-            className="cursor-pointer text-xs"
+            className="cursor-pointer text-xs  md:text-sm"
             onSelect={e => e.preventDefault()}
           >
             <Pencil2Icon className="mr-1"></Pencil2Icon>
@@ -77,7 +77,7 @@ export function ResultActions(props: IProps) {
         </EditOutput>
         <TmdbInfo data={tmdbData} onClose={() => setIsMenuOpen(false)}>
           <DropdownMenuItem
-            className="cursor-pointer text-xs"
+            className="cursor-pointer text-xs  md:text-sm"
             onSelect={e => e.preventDefault()}
           >
             <IdCardIcon className="mr-1"></IdCardIcon>
