@@ -14,6 +14,7 @@ import { ENV_CONFIG } from '@/constants';
 import { getMediaReleaseYear } from '@/lib/formatter';
 import { getTmdbImageUrl } from '@/lib/tmdb-image';
 import { TMDBData, TMDBMovie, TMDBTv } from '@/types';
+import { FilmIcon, StarIcon, TvIcon } from 'lucide-react';
 import Image from 'next/image';
 import { PropsWithChildren, useState } from 'react';
 
@@ -28,17 +29,17 @@ interface IProps extends PropsWithChildren<any> {
 export function TmdbInfo(props: IProps) {
   const [open, setOpen] = useState(false);
   const {
-    name,
     genres,
+    media_type,
     overview,
+    vote_count,
+    vote_average,
     poster_path,
-    original_name,
     backdrop_path,
     origin_country,
     content_ratings,
-    vote_count,
-    vote_average,
-  } = props.data as TMDBTv;
+  } = props.data;
+  const { name, original_name } = props.data as TMDBTv;
   const { title, original_title } = props.data as TMDBMovie;
   const releaseYear = getMediaReleaseYear(props.data);
 
@@ -73,11 +74,11 @@ export function TmdbInfo(props: IProps) {
               }
             ></Image>
             <div className="absolute flex h-full w-4/5 flex-col justify-center gap-2 rounded-lg bg-gradient-to-r from-black/80">
-              <div className="relative ml-[5%] h-2/3 w-2/5 overflow-hidden">
+              <div className="relative ml-[5%] h-2/3 w-1/3 overflow-hidden rounded-lg shadow-sm backdrop-blur-2xl">
                 <Image
                   fill
                   alt="POSTER"
-                  className="rounded-md object-contain"
+                  className="m-auto !h-[90%] rounded-md object-contain"
                   src={
                     ENV_CONFIG.DEBUG_MODE
                       ? DEBUG_POSTER
@@ -132,10 +133,13 @@ export function TmdbInfo(props: IProps) {
           </div>
           <div className="space-y-1 text-xs md:text-sm">
             <div className="flex h-5 items-center space-x-2">
-              <span>
+              <span className="flex items-center gap-1">
+                <StarIcon size={15} color="orange"></StarIcon>
                 {Math.round(vote_average).toFixed(1)} / 10.0 ({vote_count})
               </span>
               <Separator orientation="vertical"></Separator>
+              {media_type === 'tv' && <TvIcon size={15}></TvIcon>}
+              {media_type === 'movie' && <FilmIcon size={15}></FilmIcon>}
               <span>{genres.join('・')}</span>
             </div>
             <Separator className="!mt-2"></Separator>
