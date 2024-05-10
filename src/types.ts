@@ -59,6 +59,13 @@ export interface ProcessResult {
   modified?: string;
 }
 
+export interface FlattenedProcessResult extends Omit<ProcessResult, 'output'> {
+  output: {
+    meta: ParsedMeta;
+    tmdbid: number;
+  };
+}
+
 export enum TASK_TYPE {
   MANUAL = 'manual',
   WEB_DAV = 'web-dav',
@@ -66,10 +73,15 @@ export enum TASK_TYPE {
 }
 
 export interface ProcessTask {
+  id: number;
   type: TASK_TYPE;
   start: string;
   end: string;
   results: ProcessResult[];
+}
+
+export interface FlattenedProcessTask extends Omit<ProcessTask, 'results'> {
+  results: FlattenedProcessResult[];
 }
 
 export interface UserSettings {

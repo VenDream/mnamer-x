@@ -32,7 +32,7 @@ import {
 import { ENV_CONFIG } from '@/constants';
 import { rename } from '@/lib/client-api';
 import { getCurrentDatetime } from '@/lib/utils';
-import { useStore } from '@/store';
+import { StoreActions, useStore } from '@/store';
 import { ProcessResult, ProcessTask, Response, TASK_TYPE } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -64,9 +64,9 @@ export type InputData = z.infer<typeof formSchema>;
 
 export default function Manual() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [tid, setTid] = useState(-1);
   const [results, setResults] = useState<ProcessResult[]>([]);
   const addTask = useStore(state => state.addTask);
-  const taskIdx = useStore(state => state.history.length - 1);
   const updateTaskResult = useStore(state => state.updateTaskResult);
 
   const form = useForm<InputData>({
@@ -98,16 +98,16 @@ export default function Manual() {
     remove(idx);
   };
 
-  const updateResult = useCallback(
-    (idx: number, patch: Partial<ProcessResult>) => {
+  const updateResult = useCallback<StoreActions['updateTaskResult']>(
+    (id, idx, patch) => {
       setResults(prev => {
         const next = [...prev];
         next[idx] = { ...next[idx], ...patch };
         return next;
       });
-      updateTaskResult(taskIdx, idx, patch);
+      updateTaskResult(id, idx, patch);
     },
-    [taskIdx, updateTaskResult]
+    [updateTaskResult]
   );
 
   const submit = async (values: InputData) => {
@@ -120,8 +120,11 @@ export default function Manual() {
       if (code !== 0) {
         throw new Error(errormsg || 'Failed to fetch');
       }
+      const tid = Date.now();
+      setTid(tid);
       setResults(results || []);
       const task: ProcessTask = {
+        id: tid,
         type: TASK_TYPE.MANUAL,
         start,
         end: getCurrentDatetime(),
@@ -288,7 +291,11 @@ export default function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          <Result result={results} updateResult={updateResult}></Result>
+          <Result
+            tid={tid}
+            result={results}
+            updateResult={updateResult}
+          ></Result>
         </CardContent>
         <CardFooter className="hidden"></CardFooter>
       </Card>

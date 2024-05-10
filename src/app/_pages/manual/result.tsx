@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { StoreActions } from '@/store';
 import { ProcessResult } from '@/types';
 import {
   flexRender,
@@ -16,16 +17,17 @@ import { useCallback } from 'react';
 import { columns } from './result-columns';
 
 interface IProps {
+  tid: number;
   result: ProcessResult[];
-  updateResult: (idx: number, patch: Partial<ProcessResult>) => void;
+  updateResult: StoreActions['updateTaskResult'];
 }
 
 export function Result(props: IProps) {
-  const { result, updateResult } = props;
+  const { tid, result, updateResult } = props;
 
   const modifyOutput = useCallback(
-    (idx: number, output: string) => {
-      updateResult(idx, { modified: output });
+    (id: number, idx: number, output: string) => {
+      updateResult(id, idx, { modified: output });
     },
     [updateResult]
   );
@@ -33,7 +35,7 @@ export function Result(props: IProps) {
   const table = useReactTable({
     data: result,
     columns,
-    meta: { modifyOutput },
+    meta: { tid, modifyOutput },
     getCoreRowModel: getCoreRowModel(),
   });
 

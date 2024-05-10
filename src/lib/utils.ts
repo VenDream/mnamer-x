@@ -53,6 +53,16 @@ export function pick<T = Record<string, any>>(
   return keys.reduce((a, c) => ({ ...a, [c]: obj[c] }), {} as T);
 }
 
+export function exclude<T = Record<string, any>>(
+  obj: Record<string, any>,
+  keys: string[]
+) {
+  return pick(
+    obj,
+    Object.keys(obj).filter(k => !keys.includes(k))
+  ) as T;
+}
+
 export function stripJsonCodeBlockMarkup(text: string) {
   return text.replace('```json\n', '').replace('\n```', '');
 }

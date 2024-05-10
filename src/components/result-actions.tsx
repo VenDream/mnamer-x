@@ -28,7 +28,7 @@ interface IProps {
 export function ResultActions(props: IProps) {
   const { table, row } = props;
   const result = row.original;
-  const { modifyOutput } = table.options.meta!;
+  const { tid, modifyOutput } = table.options.meta!;
   const tmdbData = result.output.tmdb;
   const isUnrecognized = !tmdbData;
 
@@ -63,7 +63,7 @@ export function ResultActions(props: IProps) {
           output={formatted}
           modified={result.modified}
           onSave={modified => {
-            modifyOutput(row.index, modified);
+            modifyOutput(tid, row.index, modified);
           }}
           onClose={() => setIsMenuOpen(false)}
         >

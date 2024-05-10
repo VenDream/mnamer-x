@@ -1,14 +1,21 @@
 'use client';
 
 import { useStore } from '@/store';
+import { structuralizeProcessTask } from '@/store/transformer';
 import { LoaderIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Result } from '../_pages/manual/result';
 
 export default function History() {
   const [isHydrated, setIsHydrated] = useState(false);
-  const tasks = useStore(state => state.history);
+
+  const tmdbs = useStore(state => state.tmdbs);
+  const fTasks = useStore(state => Object.values(state.tasks));
   const updateTaskResult = useStore(state => state.updateTaskResult);
+  const tasks = useMemo(
+    () => fTasks.map(t => structuralizeProcessTask(tmdbs, t)),
+    [fTasks, tmdbs]
+  );
 
   useEffect(() => {
     setIsHydrated(true);
@@ -27,10 +34,9 @@ export default function History() {
             tasks.map((task, tidx) => (
               <Result
                 key={tidx}
+                tid={task.id}
                 result={task.results}
-                updateResult={(ridx, patch) => {
-                  updateTaskResult(tidx, ridx, patch);
-                }}
+                updateResult={updateTaskResult}
               />
             ))
           )}

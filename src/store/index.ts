@@ -1,17 +1,26 @@
-import { ProcessResult, ProcessTask, UserSettings } from '@/types';
+import {
+  FlattenedProcessTask,
+  ProcessResult,
+  ProcessTask,
+  TMDBData,
+  UserSettings,
+} from '@/types';
+import merge from 'lodash.merge';
 import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { flattenProcessResult, flattenProcessTask } from './transformer';
 
-type StoreState = {
-  history: ProcessTask[];
+export type StoreState = {
+  tmdbs: Record<number, TMDBData>;
+  tasks: Record<number, FlattenedProcessTask>;
   settings: UserSettings;
 };
 
-type StoreActions = {
+export type StoreActions = {
   addTask: (task: ProcessTask) => void;
   updateTaskResult: (
-    tidx: number,
+    id: number,
     ridx: number,
     patch: Partial<ProcessResult>
   ) => void;
@@ -21,7 +30,8 @@ const useStore = create<StoreState & StoreActions>()(
   devtools(
     persist(
       immer(set => ({
-        history: [],
+        tmdbs: {},
+        tasks: {},
         settings: {
           llmMode: 'builtin',
           formatSettings: {
@@ -30,15 +40,17 @@ const useStore = create<StoreState & StoreActions>()(
         },
         addTask: task => {
           set((state: StoreState) => {
-            state.history.push(task);
+            const fTask = flattenProcessTask(state.tmdbs, task);
+            state.tasks[task.id] = fTask;
           });
         },
-        updateTaskResult: (tidx, ridx, patch) => {
+        updateTaskResult: (id, idx, patch) => {
           set((state: StoreState) => {
-            const task = state.history[tidx];
-            const result = task.results[ridx];
-            task.results[ridx] = { ...result, ...patch };
-            state.history[tidx] = task;
+            const task = state.tasks[id];
+            const result = task.results[idx];
+            const fPatch = flattenProcessResult(state.tmdbs, patch);
+            task.results[idx] = merge(result, fPatch);
+            state.tasks[id] = task;
           });
         },
       })),
