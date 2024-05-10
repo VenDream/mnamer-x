@@ -1,19 +1,21 @@
 'use client';
 
+import { TaskCard } from '@/components/task-card';
 import { useStore } from '@/store';
 import { structuralizeProcessTask } from '@/store/transformer';
 import { LoaderIcon } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { Result } from '../_pages/manual/result';
 
 export default function History() {
   const [isHydrated, setIsHydrated] = useState(false);
 
   const tmdbs = useStore(state => state.tmdbs);
   const fTasks = useStore(state => Object.values(state.tasks));
-  const updateTaskResult = useStore(state => state.updateTaskResult);
   const tasks = useMemo(
-    () => fTasks.map(t => structuralizeProcessTask(tmdbs, t)),
+    () =>
+      fTasks
+        .map(t => structuralizeProcessTask(tmdbs, t))
+        .sort((a, b) => b.id - a.id),
     [fTasks, tmdbs]
   );
 
@@ -31,14 +33,11 @@ export default function History() {
               No tasks have been performed yet.
             </p>
           ) : (
-            tasks.map((task, tidx) => (
-              <Result
-                key={tidx}
-                tid={task.id}
-                result={task.results}
-                updateResult={updateTaskResult}
-              />
-            ))
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {tasks.map((task, idx) => (
+                <TaskCard key={task.id} tid={task.id} idx={idx + 1}></TaskCard>
+              ))}
+            </div>
           )}
         </div>
       ) : (

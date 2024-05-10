@@ -6,36 +6,34 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { StoreActions } from '@/store';
-import { ProcessResult } from '@/types';
+import { useStore } from '@/store';
+import { structuralizeProcessResult } from '@/store/transformer';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 import { columns } from './result-columns';
 
 interface IProps {
   tid: number;
-  result: ProcessResult[];
-  updateResult: StoreActions['updateTaskResult'];
 }
 
 export function Result(props: IProps) {
-  const { tid, result, updateResult } = props;
-
-  const modifyOutput = useCallback(
-    (id: number, idx: number, output: string) => {
-      updateResult(id, idx, { modified: output });
-    },
-    [updateResult]
+  const { tid } = props;
+  const tmdbs = useStore(state => state.tmdbs);
+  const { results: fResults = [] } = useStore(store => store.tasks[tid] || {});
+  const results = useMemo(
+    () =>
+      tid < 0 ? [] : fResults.map(r => structuralizeProcessResult(tmdbs, r)),
+    [fResults, tid, tmdbs]
   );
 
   const table = useReactTable({
-    data: result,
+    data: results,
     columns,
-    meta: { tid, modifyOutput },
+    meta: { tid },
     getCoreRowModel: getCoreRowModel(),
   });
 

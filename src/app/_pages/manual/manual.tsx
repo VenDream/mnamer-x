@@ -32,7 +32,7 @@ import {
 import { ENV_CONFIG } from '@/constants';
 import { rename } from '@/lib/client-api';
 import { getCurrentDatetime } from '@/lib/utils';
-import { StoreActions, useStore } from '@/store';
+import { useStore } from '@/store';
 import { ProcessResult, ProcessTask, Response, TASK_TYPE } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -43,7 +43,7 @@ import {
   QuestionMarkCircledIcon,
 } from '@radix-ui/react-icons';
 import { LoaderIcon } from 'lucide-react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -65,9 +65,7 @@ export type InputData = z.infer<typeof formSchema>;
 export default function Manual() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [tid, setTid] = useState(-1);
-  const [results, setResults] = useState<ProcessResult[]>([]);
   const addTask = useStore(state => state.addTask);
-  const updateTaskResult = useStore(state => state.updateTaskResult);
 
   const form = useForm<InputData>({
     resolver: zodResolver(formSchema),
@@ -98,18 +96,6 @@ export default function Manual() {
     remove(idx);
   };
 
-  const updateResult = useCallback<StoreActions['updateTaskResult']>(
-    (id, idx, patch) => {
-      setResults(prev => {
-        const next = [...prev];
-        next[idx] = { ...next[idx], ...patch };
-        return next;
-      });
-      updateTaskResult(id, idx, patch);
-    },
-    [updateTaskResult]
-  );
-
   const submit = async (values: InputData) => {
     try {
       setIsSubmitting(true);
@@ -122,7 +108,6 @@ export default function Manual() {
       }
       const tid = Date.now();
       setTid(tid);
-      setResults(results || []);
       const task: ProcessTask = {
         id: tid,
         type: TASK_TYPE.MANUAL,
@@ -135,7 +120,6 @@ export default function Manual() {
       const error = err as Error;
       console.error(error);
       toast.error(error.message);
-      setResults([]);
     } finally {
       setIsSubmitting(false);
     }
@@ -291,11 +275,7 @@ export default function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          <Result
-            tid={tid}
-            result={results}
-            updateResult={updateResult}
-          ></Result>
+          <Result tid={tid}></Result>
         </CardContent>
         <CardFooter className="hidden"></CardFooter>
       </Card>

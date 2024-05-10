@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { getFormattedFilename } from '@/lib/formatter';
 import { copyText } from '@/lib/utils';
+import { useStore } from '@/store';
 import { ProcessResult } from '@/types';
 import {
   CopyIcon,
@@ -28,11 +29,12 @@ interface IProps {
 export function ResultActions(props: IProps) {
   const { table, row } = props;
   const result = row.original;
-  const { tid, modifyOutput } = table.options.meta!;
+  const { tid } = table.options.meta!;
   const tmdbData = result.output.tmdb;
   const isUnrecognized = !tmdbData;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const updateTaskResult = useStore(state => state.updateTaskResult);
   const formatted = useMemo(() => getFormattedFilename(result), [result]);
 
   if (isUnrecognized) return <span className="block text-center">-</span>;
@@ -63,7 +65,7 @@ export function ResultActions(props: IProps) {
           output={formatted}
           modified={result.modified}
           onSave={modified => {
-            modifyOutput(tid, row.index, modified);
+            updateTaskResult(tid, row.index, { modified });
           }}
           onClose={() => setIsMenuOpen(false)}
         >
