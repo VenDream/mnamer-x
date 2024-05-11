@@ -59,7 +59,8 @@ export function NavMenu() {
   return (
     <div className="grid grid-flow-row gap-1 p-4">
       {NAV_ROUTES.map(({ path, label, icon: Icon }) => {
-        const isActive = path === pathname;
+        const isActive =
+          path === '/' ? path === pathname : pathname.startsWith(path);
         return (
           <Link
             key={path}

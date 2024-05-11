@@ -3,15 +3,15 @@ import { NavMenu, NavMenuForMobile } from '@/components/nav-menu';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Toaster } from '@/components/ui/sonner';
-import { SITE_META } from '@/constants';
+import { GITHUB_REPO, SITE_META } from '@/constants';
 import { cn } from '@/lib/utils';
 import { GitHubLogoIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import type { Metadata } from 'next';
-import { Inter_Tight } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import Link from 'next/link';
 import './globals.css';
 
-const font = Inter_Tight({ subsets: ['latin'] });
+const font = Roboto({ subsets: ['latin'], weight: '300' });
 const title = SITE_META.title as string;
 
 export const metadata: Metadata = SITE_META;
@@ -46,7 +46,7 @@ export default function RootLayout({
             <div className="group flex h-full items-center justify-center gap-4">
               <Link
                 target="_blank"
-                href="https://github.com/VenDream/mnamer-x"
+                href={GITHUB_REPO}
                 className="flex h-9 w-9 cursor-pointer items-center justify-center"
               >
                 <GitHubLogoIcon className="h-[1.4rem] w-[1.4rem]"></GitHubLogoIcon>

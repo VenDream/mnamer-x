@@ -6,29 +6,21 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useStore } from '@/store';
-import { structuralizeProcessResult } from '@/store/transformer';
+import { ProcessResult } from '@/types';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useMemo } from 'react';
 import { columns } from './result-columns';
 
 interface IProps {
   tid: number;
+  results: ProcessResult[];
 }
 
 export function Result(props: IProps) {
-  const { tid } = props;
-  const tmdbs = useStore(state => state.tmdbs);
-  const { results: fResults = [] } = useStore(store => store.tasks[tid] || {});
-  const results = useMemo(
-    () =>
-      tid < 0 ? [] : fResults.map(r => structuralizeProcessResult(tmdbs, r)),
-    [fResults, tid, tmdbs]
-  );
+  const { tid, results } = props;
 
   const table = useReactTable({
     data: results,

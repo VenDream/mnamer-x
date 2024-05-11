@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { ENV_CONFIG } from '@/constants';
+import { useProcessResults } from '@/hooks/use-process-results';
 import { rename } from '@/lib/client-api';
 import { getCurrentDatetime } from '@/lib/utils';
 import { useStore } from '@/store';
@@ -66,6 +67,7 @@ export default function Manual() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [tid, setTid] = useState(-1);
   const addTask = useStore(state => state.addTask);
+  const results = useProcessResults(tid);
 
   const form = useForm<InputData>({
     resolver: zodResolver(formSchema),
@@ -275,7 +277,7 @@ export default function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          <Result tid={tid}></Result>
+          {true && <Result tid={tid} results={results}></Result>}
         </CardContent>
         <CardFooter className="hidden"></CardFooter>
       </Card>

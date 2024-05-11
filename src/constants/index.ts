@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 
+// github
+export const GITHUB_REPO = 'https://github.com/VenDream/mnamer-x';
+
 // site metas
 export const SITE_META: Metadata = {
   title: 'mnamer-x',

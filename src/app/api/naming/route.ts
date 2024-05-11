@@ -21,6 +21,8 @@ export async function POST(req: Request) {
   const input = files.map(file => file.filename).join('\n');
   const output: ProcessResult[] = [];
 
+  console.log('task input: %O', files);
+
   try {
     const parsedMeta = await llmChain.invoke({
       input: input || TEST_INPUT,
