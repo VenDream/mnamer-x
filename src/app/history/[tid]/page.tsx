@@ -49,7 +49,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
           </BreadcrumbItem>
           <BreadcrumbSeparator></BreadcrumbSeparator>
           <BreadcrumbItem>
-            <BreadcrumbPage>{tid}</BreadcrumbPage>
+            <BreadcrumbPage>{params.tid}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -135,8 +135,11 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
         ) : (
           <div className="flex items-center gap-1">
             <p className="text-sm text-muted-foreground">Task not found.</p>
-            <UnderlineLink href="/history">
-              <p className="text-sm text-muted-foreground">Go back.</p>
+            <UnderlineLink
+              href="/history"
+              className="text-sm text-muted-foreground"
+            >
+              Go back.
             </UnderlineLink>
           </div>
         )
