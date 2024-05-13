@@ -19,6 +19,7 @@ export type StoreState = {
 
 export type StoreActions = {
   addTask: (task: ProcessTask) => void;
+  removeTask: (tid: number) => void;
   updateTaskResult: (
     id: number,
     ridx: number,
@@ -42,6 +43,11 @@ const useStore = create<StoreState & StoreActions>()(
           set((state: StoreState) => {
             const fTask = flattenProcessTask(state.tmdbs, task);
             state.tasks[task.id] = fTask;
+          });
+        },
+        removeTask: tid => {
+          set((state: StoreState) => {
+            delete state.tasks[tid];
           });
         },
         updateTaskResult: (id, idx, patch) => {

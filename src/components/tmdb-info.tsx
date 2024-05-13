@@ -133,14 +133,20 @@ export function TmdbInfo(props: IProps) {
           </div>
           <div className="space-y-1 text-xs md:text-sm">
             <div className="flex h-5 items-center space-x-2">
-              <span className="flex items-center gap-1">
-                <StarIcon size={15} color="orange"></StarIcon>
+              <p className="flex items-center gap-1 leading-3">
+                <StarIcon
+                  size={15}
+                  color="orange"
+                  className="relative -top-[1px]"
+                ></StarIcon>
                 {Math.round(vote_average).toFixed(1)} / 10.0 ({vote_count})
-              </span>
+              </p>
               <Separator orientation="vertical"></Separator>
-              {media_type === 'tv' && <TvIcon size={15}></TvIcon>}
-              {media_type === 'movie' && <FilmIcon size={15}></FilmIcon>}
-              <span>{genres.join('・')}</span>
+              <p className="flex items-center gap-1 leading-3 [&>svg]:relative [&>svg]:-top-[1px]">
+                {media_type === 'tv' && <TvIcon size={15}></TvIcon>}
+                {media_type === 'movie' && <FilmIcon size={15}></FilmIcon>}
+                {genres.join('・')}
+              </p>
             </div>
             <Separator className="!mt-2"></Separator>
           </div>
