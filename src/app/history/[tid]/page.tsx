@@ -14,6 +14,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loading } from '@/components/ui/loading';
 import { Separator } from '@/components/ui/separator';
+import { ROUTE } from '@/constants';
 import { useProcessResults } from '@/hooks/use-process-results';
 import { useStoreHydrate } from '@/hooks/use-store-hydrate';
 import { useStore } from '@/store';
@@ -44,7 +45,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/history">History</Link>
+              <Link href={ROUTE.HISTORY}>History</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator></BreadcrumbSeparator>
@@ -136,7 +137,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
           <div className="flex items-center gap-1">
             <p className="text-sm text-muted-foreground">Task not found.</p>
             <UnderlineLink
-              href="/history"
+              href={ROUTE.HISTORY}
               className="text-sm text-muted-foreground"
             >
               Go back.

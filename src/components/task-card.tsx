@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ENV_CONFIG } from '@/constants';
+import { ENV_CONFIG, ROUTE } from '@/constants';
 import { getTmdbImageUrl } from '@/lib/tmdb-image';
 import { cn } from '@/lib/utils';
 import { useStore } from '@/store';
@@ -47,7 +47,7 @@ export function TaskCard(props: IProps) {
   const color = isSuccess ? 'green' : withFailed ? 'orange' : 'red';
 
   return (
-    <Link href={`/history/${props.tid}`}>
+    <Link href={`${ROUTE.HISTORY}/${props.tid}`}>
       <Card
         className={cn(
           'group cursor-pointer rounded hover:outline hover:outline-2 group-hover:border-transparent',

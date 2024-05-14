@@ -15,6 +15,14 @@ export enum LLM_SERVER {
   GROQ = 'groq',
 }
 
+export enum ROUTE {
+  INDEX = '/',
+  TASKS = '/tasks',
+  HISTORY = '/history',
+  SETTINGS = '/settings',
+  CREDITS = '/credits',
+}
+
 // env configs
 export const ENV_CONFIG = {
   DEBUG_MODE: process.env.NEXT_PUBLIC_DEBUG_MODE === 'true',

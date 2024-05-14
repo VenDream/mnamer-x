@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { ROUTE } from '@/constants';
 import { cn } from '@/lib/utils';
 import {
   CounterClockwiseClockIcon,
@@ -27,27 +28,27 @@ interface NavRoute {
 
 const NAV_ROUTES: NavRoute[] = [
   {
-    path: '/',
+    path: ROUTE.INDEX,
     label: 'Getting Started',
     icon: HomeIcon,
   },
   {
-    path: '/tasks',
+    path: ROUTE.TASKS,
     label: 'Tasks',
     icon: BotIcon,
   },
   {
-    path: '/history',
+    path: ROUTE.HISTORY,
     label: 'History',
     icon: CounterClockwiseClockIcon,
   },
   {
-    path: '/settings',
+    path: ROUTE.SETTINGS,
     label: 'Settings',
     icon: SettingsIcon,
   },
   {
-    path: '/credits',
+    path: ROUTE.CREDITS,
     label: 'Credits',
     icon: InfoCircledIcon,
   },
