@@ -135,7 +135,7 @@ export function TmdbInfo(props: IProps) {
             <div className="flex h-5 items-center space-x-2">
               <p className="flex items-center gap-1 leading-3">
                 <StarIcon
-                  size={15}
+                  size={16}
                   color="orange"
                   className="relative -top-[1px]"
                 ></StarIcon>
@@ -143,8 +143,8 @@ export function TmdbInfo(props: IProps) {
               </p>
               <Separator orientation="vertical"></Separator>
               <p className="flex items-center gap-1 leading-3 [&>svg]:relative [&>svg]:-top-[1px]">
-                {media_type === 'tv' && <TvIcon size={15}></TvIcon>}
-                {media_type === 'movie' && <FilmIcon size={15}></FilmIcon>}
+                {media_type === 'tv' && <TvIcon size={16}></TvIcon>}
+                {media_type === 'movie' && <FilmIcon size={16}></FilmIcon>}
                 {genres.join('・')}
               </p>
             </div>

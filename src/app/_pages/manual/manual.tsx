@@ -253,7 +253,7 @@ export default function Manual() {
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
                       <LoaderIcon
-                        size={15}
+                        size={16}
                         className="animate-spin"
                       ></LoaderIcon>
                       Processing...

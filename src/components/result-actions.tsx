@@ -58,7 +58,7 @@ export function ResultActions(props: IProps) {
             toast.success('Copied to clipboard');
           }}
         >
-          <CopyIcon className="mr-1"></CopyIcon>
+          <CopyIcon className="relative -top-[1px] mr-1"></CopyIcon>
           Copy output
         </DropdownMenuItem>
         <EditOutput
@@ -73,7 +73,7 @@ export function ResultActions(props: IProps) {
             className="cursor-pointer text-xs  md:text-sm"
             onSelect={e => e.preventDefault()}
           >
-            <Pencil2Icon className="mr-1"></Pencil2Icon>
+            <Pencil2Icon className="relative -top-[1px] mr-1"></Pencil2Icon>
             Edit
           </DropdownMenuItem>
         </EditOutput>
@@ -82,7 +82,7 @@ export function ResultActions(props: IProps) {
             className="cursor-pointer text-xs  md:text-sm"
             onSelect={e => e.preventDefault()}
           >
-            <IdCardIcon className="mr-1"></IdCardIcon>
+            <IdCardIcon className="relative -top-[1px] mr-1"></IdCardIcon>
             View TMDB info
           </DropdownMenuItem>
         </TmdbInfo>

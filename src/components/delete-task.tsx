@@ -22,7 +22,7 @@ export function DeleteTask(props: IProps) {
       <PopoverContent className="w-48 rounded-sm" collisionPadding={20}>
         <div className="space-y-4">
           <h1 className="flex items-center gap-2 leading-3">
-            <Trash2Icon size={15}></Trash2Icon>Confirm ?
+            <Trash2Icon size={16}></Trash2Icon>Confirm ?
           </h1>
           <div className="flex justify-between gap-3">
             <Button

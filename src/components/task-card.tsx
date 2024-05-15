@@ -1,5 +1,4 @@
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -8,16 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 import { ENV_CONFIG, ROUTE } from '@/constants';
 import { getTmdbImageUrl } from '@/lib/tmdb-image';
-import { cn } from '@/lib/utils';
+import { cn, getDateTimeDiff } from '@/lib/utils';
 import { useStore } from '@/store';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import dayjs from 'dayjs';
 import { BotIcon, CircleDotIcon, ClockIcon, FileIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DeleteTask } from './delete-task';
 
 interface IProps {
@@ -31,6 +31,10 @@ const FAILED_BACKDROP = 'https://placehold.co/1280x720?text=task+failed';
 export function TaskCard(props: IProps) {
   const task = useStore(state => state.tasks[props.tid]);
   const tmdbs = useStore(state => state.tmdbs);
+  const [percent, setPercent] = useState(0);
+  const [dateStr, setDateStr] = useState('');
+  const pTimer = useRef<NodeJS.Timeout>();
+  const dTimer = useRef<NodeJS.Timeout>();
 
   const taskImage = useMemo(() => {
     const resultWithTmdb = task.results.find(r => r.output.tmdbid > 0);
@@ -39,12 +43,43 @@ export function TaskCard(props: IProps) {
     return tmdbs[tmdbid].backdrop_path || '';
   }, [task.results, tmdbs]);
 
+  const updateDateStr = useCallback(() => {
+    const dateStr = getDateTimeDiff(task.start, new Date());
+    setDateStr(dateStr);
+  }, [task.start]);
+
   const total = task.results.length;
   const success = task.results.filter(t => t.output.tmdbid > 0).length;
   const isSuccess = success === total;
   const withFailed = success < total && success > 0;
   const isFailed = success === 0;
+  const tLabel = dayjs(task.start).format('MMDDHHmm');
   const color = isSuccess ? 'green' : withFailed ? 'orange' : 'red';
+
+  useEffect(() => {
+    pTimer.current = setTimeout(() => {
+      setPercent(Math.round((success / total) * 100));
+    }, 100);
+
+    updateDateStr();
+    if (dateStr && dateStr.includes('ago') && !dTimer.current) {
+      const interval = dateStr.includes('hour') ? 1000 * 60 : 1000;
+      dTimer.current = setInterval(updateDateStr, interval);
+      console.debug(
+        'dTimer started for task %s with interval %s',
+        tLabel,
+        interval
+      );
+    }
+
+    return () => {
+      clearTimeout(pTimer.current);
+      pTimer.current = undefined;
+      clearInterval(dTimer.current);
+      dTimer.current = undefined;
+      console.debug('dTimer stopped for task %s', tLabel);
+    };
+  }, [dateStr, success, tLabel, total, updateDateStr]);
 
   return (
     <Link href={`${ROUTE.HISTORY}/${props.tid}`}>
@@ -62,10 +97,10 @@ export function TaskCard(props: IProps) {
         )}
       >
         <CardHeader className="pb-2">
-          <CardTitle className="flex items-center justify-between gap-2">
+          <CardTitle className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <CircleDotIcon size={20} color={color}></CircleDotIcon>
-              Task #{props.idx}
+              Task #{tLabel}
             </div>
             <div
               className="relative -top-[2px]"
@@ -78,7 +113,7 @@ export function TaskCard(props: IProps) {
                   type="button"
                   size="icon"
                   variant="ghost"
-                  className="visible rounded-full group-hover:visible md:invisible"
+                  className="visible relative -right-1/2 rounded-full group-hover:visible md:invisible"
                 >
                   <Cross1Icon></Cross1Icon>
                 </Button>
@@ -103,28 +138,27 @@ export function TaskCard(props: IProps) {
           </AspectRatio>
           <div className="space-y-2">
             <span className="flex items-center gap-2">
-              <BotIcon size={15} className="relative -top-[1px]"></BotIcon>
-              <Badge
-                variant="outline"
-                className={cn('rounded-none border-none text-white', {
-                  'bg-green-500': isSuccess,
-                  'bg-orange-500': withFailed,
-                  'bg-red-500': isFailed,
+              <FileIcon size={18}></FileIcon>
+              <Progress
+                value={percent}
+                className={cn('bg-accent/80', {
+                  '[&>*]:bg-green-500': isSuccess,
+                  '[&>*]:bg-orange-500': withFailed,
+                  '[&>*]:bg-red-500': isFailed,
                 })}
-              >
-                {task.type}
-              </Badge>
-            </span>
-            <span className="flex items-center gap-2">
-              <FileIcon size={15} className="relative -top-[1px]"></FileIcon>
-              {success} of {total} files renamed
+              ></Progress>
+              {success}/{total}
             </span>
           </div>
         </CardContent>
-        <CardFooter className="text-xs text-muted-foreground md:text-sm">
-          <span className="flex items-center gap-2">
-            <ClockIcon size={15} className="relative -top-[1px]"></ClockIcon>
-            {dayjs(task.start).format('MM-DD HH:mm')}
+        <CardFooter className="flex justify-between text-xs text-muted-foreground md:text-sm">
+          <span className="flex items-center gap-2 leading-4">
+            <ClockIcon size={16} className="relative -top-[1px]"></ClockIcon>
+            {dateStr}
+          </span>
+          <span className="flex items-center gap-2 leading-4">
+            <BotIcon size={16} className="relative -top-[1px]"></BotIcon>
+            {task.type}
           </span>
         </CardFooter>
       </Card>

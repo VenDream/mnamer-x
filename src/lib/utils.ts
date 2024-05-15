@@ -1,5 +1,12 @@
 import { Response } from '@/types';
 import { clsx, type ClassValue } from 'clsx';
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+  format,
+} from 'date-fns';
 import dayjs from 'dayjs';
 import { twMerge } from 'tailwind-merge';
 
@@ -65,4 +72,32 @@ export function exclude<T = Record<string, any>>(
 
 export function stripJsonCodeBlockMarkup(text: string) {
   return text.replace('```json\n', '').replace('\n```', '');
+}
+
+export function getDateTimeDiff(start: Date | string, end: Date | string) {
+  const dayDiff = differenceInDays(end, start);
+  const hourDiff = differenceInHours(end, start);
+  const minDiff = differenceInMinutes(end, start);
+  const secDiff = differenceInSeconds(end, start);
+
+  if (dayDiff > 0) {
+    return format(start, 'MM-dd HH:mm');
+  }
+
+  if (hourDiff > 0) {
+    const unit = hourDiff === 1 ? 'hour' : 'hours';
+    return `${hourDiff} ${unit} ago`;
+  }
+
+  if (minDiff > 0) {
+    const unit = minDiff === 1 ? 'minute' : 'minutes';
+    return `${minDiff} ${unit} ago`;
+  }
+
+  if (secDiff > 0) {
+    const unit = secDiff === 1 ? 'second' : 'seconds';
+    return `${secDiff} ${unit} ago`;
+  }
+
+  return '';
 }

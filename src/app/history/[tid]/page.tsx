@@ -66,7 +66,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                 <div className="space-y-2 text-muted-foreground">
                   <span className="flex items-center gap-2 text-sm">
                     <BotIcon
-                      size={15}
+                      size={16}
                       className="relative -top-[1px]"
                     ></BotIcon>
                     <span className="w-16 text-right">type：</span>
@@ -79,7 +79,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                   </span>
                   <span className="flex items-center gap-2 text-sm">
                     <FileIcon
-                      size={15}
+                      size={16}
                       className="relative -top-[1px]"
                     ></FileIcon>
                     <span className="w-16 text-right">total：</span>
@@ -87,7 +87,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                   </span>
                   <span className="flex items-center gap-2 text-sm">
                     <CircleCheckIcon
-                      size={15}
+                      size={16}
                       className="relative -top-[1px]"
                     ></CircleCheckIcon>
                     <span className="w-16 text-right">success：</span>
@@ -95,7 +95,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                   </span>
                   <span className="flex items-center gap-2 text-sm">
                     <CircleXIcon
-                      size={15}
+                      size={16}
                       className="relative -top-[1px]"
                     ></CircleXIcon>
                     <span className="w-16 text-right">failed：</span>
@@ -103,7 +103,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                   </span>
                   <span className="flex items-center gap-2 text-sm">
                     <Clock3Icon
-                      size={15}
+                      size={16}
                       className="relative -top-[1px]"
                     ></Clock3Icon>
                     <span className="w-16 text-right">start at：</span>
@@ -113,7 +113,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                   </span>
                   <span className="flex items-center gap-2 text-sm">
                     <Clock4Icon
-                      size={15}
+                      size={16}
                       className="relative -top-[1px]"
                     ></Clock4Icon>
                     <span className="w-16 text-right">end at：</span>
@@ -126,7 +126,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
             </Card>
             <Card className="rounded-sm">
               <CardHeader>
-                <CardTitle>Output</CardTitle>
+                <CardTitle>Result</CardTitle>
               </CardHeader>
               <CardContent>
                 <Result tid={tid} results={results}></Result>

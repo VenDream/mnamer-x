@@ -7,7 +7,9 @@ import { useStore } from '@/store';
 
 export default function History() {
   const isHydrated = useStoreHydrate();
-  const tasks = useStore(state => Object.values(state.tasks));
+  const tasks = useStore(state =>
+    Object.values(state.tasks).sort((t1, t2) => t2.id - t1.id)
+  );
 
   return (
     <div className="p-4">
