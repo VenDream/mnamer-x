@@ -8,7 +8,13 @@ import {
   format,
 } from 'date-fns';
 import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import { DateRange } from 'react-day-picker';
 import { twMerge } from 'tailwind-merge';
+
+dayjs.extend(isBetween);
+dayjs.extend(isSameOrAfter);
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -83,21 +89,28 @@ export function getDateTimeDiff(start: Date | string, end: Date | string) {
   if (dayDiff > 0) {
     return format(start, 'MM-dd HH:mm');
   }
-
   if (hourDiff > 0) {
     const unit = hourDiff === 1 ? 'hour' : 'hours';
     return `${hourDiff} ${unit} ago`;
   }
-
   if (minDiff > 0) {
     const unit = minDiff === 1 ? 'minute' : 'minutes';
     return `${minDiff} ${unit} ago`;
   }
-
   if (secDiff > 0) {
     const unit = secDiff === 1 ? 'second' : 'seconds';
     return `${secDiff} ${unit} ago`;
   }
-
   return '';
+}
+
+export function isDateBetween(date: Date | string, range: DateRange) {
+  if (!range) return true;
+  if (range.from) {
+    if (range.to) {
+      return dayjs(date).isBetween(range.from, range.to, 'day', '[]');
+    }
+    return dayjs(date).isSameOrAfter(range.from, 'day');
+  }
+  return true;
 }
