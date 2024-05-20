@@ -1,9 +1,11 @@
 import {
   FlattenedProcessTask,
+  LLM_SOURCE,
   ProcessResult,
   ProcessTask,
   TMDBData,
   UserSettings,
+  WebDAVClientOptions,
 } from '@/types';
 import merge from 'lodash.merge';
 import { create } from 'zustand';
@@ -18,12 +20,24 @@ export type StoreState = {
 };
 
 export type StoreActions = {
+  /** tasks */
   addTask: (task: ProcessTask) => void;
   removeTask: (tid: number) => void;
   updateTaskResult: (
     id: number,
     ridx: number,
     patch: Partial<ProcessResult>
+  ) => void;
+  /** llm */
+  updateLLMSettings: (patch: Partial<UserSettings['llm']>) => void;
+  /** formatter */
+  updateFormatterSettings: (patch: Partial<UserSettings['formatter']>) => void;
+  /** webdav */
+  addWebDAV: (opts: WebDAVClientOptions) => void;
+  removeWebDAV: (id: string) => void;
+  updateWebDAVSettings: (
+    id: string,
+    patch: Partial<WebDAVClientOptions>
   ) => void;
 };
 
@@ -34,10 +48,13 @@ const useStore = create<StoreState & StoreActions>()(
         tmdbs: {},
         tasks: {},
         settings: {
-          llmMode: 'builtin',
-          formatSettings: {
+          llm: {
+            source: LLM_SOURCE.BUILTIN,
+          },
+          formatter: {
             language: 'zh-CN',
           },
+          webdav: {},
         },
         addTask: task => {
           set((state: StoreState) => {
@@ -57,6 +74,34 @@ const useStore = create<StoreState & StoreActions>()(
             const fPatch = flattenProcessResult(state.tmdbs, patch);
             task.results[idx] = merge(result, fPatch);
             state.tasks[id] = task;
+          });
+        },
+        updateLLMSettings: patch => {
+          set((state: StoreState) => {
+            const llm = state.settings.llm;
+            state.settings.llm = merge(llm, patch);
+          });
+        },
+        updateFormatterSettings: patch => {
+          set((state: StoreState) => {
+            const formatter = state.settings.formatter;
+            state.settings.formatter = merge(formatter, patch);
+          });
+        },
+        addWebDAV: opts => {
+          set((state: StoreState) => {
+            state.settings.webdav[opts.id] = opts;
+          });
+        },
+        removeWebDAV: id => {
+          set((state: StoreState) => {
+            delete state.settings.webdav[id];
+          });
+        },
+        updateWebDAVSettings: (id, patch) => {
+          set((state: StoreState) => {
+            const client = state.settings.webdav[id];
+            state.settings.webdav[id] = merge(client, patch);
           });
         },
       })),

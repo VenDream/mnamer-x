@@ -1,3 +1,5 @@
+import { WebDAVClientOptions as WebDAVClient } from 'webdav';
+
 export interface Response<T = Record<string, any>> {
   code: number;
   data: T | null;
@@ -84,17 +86,31 @@ export interface FlattenedProcessTask extends Omit<ProcessTask, 'results'> {
   results: FlattenedProcessResult[];
 }
 
+export enum LLM_SOURCE {
+  BUILTIN = 'builtin',
+  CUSTOM = 'custom',
+}
+
+export interface LLMSettings {
+  source: LLM_SOURCE;
+  settings?: {
+    baseUrl?: string;
+    apiKey?: string;
+    apiPath?: string;
+    model?: string;
+    temperature?: number;
+  };
+}
+
+export interface FormatterSettings {
+  tpl?: string;
+  language?: string;
+}
+
+export type WebDAVClientOptions = WebDAVClient & { id: string };
+
 export interface UserSettings {
-  formatTpl?: string;
-  llmMode: 'custom' | 'builtin';
-  formatSettings?: {
-    language?: string;
-  };
-  llmSettings?: {
-    baseUrl: string;
-    apiPath: string;
-    apiKey: string;
-    model: string;
-    temperature: number;
-  };
+  llm: LLMSettings;
+  formatter: FormatterSettings;
+  webdav: Record<string, WebDAVClientOptions>;
 }
