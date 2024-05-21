@@ -8,7 +8,7 @@ export function UnderlineLink(props: LinkProps) {
     <Link
       {...props}
       className={cn(
-        'underline underline-offset-2 hover:text-blue-500 hover:*:text-blue-500',
+        'underline underline-offset-[3px] hover:text-blue-500 hover:*:text-blue-500',
         props.className
       )}
     ></Link>

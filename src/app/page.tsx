@@ -36,10 +36,7 @@ export default function Home() {
         <p className="mt-2">Including:</p>
         <ul className="ml-6 list-disc text-sm text-muted-foreground">
           {SUPPORTED_SCRAPERS.map(scraper => (
-            <li
-              key={scraper.name}
-              className="mt-2 underline underline-offset-2"
-            >
+            <li key={scraper.name} className="mt-2">
               <UnderlineLink href={scraper.site} target="_blank">
                 {scraper.name}
               </UnderlineLink>
@@ -50,7 +47,10 @@ export default function Home() {
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground">
-        Let us start the first <UnderlineLink href="/tasks">task</UnderlineLink>{' '}
+        Start your first
+        <UnderlineLink href="/tasks" className="mx-1">
+          task
+        </UnderlineLink>
         now.
       </p>
     </div>

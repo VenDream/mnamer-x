@@ -26,7 +26,7 @@ export default function Credits() {
               ></Image>
             </AspectRatio>
           </div>
-          <p>
+          <p className="text-sm text-muted-foreground">
             This product uses the TMDB API but is not endorsed or certified by
             TMDB.
           </p>
