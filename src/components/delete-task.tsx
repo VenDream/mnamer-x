@@ -19,7 +19,7 @@ export function DeleteTask(props: IProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{props.children}</PopoverTrigger>
-      <PopoverContent className="w-48 rounded-sm" collisionPadding={20}>
+      <PopoverContent className="w-48" collisionPadding={20}>
         <div className="space-y-4">
           <h1 className="flex items-center gap-2 leading-3">
             <Trash2Icon size={16}></Trash2Icon>Confirm ?

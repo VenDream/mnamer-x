@@ -53,7 +53,7 @@ export function TmdbInfo(props: IProps) {
     >
       <DialogTrigger>{props.children}</DialogTrigger>
       <DialogContent
-        className="flex max-h-[80vh] w-[90vw] max-w-[640px] flex-col rounded-sm"
+        className="flex max-h-[80vh] w-[90vw] max-w-[640px] flex-col"
         onOpenAutoFocus={e => e.preventDefault()}
       >
         <DialogHeader>

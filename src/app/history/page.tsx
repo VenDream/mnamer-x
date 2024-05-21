@@ -63,7 +63,7 @@ export default function History() {
             <div>
               <Collapsible className="space-y-2 md:hidden">
                 <CollapsibleTrigger asChild>
-                  <Button variant="outline" className="gap-2 rounded-sm">
+                  <Button variant="outline" className="gap-2">
                     <FilterIcon size={16} />
                     Filter
                   </Button>

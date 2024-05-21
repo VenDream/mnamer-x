@@ -58,7 +58,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
       {isHydrated ? (
         !!task ? (
           <div className="space-y-6">
-            <Card className="rounded-sm md:w-2/3">
+            <Card className="md:w-2/3">
               <CardHeader>
                 <CardTitle>Basic Info</CardTitle>
               </CardHeader>
@@ -124,7 +124,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                 </div>
               </CardContent>
             </Card>
-            <Card className="rounded-sm">
+            <Card>
               <CardHeader>
                 <CardTitle>Result</CardTitle>
               </CardHeader>

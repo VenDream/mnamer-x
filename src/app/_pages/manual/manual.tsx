@@ -140,7 +140,7 @@ export default function Manual() {
               {fields.map((item, index) => (
                 <div
                   key={item.id}
-                  className="relative flex flex-col gap-2 rounded-sm border-[1px] p-4"
+                  className="relative flex flex-col gap-2 rounded border-[1px] p-4"
                 >
                   <FormField
                     name={`files.${index}.filename`}

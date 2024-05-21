@@ -93,10 +93,9 @@ export enum LLM_SOURCE {
 
 export interface LLMSettings {
   source: LLM_SOURCE;
-  settings?: {
+  options?: {
     baseUrl?: string;
     apiKey?: string;
-    apiPath?: string;
     model?: string;
     temperature?: number;
   };

@@ -3,7 +3,7 @@ import { NavMenu, NavMenuForMobile } from '@/components/nav-menu';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Toaster } from '@/components/ui/sonner';
-import { GITHUB_REPO, SITE_META } from '@/constants';
+import { GITHUB_REPO, ROUTE, SITE_META } from '@/constants';
 import { cn } from '@/lib/utils';
 import { GitHubLogoIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import type { Metadata } from 'next';
@@ -36,13 +36,15 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <header className="sticky flex h-16 shrink-0 justify-between border-b px-4 py-2">
-            <div className="flex h-full flex-col justify-center">
-              <h1 className="text-lg font-bold">{title.toUpperCase()}</h1>
-              <p className="hidden gap-1 text-xs md:flex">
-                <Pencil2Icon></Pencil2Icon>
-                {SITE_META.description}
-              </p>
-            </div>
+            <Link href={ROUTE.INDEX}>
+              <div className="flex h-full flex-col justify-center">
+                <h1 className="text-lg font-bold">{title.toUpperCase()}</h1>
+                <p className="hidden gap-1 text-xs md:flex">
+                  <Pencil2Icon></Pencil2Icon>
+                  {SITE_META.description}
+                </p>
+              </div>
+            </Link>
             <div className="group flex h-full items-center justify-center gap-4">
               <Link
                 target="_blank"

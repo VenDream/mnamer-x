@@ -62,10 +62,10 @@ export function TaskFilter(props: IProps) {
           value={filter.type}
           onValueChange={type => updateFilter({ type: type as TASK_TYPE })}
         >
-          <SelectTrigger className="rounded-sm">
+          <SelectTrigger>
             <SelectValue placeholder={TASK_TYPE.MANUAL} />
           </SelectTrigger>
-          <SelectContent className="rounded-sm">
+          <SelectContent>
             {Object.values(TASK_TYPE).map(type => (
               <SelectItem key={type} value={type}>
                 {type.toUpperCase()}
@@ -79,7 +79,7 @@ export function TaskFilter(props: IProps) {
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              className="group w-full min-w-[250px] justify-start gap-2 rounded-sm text-muted-foreground"
+              className="group w-full min-w-[250px] justify-start gap-2 text-muted-foreground"
             >
               <CalendarDaysIcon
                 size={16}
@@ -108,7 +108,7 @@ export function TaskFilter(props: IProps) {
         <Input
           placeholder="Keyword"
           defaultValue={filter.keyword}
-          className="rounded-sm pl-8"
+          className="pl-8"
           onChange={e =>
             debouncedUpdateFilter({ keyword: e.currentTarget.value })
           }

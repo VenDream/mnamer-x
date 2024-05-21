@@ -1,5 +1,7 @@
 import {
   FlattenedProcessTask,
+  FormatterSettings,
+  LLMSettings,
   LLM_SOURCE,
   ProcessResult,
   ProcessTask,
@@ -29,9 +31,9 @@ export type StoreActions = {
     patch: Partial<ProcessResult>
   ) => void;
   /** llm */
-  updateLLMSettings: (patch: Partial<UserSettings['llm']>) => void;
+  updateLLMSettings: (patch: Partial<LLMSettings>) => void;
   /** formatter */
-  updateFormatterSettings: (patch: Partial<UserSettings['formatter']>) => void;
+  updateFormatterSettings: (patch: Partial<FormatterSettings>) => void;
   /** webdav */
   addWebDAV: (opts: WebDAVClientOptions) => void;
   removeWebDAV: (id: string) => void;
@@ -50,9 +52,15 @@ const useStore = create<StoreState & StoreActions>()(
         settings: {
           llm: {
             source: LLM_SOURCE.BUILTIN,
+            options: {
+              baseUrl: 'https://api.openai.com/v1/',
+              apiKey: 'YOUR API KEY',
+              model: 'gpt-4o',
+              temperature: 1,
+            },
           },
           formatter: {
-            language: 'zh-CN',
+            language: 'en-US',
           },
           webdav: {},
         },

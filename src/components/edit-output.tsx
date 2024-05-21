@@ -35,7 +35,7 @@ export function EditOutput(props: IProps) {
     >
       <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent
-        className="w-[90vw] max-w-[600px] rounded-sm"
+        className="w-[90vw] max-w-[600px]"
         onOpenAutoFocus={e => e.preventDefault()}
         onEscapeKeyDown={e => e.preventDefault()}
       >
