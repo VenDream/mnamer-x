@@ -1,7 +1,7 @@
 'use client';
 
-import { Result } from '@/app/_pages/manual/result';
 import { UnderlineLink } from '@/components/link';
+import { ResultTable } from '@/components/result-table';
 import { Badge } from '@/components/ui/badge';
 import {
   Breadcrumb,
@@ -129,7 +129,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                 <CardTitle>Result</CardTitle>
               </CardHeader>
               <CardContent>
-                <Result tid={tid} results={results}></Result>
+                <ResultTable tid={tid} results={results}></ResultTable>
               </CardContent>
             </Card>
           </div>

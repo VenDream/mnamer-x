@@ -1,8 +1,8 @@
-import CloudStorage from '@/app/_pages/cloud-storage';
-import Manual from '@/app/_pages/manual';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TASK_TYPE } from '@/types';
-import WebDAV from '../_pages/web-dav';
+import { CloudStorage } from './cloud-storage';
+import { Manual } from './manual';
+import { WebDAV } from './web-dav';
 
 const TASK_TYPES = Object.values(TASK_TYPE);
 const TASK_PAGES: Record<TASK_TYPE, React.ReactNode> = {

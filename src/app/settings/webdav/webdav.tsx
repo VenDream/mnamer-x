@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-export default function WebDAVSettings() {
+export function WebDAVSettings() {
   return (
     <Card className="rounded">
       <CardHeader>

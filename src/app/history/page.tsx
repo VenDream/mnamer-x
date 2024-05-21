@@ -1,7 +1,5 @@
 'use client';
 
-import { TaskCard } from '@/components/task-card';
-import { Filter, TaskFilter } from '@/components/task-filter';
 import { Button } from '@/components/ui/button';
 import {
   Collapsible,
@@ -15,6 +13,8 @@ import { isDateBetween } from '@/lib/utils';
 import { TASK_TYPE, TMDBMovie, TMDBTv } from '@/types';
 import { FilterIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { TaskCard } from './task-card';
+import { Filter, TaskFilter } from './task-filter';
 
 export default function History() {
   const tasks = useProcessTasks();

@@ -19,7 +19,7 @@ interface IProps {
   results: ProcessResult[];
 }
 
-export function Result(props: IProps) {
+export function ResultTable(props: IProps) {
   const { tid, results } = props;
 
   const table = useReactTable({

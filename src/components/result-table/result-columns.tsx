@@ -1,4 +1,3 @@
-import { ResultActions } from '@/components/result-actions';
 import {
   Tooltip,
   TooltipContent,
@@ -9,6 +8,7 @@ import { getFormattedFilename } from '@/lib/formatter';
 import { cn, zeroPad } from '@/lib/utils';
 import { ProcessResult } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
+import { ResultActions } from './result-actions';
 
 const columns: ColumnDef<ProcessResult>[] = [
   {

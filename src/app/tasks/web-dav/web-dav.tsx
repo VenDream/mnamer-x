@@ -1,7 +1,7 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ConstructionIcon } from 'lucide-react';
 
-export default function WebDAV() {
+export function WebDAV() {
   return (
     <Alert>
       <ConstructionIcon size={20}></ConstructionIcon>

@@ -2,9 +2,9 @@
 
 import { Loading } from '@/components/ui/loading';
 import { useStoreHydrate } from '@/hooks/use-store-hydrate';
-import FormatterSettings from './formatter';
-import LLMSettings from './llm';
-import WebDAVSettings from './webdav';
+import { FormatterSettings } from './formatter';
+import { LLMSettings } from './llm';
+import { WebDAVSettings } from './webdav';
 
 export default function Settings() {
   const isHydrated = useStoreHydrate();

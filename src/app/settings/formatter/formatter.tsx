@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select';
 import { useStore } from '@/store';
 
-export default function FormatterSettings() {
+export function FormatterSettings() {
   const { language } = useStore(state => state.settings.formatter);
   const updateFormatterSettings = useStore(
     state => state.updateFormatterSettings

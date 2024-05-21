@@ -1,5 +1,5 @@
-import chatModel from '@/app/_llm/model';
-import { InputData } from '@/app/_pages/manual/manual';
+import { InputData } from '@/app/tasks/manual';
+import chatModel from '@/lib/llm-model';
 import * as tmdb from '@/lib/tmdb-api';
 import { buildErrorResponse, buildSuccessResponse } from '@/lib/utils';
 import { SYSTEM_AGENT_PROMPT, TEST_INPUT } from '@/prompts';

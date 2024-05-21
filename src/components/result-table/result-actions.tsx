@@ -1,5 +1,3 @@
-import { EditOutput } from '@/components/edit-output';
-import { TmdbInfo } from '@/components/tmdb-info';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -20,6 +18,8 @@ import {
 import { Row, Table } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
+import { EditOutput } from './edit-output';
+import { TmdbInfo } from './tmdb-info';
 
 interface IProps {
   row: Row<ProcessResult>;

@@ -1,5 +1,6 @@
 'use client';
 
+import { ResultTable } from '@/components/result-table';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -48,7 +49,6 @@ import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { Result } from './result';
 
 const formSchema = z.object({
   files: z
@@ -63,7 +63,7 @@ const formSchema = z.object({
 });
 export type InputData = z.infer<typeof formSchema>;
 
-export default function Manual() {
+export function Manual() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [tid, setTid] = useState(-1);
   const addTask = useStore(state => state.addTask);
@@ -277,7 +277,7 @@ export default function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          {true && <Result tid={tid} results={results}></Result>}
+          {true && <ResultTable tid={tid} results={results}></ResultTable>}
         </CardContent>
         <CardFooter className="hidden"></CardFooter>
       </Card>

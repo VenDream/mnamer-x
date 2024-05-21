@@ -7,7 +7,7 @@
     "commit": "git cz",
     "dev": "next dev",
     "build": "next build",
-    "lint": "next lint",
+    "lint": "tsc -p tsconfig.json && next lint",
     "fix": "pnpm fix:eslint && pnpm fix:prettier",
     "fix:eslint": "eslint --ext .ts ./ --cache --quiet --fix",
     "fix:prettier": "prettier --write \"**/*.{ts,tsx,css,less,json,yml,yaml,md}\""

@@ -1,7 +1,7 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ConstructionIcon } from 'lucide-react';
 
-export default function CloudStorage() {
+export function CloudStorage() {
   return (
     <Alert>
       <ConstructionIcon size={20}></ConstructionIcon>

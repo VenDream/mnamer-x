@@ -1,12 +1,12 @@
-import { LLMOptions } from '@/components/llm-options';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useStore } from '@/store';
 import { LLM_SOURCE } from '@/types';
+import { LLMOptions } from './llm-options';
 
-export default function LLMSettings() {
+export function LLMSettings() {
   const { source, options } = useStore(state => state.settings.llm);
   const updateLLMSettings = useStore(state => state.updateLLMSettings);
 
