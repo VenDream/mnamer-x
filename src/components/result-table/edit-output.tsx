@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Pencil2Icon } from '@radix-ui/react-icons';
 import { PropsWithChildren, useState } from 'react';
 
 interface IProps extends PropsWithChildren<any> {
@@ -40,9 +39,7 @@ export function EditOutput(props: IProps) {
         onEscapeKeyDown={e => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-start">
-            <Pencil2Icon className="mr-2 text-lg"></Pencil2Icon>Edit output
-          </DialogTitle>
+          <DialogTitle>Edit output</DialogTitle>
           <DialogDescription className="text-left">
             Modify the output to what you prefer.
           </DialogDescription>
@@ -50,7 +47,7 @@ export function EditOutput(props: IProps) {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4 md:grid-cols-5">
             <Label htmlFor="original" className="text-right">
-              System Output
+              Original
             </Label>
             <Input
               id="original"
@@ -61,7 +58,7 @@ export function EditOutput(props: IProps) {
           </div>
           <div className="grid grid-cols-4 items-center gap-4 md:grid-cols-5">
             <Label htmlFor="modified" className="text-right">
-              Your Modified
+              Modified
             </Label>
             <Input
               id="modified"

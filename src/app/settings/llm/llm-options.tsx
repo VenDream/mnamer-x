@@ -49,7 +49,7 @@ export function LLMOptions(props: IProps) {
           <SheetTitle>LLM Options</SheetTitle>
           <SheetDescription>Custom your LLM options.</SheetDescription>
         </SheetHeader>
-        <div className="mt-8 grid grid-cols-4 gap-2">
+        <div className="mt-8 grid grid-cols-4 md:gap-2">
           <Label htmlFor="baseUrl" className="flex h-9 items-center">
             Base URL
           </Label>

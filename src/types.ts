@@ -106,7 +106,7 @@ export interface FormatterSettings {
   language?: string;
 }
 
-export type WebDAVClientOptions = WebDAVClient & { id: string };
+export type WebDAVClientOptions = WebDAVClient & { id: string; name: string };
 
 export interface UserSettings {
   llm: LLMSettings;

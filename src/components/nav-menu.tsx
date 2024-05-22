@@ -10,12 +10,13 @@ import {
 import { ROUTE } from '@/constants';
 import { cn } from '@/lib/utils';
 import {
-  CounterClockwiseClockIcon,
-  HamburgerMenuIcon,
+  BotIcon,
+  HistoryIcon,
   HomeIcon,
-  InfoCircledIcon,
-} from '@radix-ui/react-icons';
-import { BotIcon, Settings2 as SettingsIcon } from 'lucide-react';
+  InfoIcon,
+  MenuIcon,
+  Settings2Icon,
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
@@ -40,17 +41,17 @@ const NAV_ROUTES: NavRoute[] = [
   {
     path: ROUTE.HISTORY,
     label: 'History',
-    icon: CounterClockwiseClockIcon,
+    icon: HistoryIcon,
   },
   {
     path: ROUTE.SETTINGS,
     label: 'Settings',
-    icon: SettingsIcon,
+    icon: Settings2Icon,
   },
   {
     path: ROUTE.CREDITS,
     label: 'Credits',
-    icon: InfoCircledIcon,
+    icon: InfoIcon,
   },
 ];
 
@@ -74,7 +75,7 @@ export function NavMenu() {
               }
             )}
           >
-            <Icon className="h-[15px] w-[15px]"></Icon>
+            <Icon size={16}></Icon>
             {label}
           </Link>
         );
@@ -91,7 +92,7 @@ export function NavMenuForMobile() {
     <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="outline">
-          <HamburgerMenuIcon></HamburgerMenuIcon>
+          <MenuIcon size={16} className="text-foreground"></MenuIcon>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -112,7 +113,7 @@ export function NavMenuForMobile() {
                   'cursor-default': isActive,
                 })}
               >
-                <Icon className="mr-1 h-[15px] w-[15px]"></Icon>
+                <Icon size={16}></Icon>
                 {label}
               </Link>
             </DropdownMenuItem>

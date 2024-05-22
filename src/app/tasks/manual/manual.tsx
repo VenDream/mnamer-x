@@ -38,13 +38,13 @@ import { useStore } from '@/store';
 import { ProcessResult, ProcessTask, Response, TASK_TYPE } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  CaretSortIcon,
-  Cross1Icon,
+  ChevronsUpDownIcon,
+  CircleHelpIcon,
+  CirclePlusIcon,
+  LoaderIcon,
   PlayIcon,
-  PlusCircledIcon,
-  QuestionMarkCircledIcon,
-} from '@radix-ui/react-icons';
-import { LoaderIcon } from 'lucide-react';
+  XIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -131,7 +131,7 @@ export function Manual() {
     <div className="flex flex-col gap-8">
       <Card className="w-full md:max-w-screen-lg">
         <CardHeader>
-          <CardTitle>📄 Input</CardTitle>
+          <CardTitle>Input</CardTitle>
           <CardDescription>task input</CardDescription>
         </CardHeader>
         <CardContent>
@@ -165,7 +165,10 @@ export function Manual() {
                       <TooltipProvider delayDuration={100}>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <QuestionMarkCircledIcon className="mr-1"></QuestionMarkCircledIcon>
+                            <CircleHelpIcon
+                              size={16}
+                              className="mr-1"
+                            ></CircleHelpIcon>
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>
@@ -178,7 +181,7 @@ export function Manual() {
                       additional info
                       <CollapsibleTrigger asChild className="ml-1">
                         <Button type="button" variant="ghost" size="icon">
-                          <CaretSortIcon className="h-4 w-4" />
+                          <ChevronsUpDownIcon size={16} />
                           <span className="sr-only">Toggle</span>
                         </Button>
                       </CollapsibleTrigger>
@@ -195,7 +198,7 @@ export function Manual() {
                                 min={1900}
                                 max={new Date().getFullYear()}
                                 disabled={isSubmitting}
-                                placeholder="release year, e.g.: 2008"
+                                placeholder="release year, e.g., 2008"
                                 {...field}
                               ></Input>
                             </FormControl>
@@ -210,7 +213,7 @@ export function Manual() {
                             <FormControl>
                               <Input
                                 disabled={isSubmitting}
-                                placeholder="keyword, e.g.: Violet Evergarden"
+                                placeholder="keyword, e.g., Violet Evergarden"
                                 {...field}
                               ></Input>
                             </FormControl>
@@ -227,7 +230,7 @@ export function Manual() {
                     onClick={() => removeFile(index)}
                     className="absolute right-2 top-2 rounded-full"
                   >
-                    <Cross1Icon></Cross1Icon>
+                    <XIcon size={20}></XIcon>
                   </Button>
                 </div>
               ))}
@@ -238,7 +241,7 @@ export function Manual() {
                   onClick={addFile}
                   disabled={isSubmitting}
                 >
-                  <PlusCircledIcon className="mr-2"></PlusCircledIcon>
+                  <CirclePlusIcon size={16} className="mr-2"></CirclePlusIcon>
                   Add file
                   <span className="ml-2 hidden text-muted-foreground md:block">
                     ({fields.length}/{ENV_CONFIG.MAX_FILES_PER_TASK})
@@ -260,7 +263,7 @@ export function Manual() {
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
-                      <PlayIcon className="text-lg"></PlayIcon>
+                      <PlayIcon size={16}></PlayIcon>
                       Start
                     </span>
                   )}
@@ -273,7 +276,7 @@ export function Manual() {
       </Card>
       <Card className="w-full md:max-w-screen-lg">
         <CardHeader>
-          <CardTitle>📝 Output</CardTitle>
+          <CardTitle>Output</CardTitle>
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>

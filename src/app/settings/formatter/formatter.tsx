@@ -20,9 +20,9 @@ export function FormatterSettings() {
       <CardHeader>
         <CardTitle>Formatter Settings</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <div className="flex items-center gap-4">
-          <Label className="w-1/4 max-w-20 text-base">Language</Label>
+      <CardContent className="flex flex-col gap-8 md:gap-4">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center">
+          <Label className="md:w-1/4 md:max-w-28">TMDB Locale</Label>
           <Select
             value={language}
             onValueChange={value =>
@@ -38,8 +38,8 @@ export function FormatterSettings() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex items-center gap-4">
-          <Label className="w-1/4 max-w-20 text-base">Template</Label>
+        <div className="flex flex-col gap-4 md:flex-row md:items-center">
+          <Label className="md:w-1/4 md:max-w-28">Template</Label>
           <p>WIP</p>
         </div>
       </CardContent>

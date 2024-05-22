@@ -12,9 +12,14 @@ import { ENV_CONFIG, ROUTE } from '@/constants';
 import { getTmdbImageUrl } from '@/lib/tmdb-image';
 import { cn, getDateTimeDiff } from '@/lib/utils';
 import { useStore } from '@/store';
-import { Cross1Icon } from '@radix-ui/react-icons';
 import dayjs from 'dayjs';
-import { BotIcon, CircleDotIcon, ClockIcon, FileIcon } from 'lucide-react';
+import {
+  BotIcon,
+  CircleDotIcon,
+  ClockIcon,
+  FileIcon,
+  XIcon,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -115,7 +120,7 @@ export function TaskCard(props: IProps) {
                   variant="ghost"
                   className="visible relative -right-1/2 rounded-full group-hover:visible md:invisible"
                 >
-                  <Cross1Icon></Cross1Icon>
+                  <XIcon size={20}></XIcon>
                 </Button>
               </DeleteTask>
             </div>

@@ -9,13 +9,9 @@ import { getFormattedFilename } from '@/lib/formatter';
 import { copyText } from '@/lib/utils';
 import { useStore } from '@/store';
 import { ProcessResult } from '@/types';
-import {
-  CopyIcon,
-  DotsHorizontalIcon,
-  IdCardIcon,
-  Pencil2Icon,
-} from '@radix-ui/react-icons';
+import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row, Table } from '@tanstack/react-table';
+import { CopyIcon, FilmIcon, SquarePenIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { EditOutput } from './edit-output';
@@ -58,7 +54,7 @@ export function ResultActions(props: IProps) {
             toast.success('Copied to clipboard');
           }}
         >
-          <CopyIcon className="relative -top-[1px] mr-1"></CopyIcon>
+          <CopyIcon size={14} className="mr-1"></CopyIcon>
           Copy output
         </DropdownMenuItem>
         <EditOutput
@@ -73,7 +69,7 @@ export function ResultActions(props: IProps) {
             className="cursor-pointer text-xs  md:text-sm"
             onSelect={e => e.preventDefault()}
           >
-            <Pencil2Icon className="relative -top-[1px] mr-1"></Pencil2Icon>
+            <SquarePenIcon size={14} className="mr-1"></SquarePenIcon>
             Edit
           </DropdownMenuItem>
         </EditOutput>
@@ -82,7 +78,7 @@ export function ResultActions(props: IProps) {
             className="cursor-pointer text-xs  md:text-sm"
             onSelect={e => e.preventDefault()}
           >
-            <IdCardIcon className="relative -top-[1px] mr-1"></IdCardIcon>
+            <FilmIcon size={14} className="mr-1"></FilmIcon>
             View TMDB info
           </DropdownMenuItem>
         </TmdbInfo>

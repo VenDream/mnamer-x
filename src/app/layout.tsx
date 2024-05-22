@@ -1,17 +1,19 @@
 import { ModeToggle } from '@/components/mode-toggle';
 import { NavMenu, NavMenuForMobile } from '@/components/nav-menu';
 import { ThemeProvider } from '@/components/theme-provider';
+import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Toaster } from '@/components/ui/sonner';
 import { GITHUB_REPO, ROUTE, SITE_META } from '@/constants';
 import { cn } from '@/lib/utils';
-import { GitHubLogoIcon, Pencil2Icon } from '@radix-ui/react-icons';
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { FilePenLineIcon } from 'lucide-react';
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import './globals.css';
 
-const font = Roboto({ subsets: ['latin'], weight: '300' });
+const font = Inter({ subsets: ['latin'], weight: '300' });
 const title = SITE_META.title as string;
 
 export const metadata: Metadata = SITE_META;
@@ -40,7 +42,7 @@ export default function RootLayout({
               <div className="flex h-full flex-col justify-center">
                 <h1 className="text-lg font-bold">{title.toUpperCase()}</h1>
                 <p className="hidden gap-1 text-xs md:flex">
-                  <Pencil2Icon></Pencil2Icon>
+                  <FilePenLineIcon size={16}></FilePenLineIcon>
                   {SITE_META.description}
                 </p>
               </div>
@@ -51,7 +53,9 @@ export default function RootLayout({
                 href={GITHUB_REPO}
                 className="flex h-9 w-9 cursor-pointer items-center justify-center"
               >
-                <GitHubLogoIcon className="h-[1.4rem] w-[1.4rem]"></GitHubLogoIcon>
+                <Button size="icon" variant="outline">
+                  <GitHubLogoIcon className="h-[1.2rem] w-[1.2rem]"></GitHubLogoIcon>
+                </Button>
               </Link>
               <ModeToggle></ModeToggle>
               <div className="block md:hidden">

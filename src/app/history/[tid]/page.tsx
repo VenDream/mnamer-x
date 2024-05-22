@@ -2,7 +2,6 @@
 
 import { UnderlineLink } from '@/components/link';
 import { ResultTable } from '@/components/result-table';
-import { Badge } from '@/components/ui/badge';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -70,12 +69,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                       className="relative -top-[1px]"
                     ></BotIcon>
                     <span className="w-16 text-right">type：</span>
-                    <Badge
-                      variant="outline"
-                      className="rounded-none border-border shadow-sm"
-                    >
-                      {task.type}
-                    </Badge>
+                    <span>{task.type}</span>
                   </span>
                   <span className="flex items-center gap-2 text-sm">
                     <FileIcon
@@ -107,9 +101,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                       className="relative -top-[1px]"
                     ></Clock3Icon>
                     <span className="w-16 text-right">start at：</span>
-                    <span className="underline underline-offset-2">
-                      {task.start}
-                    </span>
+                    <span>{task.start}</span>
                   </span>
                   <span className="flex items-center gap-2 text-sm">
                     <Clock4Icon
@@ -117,9 +109,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                       className="relative -top-[1px]"
                     ></Clock4Icon>
                     <span className="w-16 text-right">end at：</span>
-                    <span className="underline underline-offset-2">
-                      {task.end}
-                    </span>
+                    <span>{task.end}</span>
                   </span>
                 </div>
               </CardContent>
