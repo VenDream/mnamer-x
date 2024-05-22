@@ -106,10 +106,14 @@ export interface FormatterSettings {
   language?: string;
 }
 
-export type WebDAVClientOptions = WebDAVClient & { id: string; name: string };
+export type WebDAVClientOptions = WebDAVClient & {
+  id: number;
+  name: string;
+  remoteURL: string;
+};
 
 export interface UserSettings {
   llm: LLMSettings;
   formatter: FormatterSettings;
-  webdav: Record<string, WebDAVClientOptions>;
+  webdav: Record<number, WebDAVClientOptions>;
 }

@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useStore } from '@/store';
 import { LLM_SOURCE } from '@/types';
+import { WrenchIcon } from 'lucide-react';
 import { LLMOptions } from './llm-options';
 
 export function LLMSettings() {
@@ -13,7 +14,7 @@ export function LLMSettings() {
   return (
     <Card className="rounded">
       <CardHeader>
-        <CardTitle>LLM Settings</CardTitle>
+        <CardTitle>LLM</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-8 md:gap-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
@@ -54,6 +55,7 @@ export function LLMSettings() {
               onChange={opts => updateLLMSettings({ options: opts })}
             >
               <Button variant="outline" className="rounded">
+                <WrenchIcon size={16} className="mr-2"></WrenchIcon>
                 Configure
               </Button>
             </LLMOptions>

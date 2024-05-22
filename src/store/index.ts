@@ -36,9 +36,9 @@ export type StoreActions = {
   updateFormatterSettings: (patch: Partial<FormatterSettings>) => void;
   /** webdav */
   addWebDAV: (opts: WebDAVClientOptions) => void;
-  removeWebDAV: (id: string) => void;
+  removeWebDAV: (id: number) => void;
   updateWebDAVSettings: (
-    id: string,
+    id: number,
     patch: Partial<WebDAVClientOptions>
   ) => void;
 };

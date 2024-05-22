@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/sheet';
 import { Slider } from '@/components/ui/slider';
 import { LLMSettings } from '@/types';
+import { SaveIcon } from 'lucide-react';
 import { PropsWithChildren, useState } from 'react';
 
 type LLMOptions = LLMSettings['options'];
@@ -103,6 +104,7 @@ export function LLMOptions(props: IProps) {
               className="mt-4 rounded"
               onClick={saveOptions}
             >
+              <SaveIcon size={16} className="mr-2"></SaveIcon>
               Save
             </Button>
           </SheetClose>

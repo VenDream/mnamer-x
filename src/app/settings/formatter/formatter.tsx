@@ -18,7 +18,7 @@ export function FormatterSettings() {
   return (
     <Card className="rounded">
       <CardHeader>
-        <CardTitle>Formatter Settings</CardTitle>
+        <CardTitle>Formatter</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-8 md:gap-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
