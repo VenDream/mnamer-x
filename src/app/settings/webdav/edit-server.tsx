@@ -69,8 +69,8 @@ export function EditServer(props: IProps) {
   };
 
   useEffect(() => {
-    open && form.reset();
-  }, [form, open]);
+    !props.id && open && form.reset();
+  }, [form, open, props.id]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
