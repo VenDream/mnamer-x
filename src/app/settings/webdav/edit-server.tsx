@@ -11,11 +11,11 @@ import { Input } from '@/components/ui/input';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { testConnection } from '@/lib/webdav-client';
 import { useStore } from '@/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CableIcon, SaveIcon } from 'lucide-react';
@@ -45,6 +45,7 @@ export function EditServer(props: IProps) {
   const [open, setOpen] = useState(false);
   const webdav = useStore(state => state.settings.webdav[id || 0]);
   const addWebDAV = useStore(state => state.addWebDAV);
+  const updateWebDAVSettings = useStore(state => state.updateWebDAVSettings);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -57,12 +58,15 @@ export function EditServer(props: IProps) {
   });
 
   const onSubmit = (data: FormData) => {
-    const id = Date.now();
-    addWebDAV({ ...data, id, name: data.name || `WebDAV Server #${id}` });
+    if (id) {
+      updateWebDAVSettings(id, data);
+    } else {
+      const id = Date.now();
+      addWebDAV({ ...data, id, name: data.name || `WebDAV Server #${id}` });
+    }
+
     setOpen(false);
   };
-
-  const testConnection = () => {};
 
   useEffect(() => {
     open && form.reset();
@@ -77,10 +81,7 @@ export function EditServer(props: IProps) {
         onOpenAutoFocus={e => e.preventDefault()}
       >
         <SheetHeader className="text-left">
-          <SheetTitle>WebDAV Server</SheetTitle>
-          <SheetDescription>
-            {id ? 'Edit the WebDAV server.' : 'Add a new WebDAV server.'}
-          </SheetDescription>
+          <SheetTitle>{id ? 'Edit' : 'Add'} WebDAV Server</SheetTitle>
         </SheetHeader>
         <Form {...form}>
           <form
@@ -152,9 +153,11 @@ export function EditServer(props: IProps) {
             <div className="!mt-8 flex justify-between">
               <Button
                 variant="outline"
-                onClick={e => {
+                onClick={async e => {
                   e.preventDefault();
-                  testConnection();
+                  const opts = form.getValues();
+                  const result = await testConnection(opts);
+                  console.log(result);
                 }}
               >
                 <CableIcon size={16} className="mr-2"></CableIcon>Test

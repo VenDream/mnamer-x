@@ -5,7 +5,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -48,9 +47,8 @@ export function LLMOptions(props: IProps) {
       >
         <SheetHeader className="text-left">
           <SheetTitle>LLM Options</SheetTitle>
-          <SheetDescription>Custom your LLM options.</SheetDescription>
         </SheetHeader>
-        <div className="mt-8 grid grid-cols-4 md:gap-2">
+        <div className="mt-6 grid grid-cols-4 md:gap-2">
           <Label htmlFor="baseUrl" className="flex h-9 items-center">
             Base URL
           </Label>
@@ -101,7 +99,7 @@ export function LLMOptions(props: IProps) {
           <SheetClose asChild>
             <Button
               variant="outline"
-              className="mt-4 rounded"
+              className="mt-6 rounded"
               onClick={saveOptions}
             >
               <SaveIcon size={16} className="mr-2"></SaveIcon>

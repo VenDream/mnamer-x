@@ -1,3 +1,4 @@
+import { DeleteConfirm } from '@/components/delete-confirm';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
 import {
@@ -23,7 +24,6 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { DeleteTask } from './delete-task';
 
 interface IProps {
   tid: number;
@@ -36,6 +36,8 @@ const FAILED_BACKDROP = 'https://placehold.co/1280x720?text=task+failed';
 export function TaskCard(props: IProps) {
   const task = useStore(state => state.tasks[props.tid]);
   const tmdbs = useStore(state => state.tmdbs);
+  const removeTask = useStore(state => state.removeTask);
+
   const [percent, setPercent] = useState(0);
   const [dateStr, setDateStr] = useState('');
   const pTimer = useRef<NodeJS.Timeout>();
@@ -113,7 +115,11 @@ export function TaskCard(props: IProps) {
                 e.preventDefault();
               }}
             >
-              <DeleteTask tid={props.tid}>
+              <DeleteConfirm
+                onConfirm={() => {
+                  removeTask(props.tid);
+                }}
+              >
                 <Button
                   type="button"
                   size="icon"
@@ -122,7 +128,7 @@ export function TaskCard(props: IProps) {
                 >
                   <XIcon size={20}></XIcon>
                 </Button>
-              </DeleteTask>
+              </DeleteConfirm>
             </div>
           </CardTitle>
         </CardHeader>

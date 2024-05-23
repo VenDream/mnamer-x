@@ -40,7 +40,7 @@ export function ResultTable(props: IProps) {
                   <TableHead
                     key={header.id}
                     style={{ width: header.getSize() }}
-                    className="h-8 border-r bg-accent/50 text-xs last:border-none last:text-center dark:border-accent md:text-sm"
+                    className="h-8 border-r bg-accent/50 last:border-none last:text-center dark:border-accent"
                   >
                     {header.isPlaceholder
                       ? null
@@ -64,7 +64,7 @@ export function ResultTable(props: IProps) {
                 {row.getVisibleCells().map(cell => (
                   <TableCell
                     key={cell.id}
-                    className="border-r text-xs last:border-none md:text-sm"
+                    className="border-r last:border-none"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
@@ -73,10 +73,7 @@ export function ResultTable(props: IProps) {
             ))
           ) : (
             <TableRow>
-              <TableCell
-                colSpan={columns.length}
-                className="h-24 text-center text-xs"
-              >
+              <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.
               </TableCell>
             </TableRow>

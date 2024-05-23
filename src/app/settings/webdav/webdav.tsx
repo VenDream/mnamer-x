@@ -6,34 +6,22 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useStore } from '@/store';
 import { CirclePlusIcon } from 'lucide-react';
 import { EditServer } from './edit-server';
+import { ServerList } from './server-list';
 
 export function WebDAVSettings() {
-  const webdavs = useStore(state => Object.values(state.settings.webdav));
-
   return (
     <Card className="rounded">
       <CardHeader>
         <CardTitle>WebDAV</CardTitle>
       </CardHeader>
       <CardContent>
-        {webdavs.length > 0 ? (
-          webdavs.map(webdav => (
-            <EditServer key={webdav.id} id={webdav.id}>
-              <Button variant="outline">{webdav.name}</Button>
-            </EditServer>
-          ))
-        ) : (
-          <p className="text-sm text-muted-foreground">
-            No WebDAV servers have been configured yet.
-          </p>
-        )}
+        <ServerList></ServerList>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex justify-end">
         <EditServer>
-          <Button variant="outline">
+          <Button variant="outline" className="w-full md:w-auto">
             <CirclePlusIcon size={16} className="mr-2"></CirclePlusIcon>
             Add
           </Button>
