@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -272,7 +271,6 @@ export function Manual() {
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="hidden"></CardFooter>
       </Card>
       <Card className="w-full md:max-w-screen-lg">
         <CardHeader>
@@ -280,9 +278,8 @@ export function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          {true && <ResultTable tid={tid} results={results}></ResultTable>}
+          <ResultTable tid={tid} results={results}></ResultTable>
         </CardContent>
-        <CardFooter className="hidden"></CardFooter>
       </Card>
     </div>
   );

@@ -33,8 +33,8 @@ export function FormatterSettings() {
               <SelectValue placeholder={language} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="en-US">English</SelectItem>
-              <SelectItem value="zh-CN">中文</SelectItem>
+              <SelectItem value="en-US">English (en-US)</SelectItem>
+              <SelectItem value="zh-CN">中文 (zh-CN)</SelectItem>
             </SelectContent>
           </Select>
         </div>

@@ -71,16 +71,16 @@ export function EditServer(props: IProps) {
 
   const testServer = async () => {
     const opts = form.getValues();
-    const result = await form.trigger(['remoteURL', 'username', 'password']);
+    const result = await form.trigger();
     result &&
       toast.promise(
         new Promise<boolean>((resolve, reject) => {
           testConnection(opts).then(r => (r ? resolve(r) : reject()));
         }),
         {
-          loading: 'Testing connection...',
-          success: 'WebDAV server connected',
-          error: 'WebDAV server connection failed',
+          loading: 'Testing WebDAV connection...',
+          success: 'Testing WebDAV connection...OK',
+          error: 'Testing WebDAV connection...Failed',
         }
       );
   };

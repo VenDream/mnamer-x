@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TASK_TYPE } from '@/types';
 import { CloudStorage } from './cloud-storage';
 import { Manual } from './manual';
-import { WebDAV } from './web-dav';
+import { WebDAV } from './webdav';
 
 const TASK_TYPES = Object.values(TASK_TYPE);
 const TASK_PAGES: Record<TASK_TYPE, React.ReactNode> = {
