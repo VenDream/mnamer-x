@@ -1,4 +1,5 @@
 import { DeleteConfirm } from '@/components/delete-confirm';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useStore } from '@/store';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
 import { EditServer } from './edit-server';
 
 export function ServerList() {
@@ -18,9 +20,11 @@ export function ServerList() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
+          <TableHead className="w-[80px] md:w-[150px]">Name</TableHead>
           <TableHead>URL</TableHead>
-          <TableHead>Actions</TableHead>
+          <TableHead className="w-[80px] text-center md:w-[150px]">
+            Actions
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -34,16 +38,26 @@ export function ServerList() {
                 <p className="line-clamp-1 break-all">{webdav.remoteURL}</p>
               </TableCell>
               <TableCell>
-                <div className="flex gap-2">
+                <div className="flex justify-center gap-2">
                   <EditServer id={webdav.id}>
-                    <p className="cursor-pointer text-primary hover:underline hover:underline-offset-4">
-                      edit
-                    </p>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      title="edit"
+                      className="h-6 w-6 hover:text-primary"
+                    >
+                      <PencilIcon size={14} />
+                    </Button>
                   </EditServer>
                   <DeleteConfirm onConfirm={() => removeWebDAV(webdav.id)}>
-                    <p className="cursor-pointer text-primary hover:underline hover:underline-offset-4">
-                      delete
-                    </p>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      title="delete"
+                      className="h-6 w-6 hover:text-primary"
+                    >
+                      <Trash2Icon size={14} />
+                    </Button>
                   </DeleteConfirm>
                 </div>
               </TableCell>

@@ -77,7 +77,8 @@ export default function RootLayout({
             toastOptions={{
               className: 'text-xs md:text-sm py-3 px-4 rounded-sm items-start',
               classNames: {
-                icon: 'positive top-[1px]',
+                icon: 'positive top-[3px]',
+                content: font.className,
               },
             }}
             richColors

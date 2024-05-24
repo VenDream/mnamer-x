@@ -21,6 +21,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CableIcon, SaveIcon } from 'lucide-react';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -49,7 +50,7 @@ export function EditServer(props: IProps) {
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    values: {
       name: webdav?.name || '',
       remoteURL: webdav?.remoteURL || '',
       username: webdav?.username || '',
@@ -68,9 +69,25 @@ export function EditServer(props: IProps) {
     setOpen(false);
   };
 
+  const testServer = async () => {
+    const opts = form.getValues();
+    const result = await form.trigger(['remoteURL', 'username', 'password']);
+    result &&
+      toast.promise(
+        new Promise<boolean>((resolve, reject) => {
+          testConnection(opts).then(r => (r ? resolve(r) : reject()));
+        }),
+        {
+          loading: 'Testing connection...',
+          success: 'WebDAV server connected',
+          error: 'WebDAV server connection failed',
+        }
+      );
+  };
+
   useEffect(() => {
-    !props.id && open && form.reset();
-  }, [form, open, props.id]);
+    open && form.reset();
+  }, [form, open]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -152,12 +169,11 @@ export function EditServer(props: IProps) {
             />
             <div className="!mt-8 flex justify-between">
               <Button
+                type="submit"
                 variant="outline"
                 onClick={async e => {
                   e.preventDefault();
-                  const opts = form.getValues();
-                  const result = await testConnection(opts);
-                  console.log(result);
+                  testServer();
                 }}
               >
                 <CableIcon size={16} className="mr-2"></CableIcon>Test

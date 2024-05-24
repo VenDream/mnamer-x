@@ -20,7 +20,7 @@ export function DeleteConfirm(props: IProps) {
       <PopoverTrigger asChild>{props.children}</PopoverTrigger>
       <PopoverContent className="w-auto" collisionPadding={20}>
         <div className="space-y-4">
-          <h1 className="flex items-center gap-2 leading-3">
+          <h1 className="flex items-center gap-2 text-sm">
             <Trash2Icon size={16}></Trash2Icon>
             {props.title || 'Confirm to delete ?'}
           </h1>
