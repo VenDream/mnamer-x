@@ -5,7 +5,7 @@ import { FileStat } from 'webdav';
 
 export const columns: ColumnDef<FileStat>[] = [
   {
-    size: 500,
+    size: 290,
     header: 'Name',
     cell({ row }) {
       const { type, filename } = row.original;
@@ -20,6 +20,7 @@ export const columns: ColumnDef<FileStat>[] = [
   },
   {
     header: 'Size',
+    size: 80,
     cell({ row }) {
       const { type, size } = row.original;
       return type === 'file' ? size : '-';
@@ -27,6 +28,7 @@ export const columns: ColumnDef<FileStat>[] = [
   },
   {
     header: 'Modified',
+    size: 180,
     cell({ row }) {
       const { lastmod } = row.original;
       return format(lastmod, 'yyyy-MM-dd HH:mm:ss');

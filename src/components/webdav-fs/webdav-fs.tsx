@@ -91,7 +91,7 @@ export function WebDAVFs(props: IProps) {
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
-        className="h-[80vh] w-[90vw] max-w-[600px] md:h-[50vh] [&>*:first-child]:h-full [&>*:first-child]:min-h-0"
+        className="h-[80vh] w-[90vw] max-w-[600px] md:h-[60vh] [&>*:first-child]:h-full [&>*:first-child]:min-h-0"
         onOpenAutoFocus={e => e.preventDefault()}
         onEscapeKeyDown={e => e.preventDefault()}
       >
