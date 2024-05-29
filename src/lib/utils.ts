@@ -114,3 +114,21 @@ export function isDateBetween(date: Date | string, range: DateRange) {
   }
   return true;
 }
+
+export function toHumanReadableSize(size: number) {
+  const gb = Math.pow(1024, 3);
+  const mb = Math.pow(1024, 2);
+  const kb = Math.pow(1024, 1);
+
+  if (size >= gb) {
+    return `${(size / gb).toFixed(2)} GB`;
+  }
+  if (size >= mb) {
+    return `${(size / mb).toFixed(2)} MB`;
+  }
+  if (size >= kb) {
+    return `${(size / kb).toFixed(2)} KB`;
+  }
+
+  return `${size} B`;
+}

@@ -1,34 +1,104 @@
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { toHumanReadableSize } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import { FileIcon, FolderIcon } from 'lucide-react';
+import { ArrowUpDownIcon, FileIcon, FolderIcon } from 'lucide-react';
 import { FileStat } from 'webdav';
 
 export const columns: ColumnDef<FileStat>[] = [
   {
-    size: 290,
-    header: 'Name',
+    id: 'select',
+    size: 40,
+    header: ({ table }) => (
+      <div className="flex h-full w-full items-center justify-center">
+        <Checkbox
+          aria-label="Select all"
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+        />
+      </div>
+    ),
     cell({ row }) {
-      const { type, filename } = row.original;
-      const Icon = type === 'directory' ? FolderIcon : FileIcon;
       return (
-        <div className="flex items-center">
-          <Icon size={16} className="mr-2" />
-          <p className="line-clamp-1">{filename}</p>
+        <div className="flex h-full w-full items-center justify-center">
+          <Checkbox
+            aria-label="Select row"
+            onClick={e => e.stopPropagation()}
+            checked={row.getIsSelected()}
+            onCheckedChange={value => row.toggleSelected(!!value)}
+          />
         </div>
       );
     },
   },
   {
-    header: 'Size',
-    size: 80,
+    size: 250,
+    accessorKey: 'basename',
+    header({ column }) {
+      return (
+        <Button
+          variant="ghost"
+          className="flex h-full rounded-none p-2"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Name
+          <ArrowUpDownIcon size={16} className="ml-2" />
+        </Button>
+      );
+    },
     cell({ row }) {
-      const { type, size } = row.original;
-      return type === 'file' ? size : '-';
+      const { type, basename } = row.original;
+      const Icon = type === 'directory' ? FolderIcon : FileIcon;
+      return (
+        <div className="flex items-center">
+          <Icon size={16} className="mr-2 shrink-0" />
+          <p className="line-clamp-1 break-all" title={basename}>
+            {basename}
+          </p>
+        </div>
+      );
     },
   },
   {
-    header: 'Modified',
+    size: 100,
+    accessorKey: 'size',
+    header({ column }) {
+      return (
+        <Button
+          variant="ghost"
+          className="flex h-full rounded-none p-2"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Size
+          <ArrowUpDownIcon size={16} className="ml-2" />
+        </Button>
+      );
+    },
+    cell({ row }) {
+      const { type, size } = row.original;
+      const sizeStr = toHumanReadableSize(size);
+      return type === 'file' ? sizeStr : '-';
+    },
+  },
+  {
     size: 180,
+    accessorKey: 'lastmod',
+    header({ column }) {
+      return (
+        <Button
+          variant="ghost"
+          className="flex h-full rounded-none p-2"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Modified
+          <ArrowUpDownIcon size={16} className="ml-2" />
+        </Button>
+      );
+    },
     cell({ row }) {
       const { lastmod } = row.original;
       return format(lastmod, 'yyyy-MM-dd HH:mm:ss');
