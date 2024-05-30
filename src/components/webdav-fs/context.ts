@@ -1,7 +1,10 @@
 import React from 'react';
 import { FileStat } from 'webdav';
+import { IProps } from './webdav-fs';
 
 export interface WebDAVCtx {
+  props: IProps;
+  currPath: string;
   data: FileStat[];
   isLoading: boolean;
   historyPaths: FileStat[];

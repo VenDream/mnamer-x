@@ -6,6 +6,14 @@ import {
   BreadcrumbSeparator,
   Breadcrumb as IBreadcrumb,
 } from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
+import { FolderIcon } from 'lucide-react';
 import { useMemo } from 'react';
 import { FileStat } from 'webdav';
 
@@ -27,48 +35,68 @@ export function Breadcrumb(props: IProps) {
   }, [historyPaths]);
 
   return (
-    <IBreadcrumb className="w-2/3">
+    <IBreadcrumb className="flex h-12 w-2/3 items-center">
       {showEllipsis ? (
-        <BreadcrumbList className="flex-nowrap !gap-1">
-          {first && (
-            <>
-              <BreadcrumbItem
-                className="cursor-pointer"
-                title={first.basename}
-                onClick={() => onPathChange(first.filename, 0)}
+        <BreadcrumbList className="!gap-1 break-all">
+          <BreadcrumbItem
+            className="cursor-pointer"
+            title={first.basename}
+            onClick={() => onPathChange(first.filename, 0)}
+          >
+            <BreadcrumbPage className="inline-flex items-center">
+              <FolderIcon size={16} className="mr-2 shrink-0" />
+              <p className="line-clamp-1 break-all">{first.basename}</p>
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-6 w-6">
+                  <BreadcrumbEllipsis />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="bottom"
+                className="w-auto"
+                collisionPadding={20}
               >
-                <BreadcrumbPage>{first.basename}</BreadcrumbPage>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-            </>
-          )}
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbEllipsis className="w-4" />
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-          </>
-          {lastTwo.length >= 2 && (
-            <>
-              <BreadcrumbItem
-                className="cursor-pointer"
-                title={lastTwo[0].basename}
-                onClick={() =>
-                  onPathChange(lastTwo[0].filename, historyPaths.length - 2)
-                }
-              >
-                <BreadcrumbPage className="line-clamp-1 break-all">
-                  {lastTwo[0].basename}
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem title={lastTwo[1].basename}>
-                <BreadcrumbPage className="line-clamp-1 break-all">
-                  {lastTwo[1].basename}
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-            </>
-          )}
+                {middle.map((s, i) => (
+                  <span
+                    key={s.basename}
+                    className={cn(
+                      'flex cursor-pointer items-center rounded p-1 text-sm',
+                      'transition-colors duration-100 hover:bg-accent'
+                    )}
+                    onClick={() => onPathChange(s.filename, i + 1)}
+                  >
+                    <FolderIcon size={16} className="mr-2" />
+                    {s.basename}
+                  </span>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem
+            className="cursor-pointer"
+            title={lastTwo[0].basename}
+            onClick={() =>
+              onPathChange(lastTwo[0].filename, historyPaths.length - 2)
+            }
+          >
+            <BreadcrumbPage className="inline-flex items-center">
+              <FolderIcon size={16} className="mr-2 shrink-0" />
+              <p className="line-clamp-1 break-all">{lastTwo[0].basename}</p>
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem title={lastTwo[1].basename}>
+            <BreadcrumbPage className="inline-flex items-center">
+              <FolderIcon size={16} className="mr-2 shrink-0" />
+              <p className="line-clamp-1 break-all">{lastTwo[1].basename}</p>
+            </BreadcrumbPage>
+          </BreadcrumbItem>
         </BreadcrumbList>
       ) : (
         <BreadcrumbList className="flex-nowrap !gap-1">
@@ -85,8 +113,9 @@ export function Breadcrumb(props: IProps) {
                   className="cursor-pointer"
                   onClick={() => onPathChange(stat.filename, idx)}
                 >
-                  <BreadcrumbPage className="line-clamp-1 break-all">
-                    {stat.basename}
+                  <BreadcrumbPage className="inline-flex items-center">
+                    <FolderIcon size={16} className="mr-2 shrink-0" />
+                    <p className="line-clamp-1 break-all">{stat.basename}</p>
                   </BreadcrumbPage>
                 </BreadcrumbItem>
                 {!isLast && <BreadcrumbSeparator />}

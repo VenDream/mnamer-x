@@ -35,15 +35,21 @@ export interface SelectResult {
   files: FileStat[];
 }
 
-interface IProps extends PropsWithChildren<any> {
+export interface IProps extends PropsWithChildren<any> {
   selected?: SelectResult;
-  mode?: 'dir' | 'file' | 'all';
+  mode?: 'dirs' | 'files' | 'all';
   multiple?: boolean;
   onSelect?: (result: SelectResult) => void;
 }
 
+const defaultProps: IProps = {
+  mode: 'all',
+  multiple: true,
+};
+
 export function WebDAVFs(props: IProps) {
-  const { selected, mode = 'all', multiple, onSelect, children } = props;
+  const finalProps = useMemo(() => ({ ...defaultProps, ...props }), [props]);
+  const { multiple, selected, onSelect } = finalProps;
   const webdavs = useStore(state => state.settings.webdav);
   const davServers = Object.values(webdavs);
 
@@ -104,6 +110,7 @@ export function WebDAVFs(props: IProps) {
     }
 
     if (type === 'file') {
+      // @TODO previewer
       console.log(stat);
     }
   }, []);
@@ -113,7 +120,9 @@ export function WebDAVFs(props: IProps) {
       setResult(result => {
         const selectedKeys = Object.keys(selection);
         const newResult = cloneDeep(result);
-        const { dirs, files } = newResult;
+        !multiple && (newResult.dirs = []);
+        !multiple && (newResult.files = []);
+        const { dirs = [], files = [] } = newResult;
         const stats = currStats.filter(s => s.filename.startsWith(currPath));
 
         stats.forEach(stat => {
@@ -134,7 +143,7 @@ export function WebDAVFs(props: IProps) {
         return newResult;
       });
     },
-    [currPath, currStats]
+    [currPath, currStats, multiple]
   );
 
   const onPathChange = useCallback((path: string, historyPathsIdx: number) => {
@@ -144,7 +153,9 @@ export function WebDAVFs(props: IProps) {
 
   const ctx: WebDAVCtx = useMemo(
     () => ({
+      props: finalProps,
       data: currStats,
+      currPath,
       isLoading,
       historyPaths,
       onItemClick,
@@ -152,7 +163,9 @@ export function WebDAVFs(props: IProps) {
       onRowSelectionChange,
     }),
     [
+      currPath,
       currStats,
+      finalProps,
       historyPaths,
       isLoading,
       onItemClick,
@@ -172,9 +185,9 @@ export function WebDAVFs(props: IProps) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent
-        className="flex h-[80vh] w-[90vw] max-w-[600px] flex-col md:h-[65vh] md:min-h-[680px]"
+        className="flex h-[80vh] w-[90vw] max-w-[600px] flex-col md:h-[65vh] md:min-h-[700px]"
         onOpenAutoFocus={e => e.preventDefault()}
         onEscapeKeyDown={e => e.preventDefault()}
       >
@@ -183,9 +196,9 @@ export function WebDAVFs(props: IProps) {
             WebDAV File Explorer
           </DialogTitle>
           <DialogDescription className="px-1 text-left">
-            {clientId
+            {client
               ? 'select/edit remote dirs and files.'
-              : 'select a WebDAV server to browse.'}
+              : 'select a WebDAV server to explore.'}
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-1 flex-col overflow-auto">

@@ -3,30 +3,56 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { toHumanReadableSize } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import { ArrowUpDownIcon, FileIcon, FolderIcon } from 'lucide-react';
+import {
+  ArrowUpDownIcon,
+  FileArchiveIcon,
+  FileAudioIcon,
+  FileIcon,
+  FileImageIcon,
+  FileTextIcon,
+  FileVideoIcon,
+  FolderIcon,
+} from 'lucide-react';
 import { FileStat } from 'webdav';
+
+const ARCHIVE_FILES = [
+  '.zip',
+  '.7z',
+  '.rar',
+  '.tar',
+  '.gz',
+  '.bz2',
+  '.xz',
+  '.var',
+];
 
 export const columns: ColumnDef<FileStat>[] = [
   {
     id: 'select',
     size: 40,
-    header: ({ table }) => (
-      <div className="flex h-full w-full items-center justify-center">
-        <Checkbox
-          aria-label="Select all"
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && 'indeterminate')
-          }
-          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
-        />
-      </div>
-    ),
+    header: ({ table }) => {
+      const { props } = table.options.meta?.webdavCtx || {};
+      if (!props?.multiple) return null;
+
+      return (
+        <div className="flex h-full w-full items-center justify-center">
+          <Checkbox
+            aria-label="Select all"
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && 'indeterminate')
+            }
+            onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+          />
+        </div>
+      );
+    },
     cell({ row }) {
       return (
         <div className="flex h-full w-full items-center justify-center">
           <Checkbox
             aria-label="Select row"
+            disabled={!row.getCanSelect()}
             onClick={e => e.stopPropagation()}
             checked={row.getIsSelected()}
             onCheckedChange={value => row.toggleSelected(!!value)}
@@ -51,8 +77,16 @@ export const columns: ColumnDef<FileStat>[] = [
       );
     },
     cell({ row }) {
-      const { type, basename } = row.original;
-      const Icon = type === 'directory' ? FolderIcon : FileIcon;
+      const { mime, type, basename } = row.original;
+      let Icon = type === 'directory' ? FolderIcon : FileIcon;
+
+      if (mime?.includes('image')) Icon = FileImageIcon;
+      if (mime?.includes('video')) Icon = FileVideoIcon;
+      if (mime?.includes('audio')) Icon = FileAudioIcon;
+      if (basename.endsWith('.txt')) Icon = FileTextIcon;
+      if (ARCHIVE_FILES.some(format => basename.toLowerCase().endsWith(format)))
+        Icon = FileArchiveIcon;
+
       return (
         <div className="flex items-center">
           <Icon size={16} className="mr-2 shrink-0" />

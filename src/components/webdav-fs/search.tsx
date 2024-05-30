@@ -1,15 +1,21 @@
 import { Input } from '@/components/ui/input';
 import { Table } from '@tanstack/table-core';
 import { SearchIcon } from 'lucide-react';
+import { useEffect } from 'react';
 import { FileStat } from 'webdav';
 
 interface IProps {
   table: Table<FileStat>;
+  currPath: string;
 }
 
 export function Search(props: IProps) {
-  const { table } = props;
+  const { table, currPath } = props;
   const statName = table.getColumn('basename');
+
+  useEffect(() => {
+    currPath && statName?.setFilterValue('');
+  }, [currPath, statName]);
 
   return (
     <div className="relative w-1/3">

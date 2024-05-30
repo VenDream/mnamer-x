@@ -27,7 +27,12 @@ export function WebDAV() {
           <CardDescription>task input</CardDescription>
         </CardHeader>
         <CardContent>
-          <WebDAVFs selected={data} onSelect={setData}>
+          <WebDAVFs
+            mode="all"
+            multiple={true}
+            selected={data}
+            onSelect={setData}
+          >
             <Button variant="outline">
               <CirclePlusIcon size={16} className="mr-2"></CirclePlusIcon>
               File Source
