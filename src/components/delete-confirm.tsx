@@ -8,6 +8,7 @@ import { Trash2Icon } from 'lucide-react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
 interface IProps extends PropsWithChildren<any> {
+  icon?: ReactNode;
   title?: ReactNode;
   onConfirm?: () => void;
 }
@@ -21,7 +22,7 @@ export function DeleteConfirm(props: IProps) {
       <PopoverContent className="w-auto" collisionPadding={20}>
         <div className="space-y-4">
           <h1 className="flex items-center gap-2 text-sm">
-            <Trash2Icon size={16}></Trash2Icon>
+            {props.icon || <Trash2Icon size={16}></Trash2Icon>}
             {props.title || 'Confirm to delete ?'}
           </h1>
           <div className="flex justify-between gap-3">

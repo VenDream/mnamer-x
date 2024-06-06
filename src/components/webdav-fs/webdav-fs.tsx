@@ -17,10 +17,11 @@ import { create as createWebDAVClient } from '@/lib/webdav-client';
 import { useStore } from '@/store';
 import cloneDeep from 'lodash.clonedeep';
 import { HardDriveIcon, InfoIcon, LinkIcon } from 'lucide-react';
-import {
+import React, {
   PropsWithChildren,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useState,
 } from 'react';
@@ -42,17 +43,25 @@ export interface IProps extends PropsWithChildren<any> {
   onSelect?: (result: SelectResult) => void;
 }
 
+export interface WebDAVFsHandle {
+  cleaerSelection: () => void;
+}
+
 const defaultProps: IProps = {
   mode: 'all',
   multiple: true,
 };
 
-export function WebDAVFs(props: IProps) {
+const WebDAVFsFunc: React.ForwardRefRenderFunction<WebDAVFsHandle, IProps> = (
+  props,
+  forwardedRef
+) => {
   const finalProps = useMemo(() => ({ ...defaultProps, ...props }), [props]);
   const { multiple, selected, onSelect } = finalProps;
   const webdavs = useStore(state => state.settings.webdav);
   const davServers = Object.values(webdavs);
 
+  const [open, setOpen] = useState(false);
   const [clientId, setClientId] = useState(selected?.clientId || -1);
   const [client, setClient] = useState<WebDAVClient | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +76,7 @@ export function WebDAVFs(props: IProps) {
     }
   );
 
-  const initilize = useCallback(() => {
+  const initialize = useCallback(() => {
     if (clientId < 0) return;
 
     const clientOpts = webdavs[clientId];
@@ -175,16 +184,32 @@ export function WebDAVFs(props: IProps) {
   );
 
   useEffect(() => {
-    initilize();
-  }, [initilize]);
+    initialize();
+  }, [initialize]);
 
   useEffect(() => {
     if (!client) return;
     currPath && listDir();
   }, [client, currPath, listDir]);
 
+  useImperativeHandle(forwardedRef, () => ({
+    cleaerSelection: () => {
+      setClientId(-1);
+      setClient(null);
+      setIsLoading(false);
+      setCurrPath('/');
+      setHistoryPaths([]);
+      setCurrStats([]);
+      setResult({
+        clientId: -1,
+        dirs: [],
+        files: [],
+      });
+    },
+  }));
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent
         className="flex h-[80vh] w-[90vw] max-w-[600px] flex-col md:h-[65vh] md:min-h-[700px]"
@@ -263,8 +288,12 @@ export function WebDAVFs(props: IProps) {
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 function isContainsStat(arr: FileStat[], stat: FileStat) {
   return arr.findIndex(s => s.filename === stat.filename) >= 0;
 }
+
+const WebDAVFs = React.forwardRef(WebDAVFsFunc);
+
+export { WebDAVFs };

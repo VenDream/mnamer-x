@@ -1,5 +1,6 @@
 'use client';
 
+import { DeleteConfirm } from '@/components/delete-confirm';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -9,10 +10,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { SelectResult, WebDAVFs } from '@/components/webdav-fs';
-import { CirclePlusIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { WebDAVFsHandle } from '@/components/webdav-fs/webdav-fs';
+import { CirclePlusIcon, XIcon } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 export function WebDAV() {
+  const selectorRef = useRef<WebDAVFsHandle>(null);
   const [data, setData] = useState<SelectResult>();
 
   useEffect(() => {
@@ -27,17 +31,33 @@ export function WebDAV() {
           <CardDescription>task input</CardDescription>
         </CardHeader>
         <CardContent>
-          <WebDAVFs
-            mode="all"
-            multiple={true}
-            selected={data}
-            onSelect={setData}
-          >
-            <Button variant="outline">
-              <CirclePlusIcon size={16} className="mr-2"></CirclePlusIcon>
-              File Source
-            </Button>
-          </WebDAVFs>
+          <div className="space-x-2">
+            <WebDAVFs
+              mode="all"
+              multiple={true}
+              selected={data}
+              onSelect={setData}
+              ref={selectorRef}
+            >
+              <Button variant="outline">
+                <CirclePlusIcon size={16} className="mr-2" />
+                File Source
+              </Button>
+            </WebDAVFs>
+            <DeleteConfirm
+              title="Confirm to clear selection ?"
+              onConfirm={() => {
+                setData(undefined);
+                selectorRef.current?.cleaerSelection();
+                toast.success('Selection cleared');
+              }}
+            >
+              <Button variant="outline">
+                <XIcon size={16} className="mr-2" />
+                Clear
+              </Button>
+            </DeleteConfirm>
+          </div>
         </CardContent>
       </Card>
       <Card className="w-full md:max-w-screen-lg">

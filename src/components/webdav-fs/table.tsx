@@ -29,13 +29,23 @@ import { Search } from './search';
 
 const PAGE_SIZE = 10;
 
+export interface TableHandle {
+  clearSelection: () => void;
+}
+
 export function Table() {
   const ctx = useContext(WebDAVContext) as WebDAVCtx;
   const { props, isLoading, onItemClick, onRowSelectionChange } = ctx;
-  const { mode, multiple } = props;
+  const { mode, multiple, selected } = props;
 
   const [data, setData] = useState(ctx.data);
-  const [rowSelection, setRowSelection] = useState({});
+  const [rowSelection, setRowSelection] = useState(() => {
+    const { dirs = [], files = [] } = selected || {};
+    const selection: Record<string, boolean> = {};
+    dirs.forEach(s => (selection[s.filename] = true));
+    files.forEach(s => (selection[s.filename] = true));
+    return selection;
+  });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 

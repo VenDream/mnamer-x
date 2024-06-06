@@ -3,28 +3,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { toHumanReadableSize } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import {
-  ArrowUpDownIcon,
-  FileArchiveIcon,
-  FileAudioIcon,
-  FileIcon,
-  FileImageIcon,
-  FileTextIcon,
-  FileVideoIcon,
-  FolderIcon,
-} from 'lucide-react';
+import { ArrowUpDownIcon } from 'lucide-react';
 import { FileStat } from 'webdav';
-
-const ARCHIVE_FILES = [
-  '.zip',
-  '.7z',
-  '.rar',
-  '.tar',
-  '.gz',
-  '.bz2',
-  '.xz',
-  '.var',
-];
+import { getStatItemIcon } from './stat-icon';
 
 export const columns: ColumnDef<FileStat>[] = [
   {
@@ -77,15 +58,8 @@ export const columns: ColumnDef<FileStat>[] = [
       );
     },
     cell({ row }) {
-      const { mime, type, basename } = row.original;
-      let Icon = type === 'directory' ? FolderIcon : FileIcon;
-
-      if (mime?.includes('image')) Icon = FileImageIcon;
-      if (mime?.includes('video')) Icon = FileVideoIcon;
-      if (mime?.includes('audio')) Icon = FileAudioIcon;
-      if (basename.endsWith('.txt')) Icon = FileTextIcon;
-      if (ARCHIVE_FILES.some(format => basename.toLowerCase().endsWith(format)))
-        Icon = FileArchiveIcon;
+      const { basename } = row.original;
+      const Icon = getStatItemIcon(row.original);
 
       return (
         <div className="flex items-center">
