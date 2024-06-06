@@ -224,7 +224,7 @@ export function WebDAVFs(props: IProps) {
                         {server.name}
                       </p>
                     </div>
-                    <div className="hidden h-[2.5em]  text-xs text-muted-foreground md:flex">
+                    <div className="hidden h-[2.5em] text-xs text-muted-foreground md:flex">
                       <LinkIcon
                         size={12}
                         className="relative top-[2px] mr-3 shrink-0"

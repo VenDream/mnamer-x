@@ -61,12 +61,12 @@ export function ResultActions(props: IProps) {
           output={formatted}
           modified={result.modified}
           onSave={modified => {
-            updateTaskResult(tid, row.index, { modified });
+            updateTaskResult(tid as number, row.index, { modified });
           }}
           onClose={() => setIsMenuOpen(false)}
         >
           <DropdownMenuItem
-            className="cursor-pointer text-xs  md:text-sm"
+            className="cursor-pointer text-xs md:text-sm"
             onSelect={e => e.preventDefault()}
           >
             <SquarePenIcon size={14} className="mr-1"></SquarePenIcon>
@@ -75,7 +75,7 @@ export function ResultActions(props: IProps) {
         </EditOutput>
         <TmdbInfo data={tmdbData} onClose={() => setIsMenuOpen(false)}>
           <DropdownMenuItem
-            className="cursor-pointer text-xs  md:text-sm"
+            className="cursor-pointer text-xs md:text-sm"
             onSelect={e => e.preventDefault()}
           >
             <FilmIcon size={14} className="mr-1"></FilmIcon>
