@@ -1,9 +1,9 @@
-import { InputData } from '@/app/tasks/manual';
+import { ManualInput } from '@/app/tasks/manual';
 import chatModel from '@/lib/llm-model';
 import * as tmdb from '@/lib/tmdb-api';
 import { buildErrorResponse, buildSuccessResponse } from '@/lib/utils';
 import { SYSTEM_AGENT_PROMPT, TEST_INPUT } from '@/prompts';
-import { ProcessResult, TMDBData } from '@/types';
+import { InputData, ProcessResult, TASK_TYPE, TMDBData } from '@/types';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { CustomOutputParser } from './output-parser';
 
@@ -17,7 +17,7 @@ const prompt = ChatPromptTemplate.fromMessages([
 const llmChain = prompt.pipe(chatModel).pipe(outputParser);
 
 export async function POST(req: Request) {
-  const { files = [] } = (await req.json()) as InputData;
+  const { type, files = [] } = (await req.json()) as InputData;
   const input = files.map(file => file.filename).join('\n');
   const output: ProcessResult[] = [];
 
@@ -28,35 +28,42 @@ export async function POST(req: Request) {
       input: input || TEST_INPUT,
       format_instructions: outputParser.getFormatInstructions(),
     });
-    for (const [idx, data] of Object.entries(parsedMeta)) {
-      let result: Awaited<ReturnType<typeof tmdb.searchMedia>> | null = null;
-      let mediaDetail: TMDBData | null = null;
-      const { year, keyword } = files[+idx] || {};
 
-      // try name first
-      if (data.name) {
-        result = await tmdb.searchMedia(data.name, year);
-      }
-      // then try keyword
-      if (!mediaDetail && keyword) {
-        result = await tmdb.searchMedia(keyword, year);
-      }
+    // Manual
+    if (type === TASK_TYPE.MANUAL) {
+      for (const [idx, data] of Object.entries(parsedMeta)) {
+        const file = files[+idx] as ManualInput['files'][number];
+        const { year, keyword } = file || {};
 
-      if (result?.type === 'tv') {
-        mediaDetail = await tmdb.getTvDetail(result.id);
-      } else if (result?.type === 'movie') {
-        mediaDetail = await tmdb.getMovieDetail(result.id);
-      }
+        let mediaDetail: TMDBData | null = null;
+        let result: Awaited<ReturnType<typeof tmdb.searchMedia>> | null = null;
 
-      output.push({
-        input: data.original,
-        output: {
-          meta: data,
-          tmdb: mediaDetail,
-        },
-        modified: '',
-      });
+        // try name first
+        if (data.name) {
+          result = await tmdb.searchMedia(data.name, year);
+        }
+        // then try keyword
+        if (!mediaDetail && keyword) {
+          result = await tmdb.searchMedia(keyword, year);
+        }
+
+        if (result?.type === 'tv') {
+          mediaDetail = await tmdb.getTvDetail(result?.id);
+        } else if (result?.type === 'movie') {
+          mediaDetail = await tmdb.getMovieDetail(result?.id);
+        }
+
+        output.push({
+          input: data.original,
+          output: {
+            meta: data,
+            tmdb: mediaDetail,
+          },
+          modified: '',
+        });
+      }
     }
+
     return Response.json(buildSuccessResponse(output));
   } catch (err) {
     const error = err as Error;

@@ -53,8 +53,8 @@ export function Table() {
 
   const isRowCanSelect = (row: Row<FileStat>) => {
     const { type } = row.original;
-    if (mode === 'dirs' && type === 'file') return false;
-    if (mode === 'files' && type === 'directory') return false;
+    if (mode === 'directory' && type === 'file') return false;
+    if (mode === 'file' && type === 'directory') return false;
     return true;
   };
 

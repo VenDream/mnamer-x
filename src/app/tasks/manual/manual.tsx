@@ -50,6 +50,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 const formSchema = z.object({
+  type: z.literal(TASK_TYPE.MANUAL),
   files: z
     .array(
       z.object({
@@ -60,7 +61,7 @@ const formSchema = z.object({
     )
     .min(1, { message: 'Please input at least one file.' }),
 });
-export type InputData = z.infer<typeof formSchema>;
+export type ManualInput = z.infer<typeof formSchema>;
 
 export function Manual() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,9 +69,10 @@ export function Manual() {
   const addTask = useStore(state => state.addTask);
   const results = useProcessResults(tid);
 
-  const form = useForm<InputData>({
+  const form = useForm<ManualInput>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      type: TASK_TYPE.MANUAL,
       files: [{ year: '', keyword: '', filename: '' }],
     },
   });
@@ -97,7 +99,7 @@ export function Manual() {
     remove(idx);
   };
 
-  const submit = async (values: InputData) => {
+  const submit = async (values: ManualInput) => {
     try {
       setIsSubmitting(true);
       const start = getCurrentDatetime();

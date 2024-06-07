@@ -1,4 +1,4 @@
-import { InputData } from '@/app/tasks/manual';
+import { InputData } from '@/types';
 import axios, { AxiosRequestConfig } from 'axios';
 
 const instance = axios.create({

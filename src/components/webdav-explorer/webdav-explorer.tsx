@@ -38,12 +38,12 @@ export interface SelectResult {
 
 export interface IProps extends PropsWithChildren<any> {
   selected?: SelectResult;
-  mode?: 'dirs' | 'files' | 'all';
+  mode?: FileStat['type'] | 'all';
   multiple?: boolean;
   onSelect?: (result: SelectResult) => void;
 }
 
-export interface WebDAVFsHandle {
+export interface WebDAVExplorerHandle {
   cleaerSelection: () => void;
 }
 
@@ -52,12 +52,12 @@ const defaultProps: IProps = {
   multiple: true,
 };
 
-const WebDAVFsFunc: React.ForwardRefRenderFunction<WebDAVFsHandle, IProps> = (
-  props,
-  forwardedRef
-) => {
+const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
+  WebDAVExplorerHandle,
+  IProps
+> = (props, forwardedRef) => {
   const finalProps = useMemo(() => ({ ...defaultProps, ...props }), [props]);
-  const { multiple, selected, onSelect } = finalProps;
+  const { mode, multiple, selected, onSelect } = finalProps;
   const webdavs = useStore(state => state.settings.webdav);
   const davServers = Object.values(webdavs);
 
@@ -75,6 +75,15 @@ const WebDAVFsFunc: React.ForwardRefRenderFunction<WebDAVFsHandle, IProps> = (
       files: [],
     }
   );
+
+  const isOk = useMemo(() => {
+    const { dirs = [], files = [] } = result;
+    return (
+      (mode === 'all' && dirs.length + files.length > 0) ||
+      (mode === 'directory' && dirs.length > 0) ||
+      (mode === 'file' && files.length > 0)
+    );
+  }, [mode, result]);
 
   const initialize = useCallback(() => {
     if (clientId < 0) return;
@@ -192,6 +201,10 @@ const WebDAVFsFunc: React.ForwardRefRenderFunction<WebDAVFsHandle, IProps> = (
     currPath && listDir();
   }, [client, currPath, listDir]);
 
+  useEffect(() => {
+    selected && setResult(selected);
+  }, [selected]);
+
   useImperativeHandle(forwardedRef, () => ({
     cleaerSelection: () => {
       setClientId(-1);
@@ -212,7 +225,7 @@ const WebDAVFsFunc: React.ForwardRefRenderFunction<WebDAVFsHandle, IProps> = (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent
-        className="flex h-[80vh] w-[90vw] max-w-[600px] flex-col md:h-[65vh] md:min-h-[700px]"
+        className="flex h-[80vh] w-[90vw] max-w-[800px] flex-col md:h-[65vh] md:min-h-[700px]"
         onOpenAutoFocus={e => e.preventDefault()}
         onEscapeKeyDown={e => e.preventDefault()}
       >
@@ -279,7 +292,11 @@ const WebDAVFsFunc: React.ForwardRefRenderFunction<WebDAVFsHandle, IProps> = (
               <Button variant="outline">Cancel</Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button type="submit" onClick={() => onSelect?.(result)}>
+              <Button
+                type="submit"
+                disabled={!isOk}
+                onClick={() => onSelect?.(result)}
+              >
                 Select
               </Button>
             </DialogClose>
@@ -294,6 +311,6 @@ function isContainsStat(arr: FileStat[], stat: FileStat) {
   return arr.findIndex(s => s.filename === stat.filename) >= 0;
 }
 
-const WebDAVFs = React.forwardRef(WebDAVFsFunc);
+const WebDAVExplorer = React.forwardRef(WebDAVExplorerRenderFunc);
 
-export { WebDAVFs };
+export { WebDAVExplorer };
