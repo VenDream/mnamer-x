@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PropsWithChildren, useState } from 'react';
 
-interface IProps extends PropsWithChildren<any> {
+interface IProps extends PropsWithChildren {
   output: string;
   modified?: string;
   onClose?: () => void;

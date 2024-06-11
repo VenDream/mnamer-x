@@ -29,14 +29,10 @@ import { Search } from './search';
 
 const PAGE_SIZE = 10;
 
-export interface TableHandle {
-  clearSelection: () => void;
-}
-
 export function Table() {
   const ctx = useContext(WebDAVContext) as WebDAVCtx;
   const { props, isLoading, onItemClick, onRowSelectionChange } = ctx;
-  const { mode, multiple, selected } = props;
+  const { mode, multiple, selected, accept } = props;
 
   const [data, setData] = useState(ctx.data);
   const [rowSelection, setRowSelection] = useState(() => {
@@ -52,9 +48,20 @@ export function Table() {
   const prevRowSelection = usePrevious(rowSelection);
 
   const isRowCanSelect = (row: Row<FileStat>) => {
-    const { type } = row.original;
+    const { type, basename } = row.original;
+
+    // type mismatch
     if (mode === 'directory' && type === 'file') return false;
     if (mode === 'file' && type === 'directory') return false;
+
+    // format mismatch
+    if (
+      type === 'file' &&
+      accept &&
+      !accept.some(format => basename.endsWith(format))
+    )
+      return false;
+
     return true;
   };
 

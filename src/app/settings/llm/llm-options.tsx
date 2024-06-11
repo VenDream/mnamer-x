@@ -17,7 +17,7 @@ import { PropsWithChildren, useState } from 'react';
 
 type LLMOptions = LLMSettings['options'];
 
-interface IProps extends PropsWithChildren<any> {
+interface IProps extends PropsWithChildren {
   options: LLMOptions;
   onChange: (options: LLMOptions) => void;
 }

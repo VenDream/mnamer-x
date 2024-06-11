@@ -1,3 +1,4 @@
+import { ARCHIVE_FILES } from '@/constants/file-types';
 import {
   FileArchiveIcon,
   FileAudioIcon,
@@ -8,17 +9,6 @@ import {
   FolderIcon,
 } from 'lucide-react';
 import { FileStat } from 'webdav';
-
-const ARCHIVE_FILES = [
-  '.zip',
-  '.7z',
-  '.rar',
-  '.tar',
-  '.gz',
-  '.bz2',
-  '.xz',
-  '.var',
-];
 
 export function getStatItemIcon(stat: FileStat) {
   const { type, mime, basename } = stat;

@@ -7,7 +7,7 @@ import {
 import { Trash2Icon } from 'lucide-react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
-interface IProps extends PropsWithChildren<any> {
+interface IProps extends PropsWithChildren {
   icon?: ReactNode;
   title?: ReactNode;
   onConfirm?: () => void;

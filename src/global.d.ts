@@ -7,3 +7,9 @@ declare module '@tanstack/table-core' {
     webdavCtx?: WebDAVCtx;
   }
 }
+
+declare module 'react' {
+  declare function IForwardRef<T, P = {}>(
+    render: (props: P, ref: React.Ref<T>) => ReactElement | null
+  ): (props: P & React.RefAttributes<T>) => ReactElement | null;
+}

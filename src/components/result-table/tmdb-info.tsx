@@ -21,7 +21,7 @@ import { PropsWithChildren, useState } from 'react';
 const DEBUG_BACKDROP = 'https://placehold.co/1280x720?text=backdrop';
 const DEBUG_POSTER = 'https://placehold.co/500x750?text=poster';
 
-interface IProps extends PropsWithChildren<any> {
+interface IProps extends PropsWithChildren {
   data: TMDBData;
   onClose?: () => void;
 }

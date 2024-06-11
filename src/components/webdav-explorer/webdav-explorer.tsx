@@ -36,10 +36,12 @@ export interface SelectResult {
   files: FileStat[];
 }
 
-export interface IProps extends PropsWithChildren<any> {
+export interface IProps extends PropsWithChildren {
   selected?: SelectResult;
   mode?: FileStat['type'] | 'all';
+  accept?: string[];
   multiple?: boolean;
+  resetTips?: string;
   onSelect?: (result: SelectResult) => void;
 }
 
@@ -52,12 +54,18 @@ const defaultProps: IProps = {
   multiple: true,
 };
 
-const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
-  WebDAVExplorerHandle,
-  IProps
-> = (props, forwardedRef) => {
+const defaultResult: SelectResult = {
+  clientId: -1,
+  dirs: [],
+  files: [],
+};
+
+function WebDAVExplorerPrimitive(
+  props: IProps,
+  forwardedRef: React.ForwardedRef<WebDAVExplorerHandle>
+) {
   const finalProps = useMemo(() => ({ ...defaultProps, ...props }), [props]);
-  const { mode, multiple, selected, onSelect } = finalProps;
+  const { mode, multiple, selected, resetTips, onSelect } = finalProps;
   const webdavs = useStore(state => state.settings.webdav);
   const davServers = Object.values(webdavs);
 
@@ -68,13 +76,7 @@ const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
   const [currPath, setCurrPath] = useState('/');
   const [historyPaths, setHistoryPaths] = useState<FileStat[]>([]);
   const [currStats, setCurrStats] = useState<FileStat[]>([]);
-  const [result, setResult] = useState<SelectResult>(
-    selected || {
-      clientId,
-      dirs: [],
-      files: [],
-    }
-  );
+  const [result, setResult] = useState<SelectResult>(selected || defaultResult);
 
   const isOk = useMemo(() => {
     const { dirs = [], files = [] } = result;
@@ -93,6 +95,14 @@ const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
     setClient(client);
     setResult(result => ({ ...result, clientId }));
     setHistoryPaths([
+      {
+        filename: '',
+        basename: 'Servers',
+        size: 0,
+        etag: '',
+        lastmod: '',
+        type: 'directory',
+      },
       {
         filename: '/',
         basename: clientOpts.name,
@@ -118,6 +128,18 @@ const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
       setIsLoading(false);
     }
   }, [client, currPath]);
+
+  const reset = useCallback(() => {
+    setClientId(-1);
+    setClient(null);
+    setIsLoading(false);
+    setCurrPath('/');
+    setHistoryPaths([]);
+    setCurrStats([]);
+    setResult(defaultResult);
+    onSelect?.(defaultResult);
+    toast.info(resetTips || 'Data have been reset');
+  }, [onSelect, resetTips]);
 
   const onItemClick = useCallback((stat: FileStat) => {
     const { type } = stat;
@@ -164,10 +186,17 @@ const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
     [currPath, currStats, multiple]
   );
 
-  const onPathChange = useCallback((path: string, historyPathsIdx: number) => {
-    setCurrPath(path);
-    setHistoryPaths(prev => prev.slice(0, historyPathsIdx + 1));
-  }, []);
+  const onPathChange = useCallback(
+    (path: string, historyPathsIdx: number) => {
+      if (historyPathsIdx === 0) {
+        reset();
+      } else {
+        setCurrPath(path);
+        setHistoryPaths(prev => prev.slice(0, historyPathsIdx + 1));
+      }
+    },
+    [reset]
+  );
 
   const ctx: WebDAVCtx = useMemo(
     () => ({
@@ -206,19 +235,7 @@ const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
   }, [selected]);
 
   useImperativeHandle(forwardedRef, () => ({
-    cleaerSelection: () => {
-      setClientId(-1);
-      setClient(null);
-      setIsLoading(false);
-      setCurrPath('/');
-      setHistoryPaths([]);
-      setCurrStats([]);
-      setResult({
-        clientId: -1,
-        dirs: [],
-        files: [],
-      });
-    },
+    cleaerSelection: reset,
   }));
 
   return (
@@ -235,7 +252,7 @@ const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
           </DialogTitle>
           <DialogDescription className="px-1 text-left">
             {client
-              ? 'select/edit remote dirs and files.'
+              ? 'select/preview remote dirs and files.'
               : 'select a WebDAV server to explore.'}
           </DialogDescription>
         </DialogHeader>
@@ -305,12 +322,13 @@ const WebDAVExplorerRenderFunc: React.ForwardRefRenderFunction<
       </DialogContent>
     </Dialog>
   );
-};
+}
 
 function isContainsStat(arr: FileStat[], stat: FileStat) {
   return arr.findIndex(s => s.filename === stat.filename) >= 0;
 }
 
-const WebDAVExplorer = React.forwardRef(WebDAVExplorerRenderFunc);
+const forwardRef = React.forwardRef as typeof React.IForwardRef;
+const WebDAVExplorer = forwardRef(WebDAVExplorerPrimitive);
 
 export { WebDAVExplorer };

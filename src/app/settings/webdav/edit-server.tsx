@@ -37,7 +37,7 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 type FormData = FormSchema;
 
-interface IProps extends PropsWithChildren<any> {
+interface IProps extends PropsWithChildren {
   id?: number;
 }
 

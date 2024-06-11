@@ -53,7 +53,7 @@ export const columns: ColumnDef<FileStat>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Name
-          <ArrowUpDownIcon size={16} className="ml-2" />
+          <ArrowUpDownIcon size={16} className="ml-1" />
         </Button>
       );
     },
@@ -63,7 +63,7 @@ export const columns: ColumnDef<FileStat>[] = [
 
       return (
         <div className="flex items-center">
-          <Icon size={16} className="mr-2 shrink-0" />
+          <Icon size={16} className="mr-1 shrink-0" />
           <p className="line-clamp-1 break-all" title={basename}>
             {basename}
           </p>

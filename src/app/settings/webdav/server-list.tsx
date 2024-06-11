@@ -30,16 +30,16 @@ export function ServerList() {
       <TableBody>
         {webdavs.length > 0 ? (
           webdavs.map(webdav => (
-            <TableRow key={webdav.id}>
-              <TableCell>
-                <p className="line-clamp-1 break-all">{webdav.name}</p>
-              </TableCell>
-              <TableCell>
-                <p className="line-clamp-1 break-all">{webdav.remoteURL}</p>
-              </TableCell>
-              <TableCell>
-                <div className="flex justify-center gap-2">
-                  <EditServer id={webdav.id}>
+            <EditServer id={webdav.id} key={webdav.id}>
+              <TableRow className="cursor-pointer">
+                <TableCell>
+                  <p className="line-clamp-1 break-all">{webdav.name}</p>
+                </TableCell>
+                <TableCell>
+                  <p className="line-clamp-1 break-all">{webdav.remoteURL}</p>
+                </TableCell>
+                <TableCell>
+                  <div className="flex justify-center gap-2">
                     <Button
                       variant="ghost"
                       size="icon"
@@ -48,20 +48,21 @@ export function ServerList() {
                     >
                       <PencilIcon size={14} />
                     </Button>
-                  </EditServer>
-                  <DeleteConfirm onConfirm={() => removeWebDAV(webdav.id)}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      title="delete"
-                      className="h-6 w-6 hover:text-primary"
-                    >
-                      <Trash2Icon size={14} />
-                    </Button>
-                  </DeleteConfirm>
-                </div>
-              </TableCell>
-            </TableRow>
+                    <DeleteConfirm onConfirm={() => removeWebDAV(webdav.id)}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        title="delete"
+                        onClick={e => e.stopPropagation()}
+                        className="h-6 w-6 hover:text-primary"
+                      >
+                        <Trash2Icon size={14} />
+                      </Button>
+                    </DeleteConfirm>
+                  </div>
+                </TableCell>
+              </TableRow>
+            </EditServer>
           ))
         ) : (
           <TableRow>

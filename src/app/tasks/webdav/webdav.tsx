@@ -11,16 +11,22 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import {
   SelectResult,
   WebDAVExplorer,
   WebDAVExplorerHandle,
   getStatItemIcon,
 } from '@/components/webdav-explorer';
+import { VIDEO_FILES } from '@/constants/file-types';
 import { cn } from '@/lib/utils';
 import { produce } from 'immer';
-import { CirclePlusIcon, CircleXIcon, XIcon } from 'lucide-react';
+import { CirclePlusIcon, CircleXIcon, InfoIcon, XIcon } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
 import { FileStat } from 'webdav';
 
 export function WebDAV() {
@@ -46,16 +52,26 @@ export function WebDAV() {
   }, [data]);
 
   const ItemList = useCallback(
-    (props: { label: string; list: FileStat[] }) => {
-      const { label, list } = props;
+    (props: { label: string; tips?: string; list: FileStat[] }) => {
+      const { label, tips, list } = props;
       if (list.length === 0) return null;
 
       return (
         <>
-          <span className="col-span-1 flex h-8 items-center text-sm">
+          <div className="flex h-8 items-center text-sm">
             {label}
-          </span>
-          <div className="col-span-9 flex flex-wrap gap-4">
+            {tips && (
+              <TooltipProvider>
+                <Tooltip delayDuration={100}>
+                  <TooltipTrigger>
+                    <InfoIcon size={16} className="ml-1" />
+                  </TooltipTrigger>
+                  <TooltipContent>{tips}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-4">
             {list.map(item => {
               const Icon = getStatItemIcon(item);
               return (
@@ -64,10 +80,12 @@ export function WebDAV() {
                   size="sm"
                   variant="outline"
                   title={item.basename}
-                  className="group relative flex items-center"
+                  className="group relative flex max-w-[180px] items-center"
                 >
                   <Icon size={16} className="mr-1 shrink-0" />
-                  <p className="line-clamp-1">{item.basename}</p>
+                  <p className="overflow-hidden text-ellipsis whitespace-nowrap">
+                    {item.basename}
+                  </p>
                   <CircleXIcon
                     size={18}
                     onClick={() => removeItem(item)}
@@ -102,6 +120,8 @@ export function WebDAV() {
               selected={data}
               onSelect={setData}
               ref={selectorRef}
+              accept={VIDEO_FILES}
+              resetTips="File sources cleared"
             >
               <Button variant="outline">
                 <CirclePlusIcon size={16} className="mr-2" />
@@ -112,9 +132,7 @@ export function WebDAV() {
               <DeleteConfirm
                 title="Confirm to clear all file sources ?"
                 onConfirm={() => {
-                  setData(undefined);
                   selectorRef.current?.cleaerSelection();
-                  toast.success('All file sources cleared');
                 }}
               >
                 <Button variant="outline">
@@ -128,8 +146,12 @@ export function WebDAV() {
           {isEmpty ? (
             <p className="text-sm text-muted-foreground">No file source.</p>
           ) : (
-            <div className="grid grid-cols-10 gap-4">
-              <ItemList label="Dirs" list={dirs} />
+            <div className="grid grid-cols-[50px_1fr] gap-2 md:gap-4">
+              <ItemList
+                label="Dirs"
+                list={dirs}
+                tips="Automatically select video files within the directory (non-recursive)"
+              />
               <ItemList label="Files" list={files} />
             </div>
           )}
