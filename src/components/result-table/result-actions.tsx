@@ -43,7 +43,7 @@ export function ResultActions(props: IProps) {
           variant="ghost"
           className="m-auto flex h-6 w-8 items-center justify-center p-1"
         >
-          <DotsHorizontalIcon></DotsHorizontalIcon>
+          <DotsHorizontalIcon />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -54,7 +54,7 @@ export function ResultActions(props: IProps) {
             toast.success('Copied to clipboard');
           }}
         >
-          <CopyIcon size={14} className="mr-1"></CopyIcon>
+          <CopyIcon size={14} className="mr-1" />
           Copy output
         </DropdownMenuItem>
         <EditOutput
@@ -69,7 +69,7 @@ export function ResultActions(props: IProps) {
             className="cursor-pointer text-xs md:text-sm"
             onSelect={e => e.preventDefault()}
           >
-            <SquarePenIcon size={14} className="mr-1"></SquarePenIcon>
+            <SquarePenIcon size={14} className="mr-1" />
             Edit
           </DropdownMenuItem>
         </EditOutput>
@@ -78,7 +78,7 @@ export function ResultActions(props: IProps) {
             className="cursor-pointer text-xs md:text-sm"
             onSelect={e => e.preventDefault()}
           >
-            <FilmIcon size={14} className="mr-1"></FilmIcon>
+            <FilmIcon size={14} className="mr-1" />
             View TMDB info
           </DropdownMenuItem>
         </TmdbInfo>

@@ -1,34 +1,27 @@
 export const SYSTEM_AGENT_PROMPT = `
-你是一个专业的影视数据库工具，擅长通过文件名识别其中包含的媒体元信息。
+You are a professional film and TV database tool, skilled in identifying media metadata from filenames.
 
-现在，给定一批文件名（每一行代表一个文件），你需要识别出其中包含的媒体元信息。
-识别规则：
-- "第x季"指的是季度，不算作名称
-- "0x"一般指的是集数，而非季数
-- 电影名/剧名可能带有描述语，如：xx:xx ，注意要包括进去
-- 每一个输入必须要有一个输出
+Given a batch of filenames (each line representing a file), you need to extract the media metadata.
+Identification rules:
+- "第x季" refers to the season and should not be considered part of the title.
+- "0x" usually indicates the episode number, not the season.
+- Movie/TV show titles may include descriptive phrases, such as "xx:xx", be sure to include these.
+- Each input must have an output.
 
-你需要以JSON数组的格式返回，每个JSON对象的格式如下：
+You need to return the results in JSON array format, where each JSON object follows this structure:
 {{
-  "original": "xx"   // string, 原文件名
-  "name": "xx",      // string, 电影名/剧名，不能带有点号，换成空格，无法识别则赋值为空字符串
-  "year": "20xx",    // string, 年份，无法识别则赋值为空字符串
-  "season": 1,       // number, 剧集季数，无法识别则赋值为1
-  "episode": 0,      // number, 剧集集数，无法识别则赋值为1
-  "resolution": "4K" // string, 清晰度或分辨率, 无法识别则赋值为空字符串
-  "misc": "xx.xx.xx" // string, 格式/编码/版本/压制组等其他信息, 使用a.b.c的格式，无法识别则赋值为空字符串
-  "format": "mp4"    // string, 文件后缀名，无法识别则赋值为空字符串
+  "original": "xx",   // string, original filename
+  "name": "xx",       // string, movie/TV show title; replace dots with spaces. If unidentifiable, set to an empty string.
+  "year": "20xx",     // string, year; if unidentifiable, set to an empty string.
+  "season": 1,        // number, season number; if unidentifiable, set to 1.
+  "episode": 0,       // number, episode number; if unidentifiable, set to 1.
+  "resolution": "4K", // string, resolution; if unidentifiable, set to an empty string.
+  "misc": "xx.xx.xx", // string, other information such as format/codec/version/group, in a.b.c format; if unidentifiable, set to an empty string.
+  "format": "mp4"     // string, file extension; if unidentifiable, set to an empty string.
 }}
 
-现在开始识别以下文件名：
+Now, extract the metadata from the following filenames:
 {input}
 
 {format_instructions}
-`;
-
-export const TEST_INPUT = `
-A.Gentleman.in.Moscow.S01E03.The.Last.Rostov.1080p.SHO.WEB-DL.DD.5.1.H.264-BlackTV.mkv
-漫长的季节_05_4K.mp4
-Avatar.2009.Extended.UHD.Re-Grade.2160p.x265.10bit.HDR.2Audio.mUHD-FRDS.mkv
-[SRENIX] 推しの子 Oshi no Ko - S01E03 [2160P.HEVC.NF.WEB-DL.DDP2.0].mkv
 `;

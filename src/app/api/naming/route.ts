@@ -1,13 +1,13 @@
-import { ManualInput } from '@/app/tasks/manual';
 import chatModel from '@/lib/llm-model';
-import * as tmdb from '@/lib/tmdb-api';
 import { buildErrorResponse, buildSuccessResponse } from '@/lib/utils';
-import { SYSTEM_AGENT_PROMPT, TEST_INPUT } from '@/prompts';
-import { InputData, ProcessResult, TASK_TYPE, TMDBData } from '@/types';
+import { SYSTEM_AGENT_PROMPT } from '@/prompts';
+import { InputData, ProcessResult, TASK_TYPE } from '@/types';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { execManualTask } from './manual';
 import { CustomOutputParser } from './output-parser';
+import { execWebDAVTask } from './webdav';
 
-if (!chatModel) throw new Error('ERR_LLM_MODEL_NOT_FOUND');
+if (!chatModel) throw new Error('ERR_LLM_INSTANCE_NOT_FOUND');
 
 const outputParser = new CustomOutputParser();
 const prompt = ChatPromptTemplate.fromMessages([
@@ -17,51 +17,32 @@ const prompt = ChatPromptTemplate.fromMessages([
 const llmChain = prompt.pipe(chatModel).pipe(outputParser);
 
 export async function POST(req: Request) {
-  const { type, files = [] } = (await req.json()) as InputData;
+  const inputData: InputData = await req.json();
+  const { type, files = [] } = inputData;
   const input = files.map(file => file.filename).join('\n');
-  const output: ProcessResult[] = [];
+  let output: ProcessResult[] = [];
 
-  console.log('task input: %O', files);
+  console.log('input files: %O', input);
+
+  if (files.length === 0) {
+    return Response.json(buildSuccessResponse(output));
+  }
 
   try {
     const parsedMeta = await llmChain.invoke({
-      input: input || TEST_INPUT,
+      input,
       format_instructions: outputParser.getFormatInstructions(),
     });
 
-    // Manual
-    if (type === TASK_TYPE.MANUAL) {
-      for (const [idx, data] of Object.entries(parsedMeta)) {
-        const file = files[+idx] as ManualInput['files'][number];
-        const { year, keyword } = file || {};
-
-        let mediaDetail: TMDBData | null = null;
-        let result: Awaited<ReturnType<typeof tmdb.searchMedia>> | null = null;
-
-        // try name first
-        if (data.name) {
-          result = await tmdb.searchMedia(data.name, year);
-        }
-        // then try keyword
-        if (!mediaDetail && keyword) {
-          result = await tmdb.searchMedia(keyword, year);
-        }
-
-        if (result?.type === 'tv') {
-          mediaDetail = await tmdb.getTvDetail(result?.id);
-        } else if (result?.type === 'movie') {
-          mediaDetail = await tmdb.getMovieDetail(result?.id);
-        }
-
-        output.push({
-          input: data.original,
-          output: {
-            meta: data,
-            tmdb: mediaDetail,
-          },
-          modified: '',
-        });
-      }
+    switch (type) {
+      case TASK_TYPE.MANUAL:
+        output = await execManualTask(inputData, parsedMeta);
+        break;
+      case TASK_TYPE.WEB_DAV:
+        output = await execWebDAVTask(inputData, parsedMeta);
+        break;
+      default:
+        break;
     }
 
     return Response.json(buildSuccessResponse(output));

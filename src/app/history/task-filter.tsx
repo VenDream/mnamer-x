@@ -63,7 +63,7 @@ export function TaskFilter(props: IProps) {
           onValueChange={type => updateFilter({ type: type as TASK_TYPE })}
         >
           <SelectTrigger>
-            <SelectValue placeholder={TASK_TYPE.MANUAL} />
+            <SelectValue placeholder={TASK_TYPE.ALL} />
           </SelectTrigger>
           <SelectContent>
             {Object.values(TASK_TYPE).map(type => (
@@ -112,7 +112,7 @@ export function TaskFilter(props: IProps) {
           onChange={e =>
             debouncedUpdateFilter({ keyword: e.currentTarget.value })
           }
-        ></Input>
+        />
       </div>
     </div>
   );

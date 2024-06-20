@@ -41,12 +41,13 @@ export type StoreActions = {
     id: number,
     patch: Partial<WebDAVClientOptions>
   ) => void;
+  cleanTmdbs: () => void;
 };
 
 const useStore = create<StoreState & StoreActions>()(
   devtools(
     persist(
-      immer(set => ({
+      immer((set, get) => ({
         tmdbs: {},
         tasks: {},
         settings: {
@@ -74,6 +75,7 @@ const useStore = create<StoreState & StoreActions>()(
           set((state: StoreState) => {
             delete state.tasks[tid];
           });
+          get().cleanTmdbs();
         },
         updateTaskResult: (id, idx, patch) => {
           set((state: StoreState) => {
@@ -110,6 +112,19 @@ const useStore = create<StoreState & StoreActions>()(
           set((state: StoreState) => {
             const client = state.settings.webdav[id];
             state.settings.webdav[id] = merge(client, patch);
+          });
+        },
+        cleanTmdbs: () => {
+          set((state: StoreState) => {
+            const tmdbIds = Object.keys(state.tmdbs);
+            const tasks = Object.values(state.tasks);
+
+            tmdbIds.forEach(id => {
+              const isReferred = tasks.some(t =>
+                t.results.some(r => r.output.tmdbid === +id)
+              );
+              !isReferred && delete state.tmdbs[+id];
+            });
           });
         },
       })),

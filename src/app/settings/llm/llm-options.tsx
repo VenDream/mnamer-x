@@ -13,7 +13,7 @@ import {
 import { Slider } from '@/components/ui/slider';
 import { LLMSettings } from '@/types';
 import { SaveIcon } from 'lucide-react';
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 
 type LLMOptions = LLMSettings['options'];
 
@@ -24,6 +24,7 @@ interface IProps extends PropsWithChildren {
 
 export function LLMOptions(props: IProps) {
   const { options: propsOptions, onChange, children } = props;
+  const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(propsOptions || {});
 
   const updateOption = (patch: Partial<LLMOptions>) => {
@@ -34,11 +35,17 @@ export function LLMOptions(props: IProps) {
     onChange(options);
   };
 
+  useEffect(() => {
+    if (open) {
+      setOptions(propsOptions || {});
+    }
+  }, [open, propsOptions]);
+
   const temperature =
     options.temperature === undefined ? 1 : options.temperature;
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent
         side="left"
@@ -58,7 +65,7 @@ export function LLMOptions(props: IProps) {
             placeholder="e.g., https://api.openai.com/v1/"
             className="col-span-4 rounded md:col-span-3"
             onChange={e => updateOption({ baseUrl: e.target.value })}
-          ></Input>
+          />
           <Label htmlFor="apiKey" className="flex h-9 items-center">
             API Key
           </Label>
@@ -68,7 +75,7 @@ export function LLMOptions(props: IProps) {
             placeholder="API Key"
             className="col-span-4 rounded md:col-span-3"
             onChange={e => updateOption({ apiKey: e.target.value })}
-          ></Input>
+          />
           <Label htmlFor="model" className="flex h-9 items-center">
             Model
           </Label>
@@ -78,7 +85,7 @@ export function LLMOptions(props: IProps) {
             placeholder="e.g., gpt-4o"
             className="col-span-4 rounded md:col-span-3"
             onChange={e => updateOption({ model: e.target.value })}
-          ></Input>
+          />
           <Label htmlFor="temperature" className="flex h-9 items-center">
             Temperature
           </Label>
@@ -91,7 +98,7 @@ export function LLMOptions(props: IProps) {
               value={[temperature]}
               className="flex-1"
               onValueChange={value => updateOption({ temperature: value[0] })}
-            ></Slider>
+            />
             <span className="w-6 text-sm">{temperature.toFixed(2)}</span>
           </div>
         </div>
@@ -102,7 +109,7 @@ export function LLMOptions(props: IProps) {
               className="mt-6 rounded"
               onClick={saveOptions}
             >
-              <SaveIcon size={16} className="mr-2"></SaveIcon>
+              <SaveIcon size={16} className="mr-2" />
               Save
             </Button>
           </SheetClose>

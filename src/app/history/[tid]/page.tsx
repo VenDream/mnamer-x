@@ -47,13 +47,13 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
               <Link href={ROUTE.HISTORY}>History</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator></BreadcrumbSeparator>
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage>{params.tid}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <Separator className="my-4"></Separator>
+      <Separator className="my-4" />
       {isHydrated ? (
         !!task ? (
           <div className="space-y-6">
@@ -64,18 +64,12 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
               <CardContent>
                 <div className="space-y-2 text-muted-foreground">
                   <span className="flex items-center gap-2 text-sm">
-                    <BotIcon
-                      size={16}
-                      className="relative -top-[1px]"
-                    ></BotIcon>
+                    <BotIcon size={16} className="relative -top-[1px]" />
                     <span className="w-16 text-right">type：</span>
                     <span>{task.type}</span>
                   </span>
                   <span className="flex items-center gap-2 text-sm">
-                    <FileIcon
-                      size={16}
-                      className="relative -top-[1px]"
-                    ></FileIcon>
+                    <FileIcon size={16} className="relative -top-[1px]" />
                     <span className="w-16 text-right">total：</span>
                     {total}
                   </span>
@@ -83,31 +77,22 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                     <CircleCheckIcon
                       size={16}
                       className="relative -top-[1px]"
-                    ></CircleCheckIcon>
+                    />
                     <span className="w-16 text-right">success：</span>
                     <span className="text-green-500">{success}</span>
                   </span>
                   <span className="flex items-center gap-2 text-sm">
-                    <CircleXIcon
-                      size={16}
-                      className="relative -top-[1px]"
-                    ></CircleXIcon>
+                    <CircleXIcon size={16} className="relative -top-[1px]" />
                     <span className="w-16 text-right">failed：</span>
                     <span className="text-red-500">{fail}</span>
                   </span>
                   <span className="flex items-center gap-2 text-sm">
-                    <Clock3Icon
-                      size={16}
-                      className="relative -top-[1px]"
-                    ></Clock3Icon>
+                    <Clock3Icon size={16} className="relative -top-[1px]" />
                     <span className="w-16 text-right">start at：</span>
                     <span>{task.start}</span>
                   </span>
                   <span className="flex items-center gap-2 text-sm">
-                    <Clock4Icon
-                      size={16}
-                      className="relative -top-[1px]"
-                    ></Clock4Icon>
+                    <Clock4Icon size={16} className="relative -top-[1px]" />
                     <span className="w-16 text-right">end at：</span>
                     <span>{task.end}</span>
                   </span>
@@ -119,7 +104,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
                 <CardTitle>Result</CardTitle>
               </CardHeader>
               <CardContent>
-                <ResultTable tid={tid} results={results}></ResultTable>
+                <ResultTable tid={tid} results={results} />
               </CardContent>
             </Card>
           </div>
@@ -135,7 +120,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
           </div>
         )
       ) : (
-        <Loading text="Loading data..."></Loading>
+        <Loading text="Loading data..." />
       )}
     </div>
   );

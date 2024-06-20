@@ -11,6 +11,6 @@ export function UnderlineLink(props: LinkProps) {
         'underline underline-offset-[4px] hover:text-blue-500 hover:*:text-blue-500',
         props.className
       )}
-    ></Link>
+    />
   );
 }

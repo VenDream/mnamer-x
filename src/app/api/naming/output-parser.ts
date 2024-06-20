@@ -33,8 +33,8 @@ export class CustomOutputParser extends BaseOutputParser<ExpectedOutput> {
 
   getFormatInstructions(): string {
     return `
-      你的返回值必须为一个 JSON 数组，以'['开头和']'结尾。
-      不需要添加任何额外说明，不需要添加markdown语法标记。
+      Your output must be a JSON array, starting with '[' and ending with ']'.
+      Do not add any extra explanations or markdown syntax.
     `;
   }
 }

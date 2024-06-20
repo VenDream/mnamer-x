@@ -34,6 +34,7 @@ export interface FlattenedProcessResult extends Omit<ProcessResult, 'output'> {
 }
 
 export enum TASK_TYPE {
+  ALL = 'all',
   MANUAL = 'manual',
   WEB_DAV = 'web-dav',
   CLOUD_STORAGE = 'cloud-storage',

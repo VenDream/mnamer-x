@@ -103,10 +103,10 @@ export function TaskCard(props: IProps) {
           }
         )}
       >
-        <CardHeader className="pb-2">
+        <CardHeader className="p-4 pb-2">
           <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <CircleDotIcon size={20} color={color}></CircleDotIcon>
+            <div className="flex items-center gap-1">
+              <CircleDotIcon size={20} color={color} />
               Task #{tLabel}
             </div>
             <div
@@ -124,16 +124,16 @@ export function TaskCard(props: IProps) {
                   type="button"
                   size="icon"
                   variant="ghost"
-                  className="visible relative -right-1/2 rounded-full group-hover:visible md:invisible"
+                  className="visible relative right-[-10px] rounded-full group-hover:visible md:invisible"
                 >
-                  <XIcon size={20}></XIcon>
+                  <XIcon size={20} />
                 </Button>
               </DeleteConfirm>
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 text-xs text-foreground md:text-sm">
-          <AspectRatio ratio={16 / 9}>
+        <CardContent className="space-y-4 px-4 py-0 text-xs text-foreground md:text-sm">
+          <AspectRatio ratio={16 / 9} className="rounded-sm border shadow">
             <Image
               fill
               alt="BACKDROP"
@@ -145,11 +145,11 @@ export function TaskCard(props: IProps) {
                     ? getTmdbImageUrl(taskImage, 'w500')
                     : FAILED_BACKDROP
               }
-            ></Image>
+            />
           </AspectRatio>
           <div className="space-y-2">
             <span className="flex items-center gap-2">
-              <FileIcon size={18}></FileIcon>
+              <FileIcon size={18} />
               <Progress
                 value={percent}
                 className={cn('bg-accent/80', {
@@ -157,18 +157,18 @@ export function TaskCard(props: IProps) {
                   '[&>*]:bg-orange-500': withFailed,
                   '[&>*]:bg-red-500': isFailed,
                 })}
-              ></Progress>
+              />
               {success}/{total}
             </span>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between text-xs text-muted-foreground md:text-sm">
-          <span className="flex items-center gap-2 leading-4">
-            <ClockIcon size={16} className="relative -top-[1px]"></ClockIcon>
+        <CardFooter className="flex justify-between p-4 text-xs text-muted-foreground md:text-sm">
+          <span className="flex items-center gap-1 leading-4">
+            <ClockIcon size={16} className="relative -top-[1px]" />
             {dateStr}
           </span>
-          <span className="flex items-center gap-2 leading-4">
-            <BotIcon size={16} className="relative -top-[1px]"></BotIcon>
+          <span className="flex items-center gap-1 leading-4">
+            <BotIcon size={16} className="relative -top-[1px]" />
             {task.type}
           </span>
         </CardFooter>

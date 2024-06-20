@@ -9,7 +9,7 @@ interface IProps {
 export function Loading(props: IProps) {
   return (
     <span className={cn('flex items-center gap-2', props.className)}>
-      <LoaderIcon size={16} className="animate-spin"></LoaderIcon>
+      <LoaderIcon size={16} className="animate-spin" />
       {props.text || 'Loading...'}
     </span>
   );

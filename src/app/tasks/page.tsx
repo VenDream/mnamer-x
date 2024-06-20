@@ -4,8 +4,12 @@ import { CloudStorage } from './cloud-storage';
 import { Manual } from './manual';
 import { WebDAV } from './webdav';
 
-const TASK_TYPES = Object.values(TASK_TYPE);
-const TASK_PAGES: Record<TASK_TYPE, React.ReactNode> = {
+type TaskType = Exclude<TASK_TYPE, TASK_TYPE.ALL>;
+
+const TASK_TYPES = Object.values(TASK_TYPE).filter(
+  t => t !== TASK_TYPE.ALL
+) as TaskType[];
+const TASK_PAGES: Record<TaskType, React.ReactNode> = {
   [TASK_TYPE.MANUAL]: <Manual />,
   [TASK_TYPE.WEB_DAV]: <WebDAV />,
   [TASK_TYPE.CLOUD_STORAGE]: <CloudStorage />,

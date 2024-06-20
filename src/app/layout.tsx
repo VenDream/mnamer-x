@@ -9,11 +9,14 @@ import { cn } from '@/lib/utils';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { FilePenLineIcon } from 'lucide-react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+// import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 import Link from 'next/link';
+
 import './globals.css';
 
-const font = Inter({ subsets: ['latin'], weight: '300' });
+// const font = Inter({ subsets: ['latin'], weight: '300' });
+const font = localFont({ src: '../fonts/ATCOverlook-Light.woff2' });
 const title = SITE_META.title as string;
 
 export const metadata: Metadata = SITE_META;
@@ -42,7 +45,7 @@ export default function RootLayout({
               <div className="flex h-full flex-col justify-center">
                 <h1 className="text-lg font-bold">{title.toUpperCase()}</h1>
                 <p className="hidden gap-1 text-xs md:flex">
-                  <FilePenLineIcon size={16}></FilePenLineIcon>
+                  <FilePenLineIcon size={16} />
                   {SITE_META.description}
                 </p>
               </div>
@@ -54,19 +57,19 @@ export default function RootLayout({
                 className="flex h-9 w-9 cursor-pointer items-center justify-center"
               >
                 <Button size="icon" variant="outline">
-                  <GitHubLogoIcon className="h-[1.2rem] w-[1.2rem]"></GitHubLogoIcon>
+                  <GitHubLogoIcon className="h-[1.2rem] w-[1.2rem]" />
                 </Button>
               </Link>
-              <ModeToggle></ModeToggle>
+              <ModeToggle />
               <div className="block md:hidden">
-                <NavMenuForMobile></NavMenuForMobile>
+                <NavMenuForMobile />
               </div>
             </div>
           </header>
           <main className="flex min-h-0 flex-1">
             <div className="hidden w-56 shrink-0 md:block">
               <ScrollArea className="h-full border-r">
-                <NavMenu></NavMenu>
+                <NavMenu />
               </ScrollArea>
             </div>
             <div className="flex-1">
@@ -83,7 +86,7 @@ export default function RootLayout({
             }}
             richColors
             position="top-center"
-          ></Toaster>
+          />
         </ThemeProvider>
       </body>
     </html>

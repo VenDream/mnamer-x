@@ -9,12 +9,6 @@ export const SITE_META: Metadata = {
   description: 'Use LLMs to name your media files to be scrapers-friendly.',
 };
 
-// LLM server
-export enum LLM_SERVER {
-  OPEN_AI = 'openai',
-  GROQ = 'groq',
-}
-
 export enum ROUTE {
   INDEX = '/',
   TASKS = '/tasks',
@@ -30,16 +24,12 @@ export const ENV_CONFIG = {
 
   OPENAI_BASE_URL: process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1/',
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-
-  GROQ_API_KEY: process.env.GROQ_API_KEY,
-
-  LLM_SERVER: process.env.LLM_SERVER || LLM_SERVER.OPEN_AI,
-  LLM_MODEL: process.env.LLM_MODEL || 'gpt-3.5-turbo',
+  OPENAI_MODEL: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
 
   TMDB_API_HOST: process.env.TMDB_API_HOST || 'https://api.themoviedb.org/3/',
   TMDB_API_KEY: process.env.TMDB_API_KEY,
 
-  MAX_FILES_PER_TASK: process.env.NEXT_PUBLIC_MAX_FILES_PER_TASK
-    ? +process.env.NEXT_PUBLIC_MAX_FILES_PER_TASK
+  MAX_FILES_PER_MANUAL_TASK: process.env.NEXT_PUBLIC_MAX_FILES_PER_MANUAL_TASK
+    ? +process.env.NEXT_PUBLIC_MAX_FILES_PER_MANUAL_TASK
     : 30,
 };

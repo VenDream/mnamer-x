@@ -23,7 +23,7 @@ export default function Credits() {
                 alt="TMDB_LOGO"
                 className="object-cover"
                 src={TMDB_LOGO}
-              ></Image>
+              />
             </AspectRatio>
           </div>
           <p className="text-sm text-muted-foreground">

@@ -17,12 +17,12 @@ export function WebDAVSettings() {
         <CardTitle>WebDAV</CardTitle>
       </CardHeader>
       <CardContent>
-        <ServerList></ServerList>
+        <ServerList />
       </CardContent>
       <CardFooter className="flex justify-end">
         <EditServer>
           <Button variant="outline" className="w-full md:w-auto">
-            <CirclePlusIcon size={16} className="mr-2"></CirclePlusIcon>
+            <CirclePlusIcon size={16} className="mr-2" />
             Add
           </Button>
         </EditServer>

@@ -296,7 +296,7 @@ function WebDAVExplorerPrimitive(
               </div>
             ) : (
               <p className="flex items-center gap-2 text-sm text-muted-foreground">
-                <InfoIcon size={16}></InfoIcon>
+                <InfoIcon size={16} />
                 No WebDAV servers have been added yet. Add one in{' '}
                 <UnderlineLink href={ROUTE.SETTINGS}>settings.</UnderlineLink>
               </p>

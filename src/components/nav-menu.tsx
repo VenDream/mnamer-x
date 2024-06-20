@@ -75,7 +75,7 @@ export function NavMenu() {
               }
             )}
           >
-            <Icon size={16}></Icon>
+            <Icon size={16} />
             {label}
           </Link>
         );
@@ -92,7 +92,7 @@ export function NavMenuForMobile() {
     <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="outline">
-          <MenuIcon size={16} className="text-foreground"></MenuIcon>
+          <MenuIcon size={16} className="text-foreground" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -113,7 +113,7 @@ export function NavMenuForMobile() {
                   'cursor-default': isActive,
                 })}
               >
-                <Icon size={16}></Icon>
+                <Icon size={16} />
                 {label}
               </Link>
             </DropdownMenuItem>

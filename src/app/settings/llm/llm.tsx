@@ -55,7 +55,7 @@ export function LLMSettings() {
               onChange={opts => updateLLMSettings({ options: opts })}
             >
               <Button variant="outline" className="rounded">
-                <WrenchIcon size={16} className="mr-2"></WrenchIcon>
+                <WrenchIcon size={16} className="mr-2" />
                 Configure
               </Button>
             </LLMOptions>

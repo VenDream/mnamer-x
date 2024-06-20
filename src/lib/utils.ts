@@ -90,15 +90,15 @@ export function getDateTimeDiff(start: Date | string, end: Date | string) {
     return format(start, 'MM-dd HH:mm');
   }
   if (hourDiff > 0) {
-    const unit = hourDiff === 1 ? 'hour' : 'hours';
+    const unit = hourDiff === 1 ? 'hr' : 'hrs';
     return `${hourDiff} ${unit} ago`;
   }
   if (minDiff > 0) {
-    const unit = minDiff === 1 ? 'minute' : 'minutes';
+    const unit = minDiff === 1 ? 'min' : 'mins';
     return `${minDiff} ${unit} ago`;
   }
   if (secDiff > 0) {
-    const unit = secDiff === 1 ? 'second' : 'seconds';
+    const unit = secDiff === 1 ? 'sec' : 'secs';
     return `${secDiff} ${unit} ago`;
   }
   return '';

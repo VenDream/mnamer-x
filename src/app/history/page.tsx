@@ -21,7 +21,7 @@ export default function History() {
   const isHydrated = useStoreHydrate();
 
   const [filter, setFilter] = useState<Filter>({
-    type: TASK_TYPE.MANUAL,
+    type: TASK_TYPE.ALL,
     keyword: '',
     range: {
       from: undefined,
@@ -32,7 +32,7 @@ export default function History() {
   const filteredTasks = useMemo(() => {
     const { type, keyword, range } = filter;
     return tasks.filter(t => {
-      const isTypeMatched = t.type === type;
+      const isTypeMatched = type === TASK_TYPE.ALL || t.type === type;
       const isKeywordMatched = keyword
         ? t.results.some(r => {
             const tmdb = r.output.tmdb;
@@ -69,17 +69,11 @@ export default function History() {
                   </Button>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <TaskFilter
-                    filter={filter}
-                    onFilterChange={setFilter}
-                  ></TaskFilter>
+                  <TaskFilter filter={filter} onFilterChange={setFilter} />
                 </CollapsibleContent>
               </Collapsible>
               <div className="hidden md:block">
-                <TaskFilter
-                  filter={filter}
-                  onFilterChange={setFilter}
-                ></TaskFilter>
+                <TaskFilter filter={filter} onFilterChange={setFilter} />
               </div>
               {filteredTasks.length === 0 ? (
                 <p className="mt-6 text-sm text-muted-foreground">
@@ -88,11 +82,7 @@ export default function History() {
               ) : (
                 <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {filteredTasks.map((task, idx) => (
-                    <TaskCard
-                      key={task.id}
-                      tid={task.id}
-                      idx={idx + 1}
-                    ></TaskCard>
+                    <TaskCard key={task.id} tid={task.id} idx={idx + 1} />
                   ))}
                 </div>
               )}
@@ -100,7 +90,7 @@ export default function History() {
           )}
         </div>
       ) : (
-        <Loading text="Loading data..."></Loading>
+        <Loading text="Loading data..." />
       )}
     </div>
   );

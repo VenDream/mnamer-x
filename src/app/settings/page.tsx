@@ -14,12 +14,12 @@ export default function Settings() {
       <h1 className="mb-4 text-xl">Settings</h1>
       {isHydrated ? (
         <div className="flex flex-col gap-4">
-          <LLMSettings></LLMSettings>
-          <FormatterSettings></FormatterSettings>
-          <WebDAVSettings></WebDAVSettings>
+          <LLMSettings />
+          <FormatterSettings />
+          <WebDAVSettings />
         </div>
       ) : (
-        <Loading text="Loading data..."></Loading>
+        <Loading text="Loading data..." />
       )}
     </div>
   );

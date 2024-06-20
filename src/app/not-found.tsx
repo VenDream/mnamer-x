@@ -13,7 +13,7 @@ export default function NotFound() {
         <Separator
           orientation="vertical"
           className="hidden bg-muted-foreground/50 md:block"
-        ></Separator>
+        />
         <p className="text-sm">
           This page could not be found.
           <UnderlineLink href="/" className="ml-2">

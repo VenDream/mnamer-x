@@ -22,7 +22,7 @@ export function DeleteConfirm(props: IProps) {
       <PopoverContent className="w-auto" collisionPadding={20}>
         <div className="space-y-4">
           <h1 className="flex items-center gap-2 text-sm">
-            {props.icon || <Trash2Icon size={16}></Trash2Icon>}
+            {props.icon || <Trash2Icon size={16} />}
             {props.title || 'Confirm to delete ?'}
           </h1>
           <div className="flex justify-between gap-3">

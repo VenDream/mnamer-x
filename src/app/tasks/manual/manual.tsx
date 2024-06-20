@@ -49,6 +49,8 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
+const maxFiles = ENV_CONFIG.MAX_FILES_PER_MANUAL_TASK;
+
 const formSchema = z.object({
   type: z.literal(TASK_TYPE.MANUAL),
   files: z
@@ -82,9 +84,8 @@ export function Manual() {
   });
 
   const addFile = () => {
-    if (fields.length >= ENV_CONFIG.MAX_FILES_PER_TASK) {
-      const max = ENV_CONFIG.MAX_FILES_PER_TASK;
-      const maxStr = `(${max} of ${max})`;
+    if (fields.length >= maxFiles) {
+      const maxStr = `(${maxFiles} of ${maxFiles})`;
       toast.error(`Maximum number of files exceeded ${maxStr}`);
       return;
     }
@@ -104,7 +105,7 @@ export function Manual() {
       setIsSubmitting(true);
       const start = getCurrentDatetime();
       const response = await rename(values);
-      const data = (await response.data) as Response<ProcessResult[]>;
+      const data = response.data as Response<ProcessResult[]>;
       const { code, data: results, errormsg } = data;
       if (code !== 0) {
         throw new Error(errormsg || 'Failed to fetch');
@@ -155,7 +156,7 @@ export function Manual() {
                             disabled={isSubmitting}
                             placeholder="the name of media file"
                             {...field}
-                          ></Input>
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -166,10 +167,7 @@ export function Manual() {
                       <TooltipProvider delayDuration={100}>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <CircleHelpIcon
-                              size={16}
-                              className="mr-1"
-                            ></CircleHelpIcon>
+                            <CircleHelpIcon size={16} className="mr-1" />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>
@@ -201,7 +199,7 @@ export function Manual() {
                                 disabled={isSubmitting}
                                 placeholder="release year, e.g., 2008"
                                 {...field}
-                              ></Input>
+                              />
                             </FormControl>
                           </FormItem>
                         )}
@@ -216,7 +214,7 @@ export function Manual() {
                                 disabled={isSubmitting}
                                 placeholder="keyword, e.g., Violet Evergarden"
                                 {...field}
-                              ></Input>
+                              />
                             </FormControl>
                           </FormItem>
                         )}
@@ -231,7 +229,7 @@ export function Manual() {
                     onClick={() => removeFile(index)}
                     className="absolute right-2 top-2 rounded-full"
                   >
-                    <XIcon size={20}></XIcon>
+                    <XIcon size={20} />
                   </Button>
                 </div>
               ))}
@@ -242,10 +240,10 @@ export function Manual() {
                   onClick={addFile}
                   disabled={isSubmitting}
                 >
-                  <CirclePlusIcon size={16} className="mr-2"></CirclePlusIcon>
+                  <CirclePlusIcon size={16} className="mr-2" />
                   Add file
                   <span className="ml-2 hidden text-muted-foreground md:block">
-                    ({fields.length}/{ENV_CONFIG.MAX_FILES_PER_TASK})
+                    ({fields.length}/{maxFiles})
                   </span>
                 </Button>
                 <Button
@@ -256,15 +254,12 @@ export function Manual() {
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
-                      <LoaderIcon
-                        size={16}
-                        className="animate-spin"
-                      ></LoaderIcon>
+                      <LoaderIcon size={16} className="animate-spin" />
                       Processing...
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
-                      <PlayIcon size={16}></PlayIcon>
+                      <PlayIcon size={16} />
                       Start
                     </span>
                   )}
@@ -280,7 +275,7 @@ export function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          <ResultTable tid={tid} results={results}></ResultTable>
+          <ResultTable tid={tid} results={results} />
         </CardContent>
       </Card>
     </div>

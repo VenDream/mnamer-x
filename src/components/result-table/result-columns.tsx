@@ -66,7 +66,7 @@ const columns: ColumnDef<ProcessResult>[] = [
     header: 'Action',
     size: 50,
     cell({ table, row }) {
-      return <ResultActions row={row} table={table}></ResultActions>;
+      return <ResultActions row={row} table={table} />;
     },
   },
 ];

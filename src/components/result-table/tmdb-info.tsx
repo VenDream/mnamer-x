@@ -72,7 +72,7 @@ export function TmdbInfo(props: IProps) {
                   ? DEBUG_BACKDROP
                   : getTmdbImageUrl(backdrop_path, 'w1280')
               }
-            ></Image>
+            />
             <div className="absolute flex h-full w-4/5 flex-col justify-center gap-2 rounded-lg bg-gradient-to-r from-black/80">
               <div className="relative ml-[5%] h-2/3 w-1/3 overflow-hidden rounded-lg shadow-sm backdrop-blur-2xl">
                 <Image
@@ -84,7 +84,7 @@ export function TmdbInfo(props: IProps) {
                       ? DEBUG_POSTER
                       : getTmdbImageUrl(poster_path)
                   }
-                ></Image>
+                />
               </div>
               <div className="ml-[5%] hidden space-y-1 md:block">
                 <h1 className="text-xl text-white">
@@ -129,7 +129,7 @@ export function TmdbInfo(props: IProps) {
                 </span>
               )}
             </div>
-            <Separator className="!mt-2"></Separator>
+            <Separator className="!mt-2" />
           </div>
           <div className="space-y-1 text-xs md:text-sm">
             <div className="flex h-5 items-center space-x-2">
@@ -138,17 +138,17 @@ export function TmdbInfo(props: IProps) {
                   size={16}
                   color="orange"
                   className="relative -top-[1px]"
-                ></StarIcon>
+                />
                 {Math.round(vote_average).toFixed(1)} / 10.0 ({vote_count})
               </p>
-              <Separator orientation="vertical"></Separator>
+              <Separator orientation="vertical" />
               <p className="flex items-center gap-1 leading-3 [&>svg]:relative [&>svg]:-top-[1px]">
-                {media_type === 'tv' && <TvIcon size={16}></TvIcon>}
-                {media_type === 'movie' && <FilmIcon size={16}></FilmIcon>}
+                {media_type === 'tv' && <TvIcon size={16} />}
+                {media_type === 'movie' && <FilmIcon size={16} />}
                 {genres.join('・')}
               </p>
             </div>
-            <Separator className="!mt-2"></Separator>
+            <Separator className="!mt-2" />
           </div>
           <div className="space-y-1">
             <h2 className="text-base md:text-lg">Summary</h2>
