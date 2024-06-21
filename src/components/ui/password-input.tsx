@@ -9,7 +9,7 @@ type PasswordInputProps = InputProps;
 const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
   (props: PasswordInputProps, ref) => {
     const [showPwd, setShowPwd] = useState(false);
-    const Icon = showPwd ? EyeIcon : EyeOffIcon;
+    const Icon = showPwd ? EyeOffIcon : EyeIcon;
 
     return (
       <div className="relative">
@@ -21,6 +21,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         />
         <Button
           variant="ghost"
+          title={showPwd ? 'Hide password' : 'Show password'}
           onClick={evt => {
             evt.preventDefault();
             setShowPwd(!showPwd);
