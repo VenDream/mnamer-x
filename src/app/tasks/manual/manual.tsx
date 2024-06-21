@@ -73,9 +73,9 @@ export function Manual() {
 
   const form = useForm<ManualInput>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    values: {
       type: TASK_TYPE.MANUAL,
-      files: [{ year: '', keyword: '', filename: '' }],
+      files: [],
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -90,14 +90,6 @@ export function Manual() {
       return;
     }
     append({ year: '', keyword: '', filename: '' });
-  };
-
-  const removeFile = (idx: number) => {
-    if (fields.length <= 1) {
-      toast.error('At least one file is required');
-      return;
-    }
-    remove(idx);
   };
 
   const submit = async (values: ManualInput) => {
@@ -128,6 +120,8 @@ export function Manual() {
       setIsSubmitting(false);
     }
   };
+
+  const isEmpty = form.getValues('files').length === 0;
 
   return (
     <div className="flex flex-col gap-8">
@@ -226,7 +220,7 @@ export function Manual() {
                     size="icon"
                     variant="ghost"
                     disabled={isSubmitting}
-                    onClick={() => removeFile(index)}
+                    onClick={() => remove(index)}
                     className="absolute right-2 top-2 rounded-full"
                   >
                     <XIcon size={20} />
@@ -246,24 +240,26 @@ export function Manual() {
                     ({fields.length}/{maxFiles})
                   </span>
                 </Button>
-                <Button
-                  type="submit"
-                  variant="outline"
-                  disabled={isSubmitting}
-                  className="w-[150px]"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <LoaderIcon size={16} className="animate-spin" />
-                      Processing...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      <PlayIcon size={16} />
-                      Start
-                    </span>
-                  )}
-                </Button>
+                {!isEmpty && (
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    disabled={isSubmitting}
+                    className="w-[150px]"
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <LoaderIcon size={16} className="animate-spin" />
+                        Processing...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <PlayIcon size={16} />
+                        Start
+                      </span>
+                    )}
+                  </Button>
+                )}
               </div>
             </form>
           </Form>

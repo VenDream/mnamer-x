@@ -8,9 +8,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useStore } from '@/store';
+import { LOCALE } from '@/types';
 
 export function FormatterSettings() {
-  const { language } = useStore(state => state.settings.formatter);
+  const { locale } = useStore(state => state.settings.formatter);
   const updateFormatterSettings = useStore(
     state => state.updateFormatterSettings
   );
@@ -24,17 +25,17 @@ export function FormatterSettings() {
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
           <Label className="md:w-1/4 md:max-w-28">TMDB Locale</Label>
           <Select
-            value={language}
+            value={locale}
             onValueChange={value =>
-              updateFormatterSettings({ language: value })
+              updateFormatterSettings({ locale: value as LOCALE })
             }
           >
             <SelectTrigger className="md:w-[180px]">
-              <SelectValue placeholder={language} />
+              <SelectValue placeholder={locale} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="en-US">English (en-US)</SelectItem>
-              <SelectItem value="zh-CN">中文 (zh-CN)</SelectItem>
+              <SelectItem value={LOCALE.EN}>English ({LOCALE.EN})</SelectItem>
+              <SelectItem value={LOCALE.ZH}>中文 ({LOCALE.ZH})</SelectItem>
             </SelectContent>
           </Select>
         </div>

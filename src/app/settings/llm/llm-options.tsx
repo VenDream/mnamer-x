@@ -1,48 +1,73 @@
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { PasswordInput } from '@/components/ui/password-input';
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Slider } from '@/components/ui/slider';
 import { LLMSettings } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { SaveIcon } from 'lucide-react';
 import { PropsWithChildren, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
-type LLMOptions = LLMSettings['options'];
+const formSchema: z.ZodType<FormSchema> = z.object({
+  baseUrl: z
+    .string()
+    .min(1, { message: 'Base URL is required' })
+    .url({ message: 'Invalid URL' }),
+  apiKey: z.string().min(1, { message: 'API Key is required' }),
+  model: z.string().min(1, { message: 'Model is required' }),
+  temperature: z.number(),
+});
+
+type Concrete<T> = { [K in keyof T]-?: T[K] };
+type LLMOptions = NonNullable<LLMSettings['options']>;
+type FormSchema = Concrete<LLMOptions>;
+type FormData = FormSchema;
 
 interface IProps extends PropsWithChildren {
-  options: LLMOptions;
+  options?: LLMOptions;
   onChange: (options: LLMOptions) => void;
 }
 
 export function LLMOptions(props: IProps) {
   const { options: propsOptions, onChange, children } = props;
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState(propsOptions || {});
 
-  const updateOption = (patch: Partial<LLMOptions>) => {
-    setOptions(prev => ({ ...prev, ...patch }));
-  };
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    values: {
+      baseUrl: propsOptions?.baseUrl || '',
+      apiKey: propsOptions?.apiKey || '',
+      model: propsOptions?.model || '',
+      temperature: propsOptions?.temperature || 1,
+    },
+  });
 
-  const saveOptions = () => {
-    onChange(options);
+  const onSubmit = (data: FormData) => {
+    onChange(data);
+    toast.success('Options updated');
+    setOpen(false);
   };
 
   useEffect(() => {
-    if (open) {
-      setOptions(propsOptions || {});
-    }
-  }, [open, propsOptions]);
-
-  const temperature =
-    options.temperature === undefined ? 1 : options.temperature;
+    open && form.reset();
+  }, [form, open]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -53,67 +78,88 @@ export function LLMOptions(props: IProps) {
         onOpenAutoFocus={e => e.preventDefault()}
       >
         <SheetHeader className="text-left">
-          <SheetTitle>LLM Options</SheetTitle>
+          <SheetTitle>Custom LLM Options</SheetTitle>
         </SheetHeader>
-        <div className="mt-6 grid grid-cols-4 md:gap-2">
-          <Label htmlFor="baseUrl" className="flex h-9 items-center">
-            Base URL
-          </Label>
-          <Input
-            id="baseUrl"
-            value={options.baseUrl}
-            placeholder="e.g., https://api.openai.com/v1/"
-            className="col-span-4 rounded md:col-span-3"
-            onChange={e => updateOption({ baseUrl: e.target.value })}
-          />
-          <Label htmlFor="apiKey" className="flex h-9 items-center">
-            API Key
-          </Label>
-          <Input
-            id="apiKey"
-            value={options.apiKey}
-            placeholder="API Key"
-            className="col-span-4 rounded md:col-span-3"
-            onChange={e => updateOption({ apiKey: e.target.value })}
-          />
-          <Label htmlFor="model" className="flex h-9 items-center">
-            Model
-          </Label>
-          <Input
-            id="model"
-            value={options.model}
-            placeholder="e.g., gpt-4o"
-            className="col-span-4 rounded md:col-span-3"
-            onChange={e => updateOption({ model: e.target.value })}
-          />
-          <Label htmlFor="temperature" className="flex h-9 items-center">
-            Temperature
-          </Label>
-          <div className="col-span-4 flex items-center gap-2 md:col-span-3">
-            <Slider
-              id="temperature"
-              min={0}
-              max={1}
-              step={0.05}
-              value={[temperature]}
-              className="flex-1"
-              onValueChange={value => updateOption({ temperature: value[0] })}
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-6 space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="baseUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Base URL</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="e.g., https://api.openai.com/v1/"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <span className="w-6 text-sm">{temperature.toFixed(2)}</span>
-          </div>
-        </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button
-              variant="outline"
-              className="mt-6 rounded"
-              onClick={saveOptions}
-            >
-              <SaveIcon size={16} className="mr-2" />
-              Save
-            </Button>
-          </SheetClose>
-        </SheetFooter>
+            <FormField
+              control={form.control}
+              name="apiKey"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>API Key</FormLabel>
+                  <FormControl>
+                    <PasswordInput placeholder="API Key" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="model"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Model</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g., gpt-4o" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="temperature"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Temperature</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center gap-2">
+                      <Slider
+                        min={0}
+                        max={1}
+                        step={0.01}
+                        value={[field.value]}
+                        onValueChange={value => field.onChange(value[0])}
+                        className="flex-1"
+                      />
+                      <span className="w-6 text-sm">
+                        {field.value.toFixed(2)}
+                      </span>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="!mt-6 flex justify-end">
+              <Button type="submit" variant="outline" className="rounded">
+                <SaveIcon size={16} className="mr-2" />
+                Save
+              </Button>
+            </div>
+          </form>
+        </Form>
       </SheetContent>
     </Sheet>
   );

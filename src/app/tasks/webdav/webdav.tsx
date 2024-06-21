@@ -118,6 +118,12 @@ export function WebDAV() {
       setIsSubmitting(true);
       const start = getCurrentDatetime();
       const inputData = await getInputData();
+
+      if (inputData.files.length <= 0) {
+        toast.error('No video files found, please check the input');
+        return;
+      }
+
       const response = await rename(inputData);
       const data = response.data as Response<ProcessResult[]>;
       const { code, data: results, errormsg } = data;

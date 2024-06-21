@@ -2,11 +2,11 @@
 
 import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { ROUTE } from '@/constants';
 import { cn } from '@/lib/utils';
 import {
@@ -86,40 +86,41 @@ export function NavMenu() {
 
 export function NavMenuForMobile() {
   const pathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-      <DropdownMenuTrigger asChild>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
         <Button size="icon" variant="outline">
           <MenuIcon size={16} className="text-foreground" />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {NAV_ROUTES.map(({ path, label, icon: Icon }) => {
-          const isActive = path === pathname;
-          return (
-            <DropdownMenuItem
-              key={path}
-              onClick={() => setIsMenuOpen(false)}
-              className={cn('transition-none', {
-                'bg-accent': isActive,
-                'cursor-default': isActive,
-              })}
-            >
+      </SheetTrigger>
+      <SheetContent side="left">
+        <SheetTitle>Menu</SheetTitle>
+        <div className="mt-6 space-y-2">
+          {NAV_ROUTES.map(({ path, label, icon: Icon }) => {
+            const isActive = path === pathname;
+            return (
               <Link
+                key={path}
                 href={path}
-                className={cn('flex w-full items-center gap-1 rounded-md', {
-                  'cursor-default': isActive,
-                })}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  'flex w-full items-center gap-1 rounded-md border p-2',
+                  'rounded-sm shadow-sm',
+                  {
+                    'bg-accent': isActive,
+                    'cursor-default': isActive,
+                  }
+                )}
               >
-                <Icon size={16} />
+                <Icon size={16} className="mr-2" />
                 {label}
               </Link>
-            </DropdownMenuItem>
-          );
-        })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+            );
+          })}
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

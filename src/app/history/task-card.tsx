@@ -132,7 +132,7 @@ export function TaskCard(props: IProps) {
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 px-4 py-0 text-xs text-foreground md:text-sm">
+        <CardContent className="space-y-4 px-4 py-0 text-sm text-foreground">
           <AspectRatio ratio={16 / 9} className="rounded-sm border shadow">
             <Image
               fill
@@ -162,7 +162,7 @@ export function TaskCard(props: IProps) {
             </span>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between p-4 text-xs text-muted-foreground md:text-sm">
+        <CardFooter className="flex justify-between p-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1 leading-4">
             <ClockIcon size={16} className="relative -top-[1px]" />
             {dateStr}

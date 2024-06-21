@@ -11,6 +11,8 @@ export function LLMSettings() {
   const { source, options } = useStore(state => state.settings.llm);
   const updateLLMSettings = useStore(state => state.updateLLMSettings);
 
+  const isConfigured = !!options;
+
   return (
     <Card className="rounded">
       <CardHeader>
@@ -54,7 +56,10 @@ export function LLMSettings() {
               options={options}
               onChange={opts => updateLLMSettings({ options: opts })}
             >
-              <Button variant="outline" className="rounded">
+              <Button
+                className="rounded"
+                variant={isConfigured ? 'outline' : 'destructive'}
+              >
                 <WrenchIcon size={16} className="mr-2" />
                 Configure
               </Button>

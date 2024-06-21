@@ -8,6 +8,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import {
   Sheet,
   SheetContent,
@@ -15,11 +16,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import { testConnection } from '@/lib/webdav-client';
 import { useStore } from '@/store';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CableIcon, EyeIcon, EyeOffIcon, SaveIcon } from 'lucide-react';
+import { CableIcon, SaveIcon } from 'lucide-react';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -45,7 +45,6 @@ interface IProps extends PropsWithChildren {
 export function EditServer(props: IProps) {
   const { id, children } = props;
   const [open, setOpen] = useState(false);
-  const [showPwd, setShowPwd] = useState(false);
   const webdav = useStore(state => state.settings.webdav[id || 0]);
   const addWebDAV = useStore(state => state.addWebDAV);
   const updateWebDAVSettings = useStore(state => state.updateWebDAVSettings);
@@ -63,9 +62,11 @@ export function EditServer(props: IProps) {
   const onSubmit = (data: FormData) => {
     if (id) {
       updateWebDAVSettings(id, data);
+      toast.success('Settings updated');
     } else {
       const id = Date.now();
       addWebDAV({ ...data, id, name: data.name || `WebDAV Server #${id}` });
+      toast.success('WebDAV server added');
     }
 
     setOpen(false);
@@ -88,10 +89,7 @@ export function EditServer(props: IProps) {
   };
 
   useEffect(() => {
-    if (open) {
-      form.reset();
-      setShowPwd(false);
-    }
+    open && form.reset();
   }, [form, open]);
 
   return (
@@ -158,40 +156,20 @@ export function EditServer(props: IProps) {
             <FormField
               control={form.control}
               name="password"
-              render={({ field }) => {
-                const Icon = showPwd ? EyeOffIcon : EyeIcon;
-                return (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type={showPwd ? 'text' : 'password'}
-                          className="pr-10"
-                          placeholder="password for authentication"
-                          {...field}
-                        />
-                        <Button
-                          variant="ghost"
-                          onClick={evt => {
-                            evt.preventDefault();
-                            setShowPwd(!showPwd);
-                          }}
-                          className={cn(
-                            'absolute right-2 top-1/2 flex h-6 w-6',
-                            '-translate-y-1/2 items-center justify-center p-0'
-                          )}
-                        >
-                          <Icon size={16} />
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <PasswordInput
+                      placeholder="password for authentication"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <div className="!mt-8 flex justify-between">
+            <div className="!mt-6 flex justify-between">
               <Button
                 type="submit"
                 variant="outline"

@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { ENV_CONFIG } from '@/constants';
 import { getMediaReleaseYear } from '@/lib/formatter';
 import { getTmdbImageUrl } from '@/lib/tmdb-image';
+import { cn } from '@/lib/utils';
 import { TMDBData, TMDBMovie, TMDBTv } from '@/types';
 import { FilmIcon, StarIcon, TvIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -132,7 +133,12 @@ export function TmdbInfo(props: IProps) {
             <Separator className="!mt-2" />
           </div>
           <div className="space-y-1 text-xs md:text-sm">
-            <div className="flex h-5 items-center space-x-2">
+            <div
+              className={cn(
+                'flex w-full min-w-0 flex-col space-y-2',
+                'md:flex-row md:items-center md:space-x-2 md:space-y-0'
+              )}
+            >
               <p className="flex items-center gap-1 leading-3">
                 <StarIcon
                   size={16}
@@ -141,8 +147,16 @@ export function TmdbInfo(props: IProps) {
                 />
                 {Math.round(vote_average).toFixed(1)} / 10.0 ({vote_count})
               </p>
-              <Separator orientation="vertical" />
-              <p className="flex items-center gap-1 leading-3 [&>svg]:relative [&>svg]:-top-[1px]">
+              <Separator
+                orientation="vertical"
+                className="hidden h-5 md:block"
+              />
+              <p
+                className={cn(
+                  'flex items-center gap-1 leading-3',
+                  '[&>svg]:relative [&>svg]:-top-[1px] [&>svg]:shrink-0'
+                )}
+              >
                 {media_type === 'tv' && <TvIcon size={16} />}
                 {media_type === 'movie' && <FilmIcon size={16} />}
                 {genres.join('・')}

@@ -9,13 +9,11 @@ import { cn } from '@/lib/utils';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { FilePenLineIcon } from 'lucide-react';
 import type { Metadata } from 'next';
-// import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 
 import './globals.css';
 
-// const font = Inter({ subsets: ['latin'], weight: '300' });
 const font = localFont({ src: '../fonts/ATCOverlook-Light.woff2' });
 const title = SITE_META.title as string;
 
@@ -78,7 +76,7 @@ export default function RootLayout({
           </main>
           <Toaster
             toastOptions={{
-              className: 'text-xs md:text-sm py-3 px-4 rounded-sm items-start',
+              className: 'text-sm py-3 px-4 rounded-sm items-start',
               classNames: {
                 icon: 'positive top-[3px]',
                 content: font.className,

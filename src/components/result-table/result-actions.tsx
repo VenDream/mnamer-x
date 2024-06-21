@@ -48,7 +48,7 @@ export function ResultActions(props: IProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
-          className="cursor-pointer text-xs md:text-sm"
+          className="cursor-pointer text-sm"
           onClick={() => {
             copyText(formatted);
             toast.success('Copied to clipboard');
@@ -66,7 +66,7 @@ export function ResultActions(props: IProps) {
           onClose={() => setIsMenuOpen(false)}
         >
           <DropdownMenuItem
-            className="cursor-pointer text-xs md:text-sm"
+            className="cursor-pointer text-sm"
             onSelect={e => e.preventDefault()}
           >
             <SquarePenIcon size={14} className="mr-1" />
@@ -75,7 +75,7 @@ export function ResultActions(props: IProps) {
         </EditOutput>
         <TmdbInfo data={tmdbData} onClose={() => setIsMenuOpen(false)}>
           <DropdownMenuItem
-            className="cursor-pointer text-xs md:text-sm"
+            className="cursor-pointer text-sm"
             onSelect={e => e.preventDefault()}
           >
             <FilmIcon size={14} className="mr-1" />

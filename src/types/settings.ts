@@ -15,9 +15,14 @@ export interface LLMSettings {
   };
 }
 
+export enum LOCALE {
+  EN = 'en-US',
+  ZH = 'zh-CN',
+}
+
 export interface FormatterSettings {
   tpl?: string;
-  language?: string;
+  locale?: LOCALE;
 }
 
 export type WebDAVClientOptions = WebDAVClient & {

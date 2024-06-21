@@ -3,6 +3,7 @@ import {
   FormatterSettings,
   LLMSettings,
   LLM_SOURCE,
+  LOCALE,
   ProcessResult,
   ProcessTask,
   TMDBData,
@@ -53,15 +54,9 @@ const useStore = create<StoreState & StoreActions>()(
         settings: {
           llm: {
             source: LLM_SOURCE.BUILTIN,
-            options: {
-              baseUrl: 'https://api.openai.com/v1/',
-              apiKey: 'YOUR API KEY',
-              model: 'gpt-4o',
-              temperature: 1,
-            },
           },
           formatter: {
-            language: 'en-US',
+            locale: LOCALE.EN,
           },
           webdav: {},
         },
