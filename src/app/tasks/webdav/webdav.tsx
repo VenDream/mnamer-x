@@ -76,20 +76,22 @@ export function WebDAV() {
     // dirs files
     if (clientId > 0 && dirs.length > 0) {
       const client = create(webdavClients[clientId]);
-      await PromisePool.withConcurrency(10)
+      const { results } = await PromisePool.withConcurrency(10)
         .for(dirs)
+        .useCorrespondingResults()
         .process(async dir => {
           const stats = (await client.getDirectoryContents(
             dir.filename
           )) as FileStat[];
-          const videoFiles = stats.filter(s => isVideoFile(s));
-          videoFiles.forEach(file => {
-            inputFiles.push({
-              dirpath: file.filename,
-              filename: file.basename,
-            });
-          });
+          return stats
+            .filter(s => isVideoFile(s))
+            .map(v => ({
+              dirpath: v.filename,
+              filename: v.basename,
+            }));
         });
+      const files = results.flat() as WebDAVInput['files'];
+      inputFiles.push(...files);
     }
 
     // files

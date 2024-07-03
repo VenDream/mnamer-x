@@ -56,51 +56,53 @@ export function TaskFilter(props: IProps) {
   });
 
   return (
-    <div className="grid grid-cols-1 grid-rows-3 gap-2 md:grid-cols-4 md:grid-rows-1">
-      <div className="row-span-1 md:col-span-1">
-        <Select
-          value={filter.type}
-          onValueChange={type => updateFilter({ type: type as TASK_TYPE })}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder={TASK_TYPE.ALL} />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.values(TASK_TYPE).map(type => (
-              <SelectItem key={type} value={type}>
-                {type.toUpperCase()}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="row-span-1 md:col-span-1">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="group w-full min-w-[250px] justify-start gap-2 text-muted-foreground"
-            >
-              <CalendarDaysIcon
-                size={16}
-                className="text-muted-foreground transition-colors group-hover:text-accent-foreground"
+    <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center gap-2">
+        <div className="">
+          <Select
+            value={filter.type}
+            onValueChange={type => updateFilter({ type: type as TASK_TYPE })}
+          >
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder={TASK_TYPE.ALL} />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.values(TASK_TYPE).map(type => (
+                <SelectItem key={type} value={type}>
+                  {type.toUpperCase()}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="group w-full min-w-[220px] justify-start gap-2 text-muted-foreground"
+              >
+                <CalendarDaysIcon
+                  size={16}
+                  className="text-muted-foreground transition-colors group-hover:text-accent-foreground"
+                />
+                {dateLabel}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                initialFocus
+                mode="range"
+                selected={filter.range}
+                numberOfMonths={2}
+                defaultMonth={filter.range?.from || new Date()}
+                onSelect={range => updateFilter({ range })}
               />
-              {dateLabel}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              initialFocus
-              mode="range"
-              selected={filter.range}
-              numberOfMonths={2}
-              defaultMonth={filter.range?.from || new Date()}
-              onSelect={range => updateFilter({ range })}
-            />
-          </PopoverContent>
-        </Popover>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
-      <div className="relative row-span-1 md:col-span-1 md:col-start-4">
+      <div className="relative">
         <SearchIcon
           size={16}
           className="absolute left-2.5 top-2.5 text-muted-foreground"

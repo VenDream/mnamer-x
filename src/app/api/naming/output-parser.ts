@@ -33,8 +33,8 @@ export class CustomOutputParser extends BaseOutputParser<ExpectedOutput> {
 
   getFormatInstructions(): string {
     return `
-      Your output must be a JSON array, starting with '[' and ending with ']'.
-      Do not add any extra explanations or markdown syntax.
+      Your output MUST be a JSON array, starting with '[' and ending with ']'.
+      DO NOT add any extra explanations or markdown syntax.
     `;
   }
 }

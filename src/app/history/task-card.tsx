@@ -23,11 +23,18 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { HistoryContext, HistoryCtx } from './context';
 
 interface IProps {
   tid: number;
-  idx: number;
 }
 
 const DEBUG_BACKDROP = 'https://placehold.co/1280x720?text=backdrop';
@@ -37,6 +44,7 @@ export function TaskCard(props: IProps) {
   const task = useStore(state => state.tasks[props.tid]);
   const tmdbs = useStore(state => state.tmdbs);
   const removeTask = useStore(state => state.removeTask);
+  const { selectMode } = useContext(HistoryContext) as HistoryCtx;
 
   const [percent, setPercent] = useState(0);
   const [dateStr, setDateStr] = useState('');
@@ -57,9 +65,9 @@ export function TaskCard(props: IProps) {
 
   const total = task.results.length;
   const success = task.results.filter(t => t.output.tmdbid > 0).length;
-  const isSuccess = success === total;
+  const isSuccess = success === total && total > 0;
   const withFailed = success < total && success > 0;
-  const isFailed = success === 0;
+  const isFailed = !isSuccess && !withFailed;
   const tLabel = dayjs(task.start).format('MMDDHHmm');
   const color = isSuccess ? 'green' : withFailed ? 'orange' : 'red';
 
@@ -92,23 +100,25 @@ export function TaskCard(props: IProps) {
     <Link href={`${ROUTE.HISTORY}/${props.tid}`}>
       <Card
         className={cn(
-          'group cursor-pointer rounded hover:outline hover:outline-2 group-hover:border-transparent',
+          'group cursor-pointer rounded',
+          'md:hover:outline md:hover:outline-2 md:group-hover:border-transparent',
           {
-            'hover:outline-green-500': isSuccess,
-            'hover:bg-green-500/20': isSuccess,
-            'hover:outline-orange-500': withFailed,
-            'hover:bg-orange-500/20': withFailed,
-            'hover:outline-red-500': isFailed,
-            'hover:bg-red-500/20': isFailed,
+            'md:hover:outline-green-500': isSuccess,
+            'md:hover:bg-green-500/20': isSuccess,
+            'md:hover:outline-orange-500': withFailed,
+            'md:hover:bg-orange-500/20': withFailed,
+            'md:hover:outline-red-500': isFailed,
+            'md:hover:bg-red-500/20': isFailed,
           }
         )}
       >
         <CardHeader className="p-4 pb-2">
           <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
+            <div className="flex select-none items-center gap-1">
               <CircleDotIcon size={20} color={color} />
               Task #{tLabel}
             </div>
+
             <div
               className="relative -top-[2px]"
               onClick={e => {
@@ -124,7 +134,14 @@ export function TaskCard(props: IProps) {
                   type="button"
                   size="icon"
                   variant="ghost"
-                  className="visible relative right-[-10px] rounded-full group-hover:visible md:invisible"
+                  className={cn(
+                    'relative right-[-10px] rounded-full',
+                    'md:opacity-0 md:group-hover:opacity-100',
+                    {
+                      'opacity-100': !selectMode,
+                      'opacity-0': selectMode,
+                    }
+                  )}
                 >
                   <XIcon size={20} />
                 </Button>

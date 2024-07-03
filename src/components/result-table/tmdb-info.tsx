@@ -140,23 +140,14 @@ export function TmdbInfo(props: IProps) {
               )}
             >
               <p className="flex items-center gap-1 leading-3">
-                <StarIcon
-                  size={16}
-                  color="orange"
-                  className="relative -top-[1px]"
-                />
+                <StarIcon size={16} color="orange" className="shrink-0" />
                 {Math.round(vote_average).toFixed(1)} / 10.0 ({vote_count})
               </p>
               <Separator
                 orientation="vertical"
                 className="hidden h-5 md:block"
               />
-              <p
-                className={cn(
-                  'flex items-center gap-1 leading-3',
-                  '[&>svg]:relative [&>svg]:-top-[1px] [&>svg]:shrink-0'
-                )}
-              >
+              <p className="flex items-center gap-1 leading-3 [&>svg]:shrink-0">
                 {media_type === 'tv' && <TvIcon size={16} />}
                 {media_type === 'movie' && <FilmIcon size={16} />}
                 {genres.join('・')}

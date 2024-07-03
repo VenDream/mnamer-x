@@ -51,7 +51,7 @@ function getFormattedMovieName(meta: ParsedMeta, movie: TMDBMovie) {
 
 function getFormattedTvName(meta: ParsedMeta, tv: TMDBTv) {
   const { season, episode, misc, format, resolution } = meta;
-  const { name, first_air_date } = tv;
+  const { name } = tv;
 
   const year = getMediaReleaseYear(tv);
   let filename = `${name}.${year}.S${zeroPad(season, 2)}E${zeroPad(episode, 2)}`;

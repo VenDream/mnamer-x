@@ -11,6 +11,7 @@ export async function execWebDAVTask(
 
   await PromisePool.withConcurrency(10)
     .for(data)
+    .useCorrespondingResults()
     .process(async (meta, idx) => {
       const file = files[idx] as WebDAVInput['files'][number];
       const { dirpath } = file || {};
@@ -20,13 +21,15 @@ export async function execWebDAVTask(
 
       result = await tmdb.searchMedia(meta.name);
 
+      console.log('[%s] result: %O', idx, result);
+
       if (result?.type === 'tv') {
         mediaDetail = await tmdb.getTvDetail(result?.id);
       } else if (result?.type === 'movie') {
         mediaDetail = await tmdb.getMovieDetail(result?.id);
       }
 
-      output.push({
+      output[idx] = {
         input: meta.original,
         output: {
           meta,
@@ -37,7 +40,7 @@ export async function execWebDAVTask(
           clientId: inputData.clientId,
           dirpath,
         },
-      });
+      };
     });
 
   return output;

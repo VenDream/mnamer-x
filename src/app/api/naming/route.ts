@@ -1,20 +1,17 @@
-import chatModel from '@/lib/llm-model';
+import { getOpenAILLM } from '@/lib/llm-model';
 import { buildErrorResponse, buildSuccessResponse } from '@/lib/utils';
 import { SYSTEM_AGENT_PROMPT } from '@/prompts';
-import { InputData, ProcessResult, TASK_TYPE } from '@/types';
+import { InputData, ParsedMeta, ProcessResult, TASK_TYPE } from '@/types';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { execManualTask } from './manual';
 import { CustomOutputParser } from './output-parser';
 import { execWebDAVTask } from './webdav';
-
-if (!chatModel) throw new Error('ERR_LLM_INSTANCE_NOT_FOUND');
 
 const outputParser = new CustomOutputParser();
 const prompt = ChatPromptTemplate.fromMessages([
   ['system', SYSTEM_AGENT_PROMPT],
   ['user', '{input}'],
 ]);
-const llmChain = prompt.pipe(chatModel).pipe(outputParser);
 
 export async function POST(req: Request) {
   const inputData: InputData = await req.json();
@@ -29,17 +26,18 @@ export async function POST(req: Request) {
   }
 
   try {
-    const parsedMeta = await llmChain.invoke({
+    const llm = getOpenAILLM({ prompt, parser: outputParser });
+    const parsedMetas = (await llm.invoke({
       input,
       format_instructions: outputParser.getFormatInstructions(),
-    });
+    })) as ParsedMeta[];
 
     switch (type) {
       case TASK_TYPE.MANUAL:
-        output = await execManualTask(inputData, parsedMeta);
+        output = await execManualTask(inputData, parsedMetas);
         break;
       case TASK_TYPE.WEB_DAV:
-        output = await execWebDAVTask(inputData, parsedMeta);
+        output = await execWebDAVTask(inputData, parsedMetas);
         break;
       default:
         break;

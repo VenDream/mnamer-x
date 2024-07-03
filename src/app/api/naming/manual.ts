@@ -12,6 +12,7 @@ export async function execManualTask(
 
   await PromisePool.withConcurrency(10)
     .for(data)
+    .useCorrespondingResults()
     .process(async (meta, idx) => {
       const file = files[idx] as ManualInput['files'][number];
       const { year, keyword } = file || {};
@@ -34,14 +35,14 @@ export async function execManualTask(
         mediaDetail = await tmdb.getMovieDetail(result?.id);
       }
 
-      output.push({
+      output[idx] = {
         input: meta.original,
         output: {
           meta,
           tmdb: mediaDetail,
         },
         modified: '',
-      });
+      };
     });
 
   return output;
