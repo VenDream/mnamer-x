@@ -14,8 +14,6 @@ import { TaskFilter } from './task-filter';
 export function Header() {
   const {
     selected,
-    filter,
-    setFilter,
     selectMode,
     selectAll,
     unselectAll,
@@ -27,7 +25,7 @@ export function Header() {
 
   return (
     <div className="hidden border-b pb-4 md:block">
-      <TaskFilter filter={filter} onFilterChange={setFilter} />
+      <TaskFilter />
       <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-2">
           <Button variant="outline" onClick={toggleSelectMode}>

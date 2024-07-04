@@ -1,5 +1,5 @@
+import { useProcessTask } from '@/hooks/use-process-tasks';
 import { cn } from '@/lib/utils';
-import { ProcessTask } from '@/types';
 import { useLongPress } from 'ahooks';
 import { CircleCheckBigIcon, CircleIcon } from 'lucide-react';
 import { useContext, useRef } from 'react';
@@ -7,11 +7,11 @@ import { HistoryContext, HistoryCtx } from './context';
 import { TaskCard } from './task-card';
 
 interface IProps {
-  task: ProcessTask;
+  tid: number;
 }
 
 export function TaskItem(props: IProps) {
-  const { task } = props;
+  const task = useProcessTask(props.tid);
   const { selectMode, toggleSelectMode, selected, toggleSelected } = useContext(
     HistoryContext
   ) as HistoryCtx;
@@ -39,13 +39,12 @@ export function TaskItem(props: IProps) {
   );
 
   return (
-    <div className="p-2 md:p-1">
+    <div className="animate-fade-up p-2 animate-duration-500 md:p-1">
       <div
         ref={ref}
         className={cn(
           'relative cursor-pointer rounded after:absolute',
           'outline outline-0 outline-primary after:rounded',
-          'after:bg-accent/20',
           {
             'after:inset-0': selectMode,
             'after:bg-accent/60': isSelected,
@@ -57,7 +56,6 @@ export function TaskItem(props: IProps) {
         {selectMode && (
           <Icon
             size={22}
-            strokeWidth={3}
             className="absolute right-[18px] top-[24px] z-10 !stroke-2 text-primary"
           />
         )}

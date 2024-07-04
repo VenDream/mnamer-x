@@ -11,6 +11,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ContentPage } from '@/components/ui/content-page';
 import { Loading } from '@/components/ui/loading';
 import { Separator } from '@/components/ui/separator';
 import { ROUTE } from '@/constants';
@@ -38,7 +39,7 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
   const fail = total - success;
 
   return (
-    <div className="space-y-4 p-4 md:max-w-screen-lg">
+    <ContentPage className="space-y-4">
       <h1 className="mb-4 text-xl">Task Detail</h1>
       <Breadcrumb>
         <BreadcrumbList>
@@ -122,6 +123,6 @@ export default function TaskDetail({ params }: { params: { tid: string } }) {
       ) : (
         <Loading text="Loading data..." />
       )}
-    </div>
+    </ContentPage>
   );
 }

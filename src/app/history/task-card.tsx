@@ -100,7 +100,7 @@ export function TaskCard(props: IProps) {
     <Link href={`${ROUTE.HISTORY}/${props.tid}`}>
       <Card
         className={cn(
-          'group cursor-pointer rounded',
+          'group cursor-pointer rounded bg-accent/20',
           'md:hover:outline md:hover:outline-2 md:group-hover:border-transparent',
           {
             'md:hover:outline-green-500': isSuccess,

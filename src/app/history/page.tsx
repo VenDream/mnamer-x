@@ -1,5 +1,6 @@
 'use client';
 
+import { ContentPage } from '@/components/ui/content-page';
 import { Loading } from '@/components/ui/loading';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useProcessTasks } from '@/hooks/use-process-tasks';
@@ -12,9 +13,10 @@ import { InfoIcon } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { HistoryContext, HistoryCtx } from './context';
+import { FloatFilter } from './float-filter';
 import { FloatMenu } from './float-menu';
 import { Header } from './header';
-import { Filter } from './task-filter';
+import { DEFAULT_FILTER } from './task-filter';
 import { TaskItem } from './task-item';
 
 export default function History() {
@@ -24,14 +26,10 @@ export default function History() {
 
   const [selectMode, setSelectMode] = useState(false);
   const [selected, setSelected] = useState<number[]>([]);
-  const [filter, setFilter] = useState<Filter>({
-    type: TASK_TYPE.ALL,
-    keyword: '',
-    range: {
-      from: undefined,
-      to: undefined,
-    },
-  });
+  const [filter, setFilter] = useState(DEFAULT_FILTER);
+
+  const [animate, setAnimate] = useState(true);
+  const [showFloatFilter, setShowFloatFilter] = useState(false);
 
   const filteredTasks = useMemo(() => {
     const { type, keyword, range } = filter;
@@ -121,7 +119,15 @@ export default function History() {
   }, [filter]);
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] flex-col gap-4 p-4">
+    <ContentPage
+      fullWidth
+      animate={animate}
+      onAnimationEnd={() => {
+        setAnimate(false);
+        setShowFloatFilter(true);
+      }}
+      className="flex h-[calc(100vh-4rem)] flex-col gap-4 fill-mode-backwards"
+    >
       <h1 className="text-xl">Task History</h1>
       {isHydrated ? (
         tasks.length === 0 ? (
@@ -150,19 +156,20 @@ export default function History() {
                       )}
                     >
                       {filteredTasks.map(task => (
-                        <TaskItem task={task} key={task.id} />
+                        <TaskItem tid={task.id} key={task.id} />
                       ))}
                     </div>
                   )}
                 </ScrollArea>
               </div>
               <FloatMenu />
+              {showFloatFilter && <FloatFilter />}
             </div>
           </HistoryContext.Provider>
         )
       ) : (
         <Loading text="Loading data..." />
       )}
-    </div>
+    </ContentPage>
   );
 }

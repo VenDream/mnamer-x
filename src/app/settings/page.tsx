@@ -1,5 +1,6 @@
 'use client';
 
+import { ContentPage } from '@/components/ui/content-page';
 import { Loading } from '@/components/ui/loading';
 import { useStoreHydrate } from '@/hooks/use-store-hydrate';
 import { FormatterSettings } from './formatter';
@@ -10,7 +11,7 @@ export default function Settings() {
   const isHydrated = useStoreHydrate();
 
   return (
-    <div className="p-4 md:max-w-screen-lg">
+    <ContentPage>
       <h1 className="mb-4 text-xl">Settings</h1>
       {isHydrated ? (
         <div className="flex flex-col gap-4">
@@ -21,6 +22,6 @@ export default function Settings() {
       ) : (
         <Loading text="Loading data..." />
       )}
-    </div>
+    </ContentPage>
   );
 }

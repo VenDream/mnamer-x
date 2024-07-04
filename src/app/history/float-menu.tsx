@@ -23,9 +23,9 @@ export function FloatMenu() {
   return (
     <div
       className={cn(
-        'invisible z-10 duration-200 fill-mode-forwards',
-        'fixed bottom-8 left-[16.7%] flex h-10 w-2/3 items-center justify-center gap-2',
-        'rounded bg-muted p-2 text-foreground shadow md:hidden',
+        'invisible z-10 h-10 w-2/3 duration-200 fill-mode-forwards',
+        'fixed bottom-8 left-[16.7%] flex items-center justify-center gap-2',
+        'rounded bg-accent/80 p-2 text-foreground shadow backdrop-blur md:hidden',
         {
           visible: selectMode,
           'animate-in': selectMode,

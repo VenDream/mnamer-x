@@ -1,4 +1,5 @@
 import { UnderlineLink } from '@/components/link';
+import { ContentPage } from '@/components/ui/content-page';
 
 interface Scraper {
   name: string;
@@ -26,7 +27,7 @@ const SUPPORTED_SCRAPERS: Scraper[] = [
 
 export default function Home() {
   return (
-    <div className="h-full w-full p-4">
+    <ContentPage>
       <h1 className="mb-4 text-xl">Introduction</h1>
       <div className="[&>p]:mt-2 [&>p]:text-sm [&>p]:text-muted-foreground">
         <p>
@@ -53,6 +54,6 @@ export default function Home() {
         </UnderlineLink>
         now.
       </p>
-    </div>
+    </ContentPage>
   );
 }

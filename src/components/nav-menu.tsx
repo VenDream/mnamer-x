@@ -30,7 +30,7 @@ interface NavRoute {
 const NAV_ROUTES: NavRoute[] = [
   {
     path: ROUTE.INDEX,
-    label: 'Getting Started',
+    label: 'Home',
     icon: HomeIcon,
   },
   {

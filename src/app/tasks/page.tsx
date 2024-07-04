@@ -1,3 +1,4 @@
+import { ContentPage } from '@/components/ui/content-page';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TASK_TYPE } from '@/types';
 import { CloudStorage } from './cloud-storage';
@@ -17,7 +18,7 @@ const TASK_PAGES: Record<TaskType, React.ReactNode> = {
 
 export default function Tasks() {
   return (
-    <div className="p-4">
+    <ContentPage>
       <h1 className="mb-4 text-xl">Task Execution</h1>
       <Tabs defaultValue="manual" className="w-full">
         <TabsList className="w-full justify-start md:max-w-screen-lg">
@@ -38,6 +39,6 @@ export default function Tasks() {
           </TabsContent>
         ))}
       </Tabs>
-    </div>
+    </ContentPage>
   );
 }

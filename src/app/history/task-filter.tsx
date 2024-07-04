@@ -17,8 +17,9 @@ import { TASK_TYPE } from '@/types';
 import { useDebounceFn } from 'ahooks';
 import { format } from 'date-fns';
 import { CalendarDaysIcon, SearchIcon } from 'lucide-react';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { DateRange } from 'react-day-picker';
+import { HistoryContext, HistoryCtx } from './context';
 
 export interface Filter {
   type: TASK_TYPE;
@@ -26,13 +27,17 @@ export interface Filter {
   range: DateRange;
 }
 
-interface IProps {
-  filter: Filter;
-  onFilterChange: (filter: Filter) => void;
-}
+export const DEFAULT_FILTER: Filter = {
+  type: TASK_TYPE.ALL,
+  keyword: '',
+  range: {
+    from: undefined,
+    to: undefined,
+  },
+};
 
-export function TaskFilter(props: IProps) {
-  const { filter, onFilterChange } = props;
+export function TaskFilter() {
+  const { filter, setFilter } = useContext(HistoryContext) as HistoryCtx;
 
   const dateLabel = useMemo(() => {
     const { from, to } = filter.range || {};
@@ -48,7 +53,7 @@ export function TaskFilter(props: IProps) {
   }, [filter.range]);
 
   const updateFilter = (patch: Partial<Filter>) => {
-    onFilterChange({ ...filter, ...patch });
+    setFilter({ ...filter, ...patch });
   };
 
   const { run: debouncedUpdateFilter } = useDebounceFn(updateFilter, {
@@ -58,49 +63,45 @@ export function TaskFilter(props: IProps) {
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex items-center gap-2">
-        <div className="">
-          <Select
-            value={filter.type}
-            onValueChange={type => updateFilter({ type: type as TASK_TYPE })}
-          >
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder={TASK_TYPE.ALL} />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(TASK_TYPE).map(type => (
-                <SelectItem key={type} value={type}>
-                  {type.toUpperCase()}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="group w-full min-w-[220px] justify-start gap-2 text-muted-foreground"
-              >
-                <CalendarDaysIcon
-                  size={16}
-                  className="text-muted-foreground transition-colors group-hover:text-accent-foreground"
-                />
-                {dateLabel}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                initialFocus
-                mode="range"
-                selected={filter.range}
-                numberOfMonths={2}
-                defaultMonth={filter.range?.from || new Date()}
-                onSelect={range => updateFilter({ range })}
+        <Select
+          value={filter.type}
+          onValueChange={type => updateFilter({ type: type as TASK_TYPE })}
+        >
+          <SelectTrigger className="w-[150px]">
+            <SelectValue placeholder={TASK_TYPE.ALL} />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.values(TASK_TYPE).map(type => (
+              <SelectItem key={type} value={type}>
+                {type.toUpperCase()}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="group w-full min-w-[220px] justify-start gap-2 text-muted-foreground"
+            >
+              <CalendarDaysIcon
+                size={16}
+                className="text-muted-foreground transition-colors group-hover:text-accent-foreground"
               />
-            </PopoverContent>
-          </Popover>
-        </div>
+              {dateLabel}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              initialFocus
+              mode="range"
+              selected={filter.range}
+              numberOfMonths={2}
+              defaultMonth={filter.range?.from || new Date()}
+              onSelect={range => updateFilter({ range })}
+            />
+          </PopoverContent>
+        </Popover>
       </div>
       <div className="relative">
         <SearchIcon

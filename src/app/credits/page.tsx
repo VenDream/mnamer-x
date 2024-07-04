@@ -1,5 +1,6 @@
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ContentPage } from '@/components/ui/content-page';
 import Image from 'next/image';
 
 /** @see https://developer.themoviedb.org/docs/faq#what-are-the-attribution-requirements */
@@ -9,7 +10,7 @@ const TMDB_LOGO_RATIO = 150 / 11;
 
 export default function Credits() {
   return (
-    <div className="p-4 md:max-w-screen-lg">
+    <ContentPage>
       <h1 className="mb-4 text-xl">Credits</h1>
       <Card className="rounded">
         <CardHeader>
@@ -32,6 +33,6 @@ export default function Credits() {
           </p>
         </CardContent>
       </Card>
-    </div>
+    </ContentPage>
   );
 }
