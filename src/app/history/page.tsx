@@ -123,10 +123,12 @@ export default function History() {
       fullWidth
       animate={animate}
       onAnimationEnd={() => {
-        setAnimate(false);
-        setShowFloatFilter(true);
+        setTimeout(() => {
+          setAnimate(false);
+          setShowFloatFilter(true);
+        }, 200);
       }}
-      className="flex h-[calc(100vh-4rem)] flex-col gap-4 fill-mode-backwards"
+      className="flex h-[calc(100vh-4rem)] flex-col gap-4"
     >
       <h1 className="text-xl">Task History</h1>
       {isHydrated ? (
