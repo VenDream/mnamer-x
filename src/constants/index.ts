@@ -1,11 +1,17 @@
 import type { Metadata } from 'next';
 
+// app name
+export const APP_NAME = 'mnamer-x';
+
 // github
 export const GITHUB_REPO = 'https://github.com/VenDream/mnamer-x';
 
 // site metas
 export const SITE_META: Metadata = {
-  title: 'mnamer-x',
+  title: {
+    template: `%s | ${APP_NAME}`,
+    default: APP_NAME,
+  },
   description: 'Use LLMs to name your media files to be scrapers-friendly.',
 };
 

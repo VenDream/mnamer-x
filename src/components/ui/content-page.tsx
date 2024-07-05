@@ -10,12 +10,7 @@ interface IProps extends React.PropsWithChildren {
 
 const ContentPage = React.forwardRef<HTMLDivElement, IProps>(
   (props: IProps, ref) => {
-    const {
-      animate = true,
-      className = '',
-      fullWidth = true,
-      onAnimationEnd,
-    } = props;
+    const { animate = true, className = '', fullWidth, onAnimationEnd } = props;
 
     return (
       <div

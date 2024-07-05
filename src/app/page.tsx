@@ -27,7 +27,7 @@ const SUPPORTED_SCRAPERS: Scraper[] = [
 
 export default function Home() {
   return (
-    <ContentPage>
+    <ContentPage fullWidth={true}>
       <h1 className="mb-4 text-xl">Introduction</h1>
       <div className="[&>p]:mt-2 [&>p]:text-sm [&>p]:text-muted-foreground">
         <p>

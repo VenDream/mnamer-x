@@ -120,7 +120,7 @@ export default function History() {
 
   return (
     <ContentPage
-      fullWidth
+      fullWidth={true}
       animate={animate}
       onAnimationEnd={() => {
         setTimeout(() => {
