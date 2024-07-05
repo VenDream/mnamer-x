@@ -40,7 +40,7 @@ export default function RootLayout({
           <header className="sticky flex h-16 shrink-0 justify-between border-b px-4 py-2">
             <Link href={ROUTE.INDEX}>
               <div className="flex h-full flex-col justify-center">
-                <h1 className="text-lg font-bold">{APP_NAME.toUpperCase()}</h1>
+                <h1 className="text-lg font-bold">{APP_NAME}</h1>
                 <p className="hidden gap-1 text-xs md:flex">
                   <FilePenLineIcon size={16} />
                   {SITE_META.description}

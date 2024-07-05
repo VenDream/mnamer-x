@@ -1,5 +1,7 @@
 import { UnderlineLink } from '@/components/link';
 import { ContentPage } from '@/components/ui/content-page';
+import { APP_NAME } from '@/constants';
+import { Metadata } from 'next';
 
 interface Scraper {
   name: string;
@@ -24,6 +26,10 @@ const SUPPORTED_SCRAPERS: Scraper[] = [
     site: 'https://zh.okaapps.com/product/1659622164',
   },
 ];
+
+export const metadata: Metadata = {
+  title: `Home | ${APP_NAME}`,
+};
 
 export default function Home() {
   return (

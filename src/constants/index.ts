@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 // app name
-export const APP_NAME = 'mnamer-x';
+export const APP_NAME = 'MNAMER-X';
 
 // github
 export const GITHUB_REPO = 'https://github.com/VenDream/mnamer-x';
