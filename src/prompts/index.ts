@@ -8,7 +8,6 @@ Identification rules:
   - "第x季" refers to the season.
 - "0x" usually indicates the episode number, not the season.
 - Movie/TV show titles may include descriptive phrases, such as "xx:xx", be sure to include these.
-- Each input must have an output.
 
 You need to return the results in JSON array format, where each JSON object follows this structure:
 {{

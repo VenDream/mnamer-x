@@ -35,6 +35,7 @@ export class CustomOutputParser extends BaseOutputParser<ExpectedOutput> {
     return `
       Your output MUST be a JSON array, starting with '[' and ending with ']'.
       DO NOT add any extra explanations or markdown syntax.
+      Remember, each input MUST have a corresponding output.
     `;
   }
 }

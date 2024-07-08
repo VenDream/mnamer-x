@@ -26,7 +26,9 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 const formSchema = z.object({
-  name: z.string(),
+  name: z
+    .string()
+    .max(10, { message: 'Name should be no more than 10 characters' }),
   remoteURL: z
     .string()
     .min(1, { message: 'Remote URL is required' })

@@ -99,9 +99,13 @@ export function Manual() {
       const response = await rename(values);
       const data = response.data as Response<ProcessResult[]>;
       const { code, data: results, errormsg } = data;
-      if (code !== 0) {
-        throw new Error(errormsg || 'Failed to fetch');
-      }
+
+      if (code !== 0) throw new Error(errormsg || 'Failed to fetch');
+      if (results?.length === 0)
+        throw new Error(
+          'Unable to recognize any media files, please check the input.'
+        );
+
       const tid = Date.now();
       setTid(tid);
       const task: ProcessTask = {
