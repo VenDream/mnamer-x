@@ -31,6 +31,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { toast } from 'sonner';
 import { HistoryContext, HistoryCtx } from './context';
 
 interface IProps {
@@ -128,6 +129,7 @@ export function TaskCard(props: IProps) {
               <DeleteConfirm
                 onConfirm={() => {
                   removeTask(props.tid);
+                  toast.success('Task deleted');
                 }}
               >
                 <Button

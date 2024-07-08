@@ -32,7 +32,12 @@ import {
 } from '@/types';
 import { PromisePool } from '@supercharge/promise-pool';
 import { produce } from 'immer';
-import { CirclePlusIcon, LoaderIcon, PlayIcon, XIcon } from 'lucide-react';
+import {
+  CirclePlusIcon,
+  LoaderCircleIcon,
+  PlayIcon,
+  XIcon,
+} from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { FileStat } from 'webdav';
@@ -219,7 +224,10 @@ export function WebDAV() {
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
-                      <LoaderIcon size={16} className="animate-spin" />
+                      <LoaderCircleIcon
+                        size={20}
+                        className="animate-spin animate-duration-1000"
+                      />
                       Processing...
                     </span>
                   ) : (

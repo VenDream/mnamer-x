@@ -40,7 +40,7 @@ import {
   ChevronsUpDownIcon,
   CircleHelpIcon,
   CirclePlusIcon,
-  LoaderIcon,
+  LoaderCircleIcon,
   PlayIcon,
   XIcon,
 } from 'lucide-react';
@@ -249,7 +249,10 @@ export function Manual() {
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
-                        <LoaderIcon size={16} className="animate-spin" />
+                        <LoaderCircleIcon
+                          size={20}
+                          className="animate-spin animate-duration-1000"
+                        />
                         Processing...
                       </span>
                     ) : (
