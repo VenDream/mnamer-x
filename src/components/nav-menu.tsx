@@ -95,7 +95,7 @@ export function NavMenuForMobile() {
           <MenuIcon size={16} className="text-foreground" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="bottom" className="h-[60vh] w-screen">
+      <SheetContent side="bottom" className="h-[60vh] w-screen rounded-lg">
         <SheetTitle>Pages</SheetTitle>
         <div className="mt-6 space-y-2">
           {NAV_ROUTES.map(({ path, label, icon: Icon }) => {

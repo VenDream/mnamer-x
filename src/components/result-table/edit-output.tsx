@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -40,9 +39,6 @@ export function EditOutput(props: IProps) {
       >
         <DialogHeader>
           <DialogTitle>Edit output</DialogTitle>
-          <DialogDescription className="text-left">
-            Modify the output to what you prefer.
-          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4 md:grid-cols-5">

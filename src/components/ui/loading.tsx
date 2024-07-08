@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { LoaderIcon } from 'lucide-react';
+import { LoaderCircleIcon } from 'lucide-react';
 
 interface IProps {
   text?: string;
@@ -9,7 +9,10 @@ interface IProps {
 export function Loading(props: IProps) {
   return (
     <span className={cn('flex items-center gap-2', props.className)}>
-      <LoaderIcon size={16} className="animate-spin" />
+      <LoaderCircleIcon
+        size={20}
+        className="animate-spin animate-duration-1000"
+      />
       {props.text || 'Loading...'}
     </span>
   );

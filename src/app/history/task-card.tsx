@@ -97,7 +97,7 @@ export function TaskCard(props: IProps) {
   }, [dateStr, success, tLabel, total, updateDateStr]);
 
   return (
-    <Link href={`${ROUTE.HISTORY}/${props.tid}`}>
+    <Link href={`${ROUTE.TASKS}/${props.tid}`}>
       <Card
         className={cn(
           'group cursor-pointer rounded bg-accent/20',

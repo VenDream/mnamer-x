@@ -17,6 +17,7 @@ import { Separator } from '@/components/ui/separator';
 import { ROUTE } from '@/constants';
 import { useProcessResults } from '@/hooks/use-process-results';
 import { useStoreHydrate } from '@/hooks/use-store-hydrate';
+import { cn } from '@/lib/utils';
 import { useStore } from '@/store';
 import {
   BotIcon,
@@ -28,8 +29,13 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-export function TaskDetail({ params }: { params: { tid: string } }) {
-  const tid = +params.tid;
+interface IProps {
+  tid: number;
+  dialog?: boolean;
+}
+
+export function TaskDetail(props: IProps) {
+  const { tid, dialog } = props;
   const task = useStore(state => state.tasks[tid]);
   const results = useProcessResults(tid);
   const isHydrated = useStoreHydrate();
@@ -39,22 +45,32 @@ export function TaskDetail({ params }: { params: { tid: string } }) {
   const fail = total - success;
 
   return (
-    <ContentPage className="space-y-4">
-      <h1 className="mb-4 text-xl">Task Detail</h1>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href={ROUTE.HISTORY}>History</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>{params.tid}</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      <Separator className="my-4" />
+    <ContentPage
+      className={cn('space-y-4', {
+        'p-0': dialog,
+      })}
+      animate={!dialog}
+      fullWidth={dialog}
+    >
+      {!dialog && (
+        <>
+          <h1 className="mb-4 text-xl">Task Detail</h1>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href={ROUTE.TASKS}>Tasks</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{tid}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <Separator className="my-4" />
+        </>
+      )}
       {isHydrated ? (
         !!task ? (
           <div className="space-y-6">
@@ -113,7 +129,7 @@ export function TaskDetail({ params }: { params: { tid: string } }) {
           <div className="flex items-center gap-1">
             <p className="text-sm text-muted-foreground">Task not found.</p>
             <UnderlineLink
-              href={ROUTE.HISTORY}
+              href={ROUTE.TASKS}
               className="text-sm text-muted-foreground"
             >
               Go back.

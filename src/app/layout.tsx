@@ -11,6 +11,7 @@ import { FilePenLineIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Link from 'next/link';
+import React from 'react';
 
 import './globals.css';
 
@@ -20,8 +21,10 @@ export const metadata: Metadata = SITE_META;
 
 export default function RootLayout({
   children,
+  dialog,
 }: Readonly<{
   children: React.ReactNode;
+  dialog?: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -72,6 +75,7 @@ export default function RootLayout({
             <div className="flex-1">
               <ScrollArea className="h-full">{children}</ScrollArea>
             </div>
+            {dialog}
           </main>
           <Toaster
             toastOptions={{
