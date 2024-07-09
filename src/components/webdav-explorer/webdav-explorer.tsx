@@ -60,7 +60,7 @@ const defaultResult: SelectResult = {
   files: [],
 };
 
-function WebDAVExplorerPrimitive(
+function WebDAVExplorerRenderFunc(
   props: IProps,
   forwardedRef: React.ForwardedRef<WebDAVExplorerHandle>
 ) {
@@ -70,9 +70,7 @@ function WebDAVExplorerPrimitive(
   const davServers = Object.values(webdavs);
 
   const [open, setOpen] = useState(false);
-  const [clientId, setClientId] = useState(
-    selected?.clientId || (davServers.length === 1 ? davServers[0].id : -1)
-  );
+  const [clientId, setClientId] = useState(selected?.clientId || -1);
   const [client, setClient] = useState<WebDAVClient | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currPath, setCurrPath] = useState('/');
@@ -331,6 +329,6 @@ function isContainsStat(arr: FileStat[], stat: FileStat) {
 }
 
 const forwardRef = React.forwardRef as typeof React.IForwardRef;
-const WebDAVExplorer = forwardRef(WebDAVExplorerPrimitive);
+const WebDAVExplorer = forwardRef(WebDAVExplorerRenderFunc);
 
 export { WebDAVExplorer };

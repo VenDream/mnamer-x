@@ -46,11 +46,15 @@ import { FileSource } from './file-source';
 
 export function WebDAV() {
   const selectorRef = useRef<WebDAVExplorerHandle>(null);
+  const webdavClients = useStore(state => state.settings.webdav);
   const [tid, setTid] = useState(-1);
-  const [fileSource, setFileSource] = useState<SelectResult>();
+  const [fileSource, setFileSource] = useState<SelectResult>(() => ({
+    clientId: Object.values(webdavClients)[0]?.id || -1,
+    dirs: [],
+    files: [],
+  }));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const addTask = useStore(state => state.addTask);
-  const webdavClients = useStore(state => state.settings.webdav);
   const results = useProcessResults(tid);
 
   const { dirs = [], files = [] } = fileSource || {};

@@ -30,7 +30,7 @@ import {
   SaveIcon,
   SearchIcon,
 } from 'lucide-react';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { HistoryContext, HistoryCtx } from './context';
 import { DEFAULT_FILTER, Filter } from './task-filter';
 
@@ -69,6 +69,10 @@ export function FloatFilter() {
     setCtxFilter(DEFAULT_FILTER);
     setOpen(false);
   };
+
+  useEffect(() => {
+    ctxFilter && setFilter(ctxFilter);
+  }, [ctxFilter]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
