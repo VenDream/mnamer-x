@@ -50,7 +50,7 @@ export function Breadcrumb(props: IProps) {
   };
 
   return (
-    <IBreadcrumb className="flex h-12 w-2/3 items-center">
+    <IBreadcrumb className="flex items-center md:h-12 md:w-2/3">
       <BreadcrumbList className="!gap-1">
         {items.map((stat, idx) => {
           const oIdx = getOriginalIdx(stat);
@@ -68,7 +68,11 @@ export function Breadcrumb(props: IProps) {
                 {isEllipsis ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-6 w-6">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-5 w-6 md:h-6"
+                      >
                         <BreadcrumbEllipsis />
                       </Button>
                     </DropdownMenuTrigger>

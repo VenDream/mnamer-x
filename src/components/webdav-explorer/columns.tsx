@@ -72,7 +72,7 @@ export const columns: ColumnDef<FileStat>[] = [
     },
   },
   {
-    size: 100,
+    size: 140,
     accessorKey: 'size',
     header({ column }) {
       return (
@@ -93,7 +93,7 @@ export const columns: ColumnDef<FileStat>[] = [
     },
   },
   {
-    size: 180,
+    size: 130,
     accessorKey: 'lastmod',
     header({ column }) {
       return (

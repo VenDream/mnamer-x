@@ -5,7 +5,6 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -242,7 +241,10 @@ function WebDAVExplorerRenderFunc(
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent
-        className="flex h-[80vh] w-[90vw] max-w-[800px] flex-col md:h-[65vh] md:min-h-[700px]"
+        className={cn(
+          'flex h-[85vh] w-[90vw] max-w-[800px] flex-col',
+          'md:h-[65vh] md:min-h-[700px]'
+        )}
         onOpenAutoFocus={e => e.preventDefault()}
         onEscapeKeyDown={e => e.preventDefault()}
       >
@@ -304,7 +306,7 @@ function WebDAVExplorerRenderFunc(
           </ScrollArea>
         </div>
         {client && (
-          <DialogFooter>
+          <div className="flex items-center justify-between md:justify-end md:gap-2">
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
@@ -317,7 +319,7 @@ function WebDAVExplorerRenderFunc(
                 Select
               </Button>
             </DialogClose>
-          </DialogFooter>
+          </div>
         )}
       </DialogContent>
     </Dialog>

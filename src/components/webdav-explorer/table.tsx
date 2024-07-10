@@ -7,10 +7,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useIsDesktop } from '@/hooks/use-media-query';
 import {
   ColumnFiltersState,
   Row,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -27,12 +29,14 @@ import { WebDAVContext, WebDAVCtx } from './context';
 import { Paginator } from './paginator';
 import { Search } from './search';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
+const DESKTOP_PAGE_SIZE = 10;
 
 export function Table() {
   const ctx = useContext(WebDAVContext) as WebDAVCtx;
   const { props, isLoading, onItemClick, onRowSelectionChange } = ctx;
   const { mode, multiple, selected, accept } = props;
+  const isDesktop = useIsDesktop();
 
   const [data, setData] = useState(ctx.data);
   const [rowSelection, setRowSelection] = useState(() => {
@@ -44,6 +48,9 @@ export function Table() {
   });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    lastmod: isDesktop,
+  });
 
   const prevRowSelection = usePrevious(rowSelection);
 
@@ -69,7 +76,7 @@ export function Table() {
     data,
     columns,
     meta: { webdavCtx: ctx },
-    state: { sorting, columnFilters, rowSelection },
+    state: { sorting, columnFilters, rowSelection, columnVisibility },
     enableRowSelection: isRowCanSelect,
     enableMultiRowSelection: !!multiple,
     onSortingChange: setSorting,
@@ -83,8 +90,8 @@ export function Table() {
   });
 
   useEffect(() => {
-    table.setPageSize(PAGE_SIZE);
-  }, [table]);
+    table.setPageSize(isDesktop ? DESKTOP_PAGE_SIZE : PAGE_SIZE);
+  }, [isDesktop, table]);
 
   useEffect(() => {
     isLoading && setData([]);
@@ -100,9 +107,13 @@ export function Table() {
     }
   }, [onRowSelectionChange, prevRowSelection, rowSelection]);
 
+  useEffect(() => {
+    setColumnVisibility({ lastmod: isDesktop });
+  }, [isDesktop]);
+
   return (
     <div className="p-1">
-      <div className="mb-2 flex items-center justify-between gap-4">
+      <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between md:gap-4">
         <Breadcrumb
           historyPaths={ctx.historyPaths}
           onPathChange={ctx.onPathChange}

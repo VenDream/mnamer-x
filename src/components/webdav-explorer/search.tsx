@@ -18,7 +18,7 @@ export function Search(props: IProps) {
   }, [currPath, statName]);
 
   return (
-    <div className="relative w-1/3">
+    <div className="relative md:w-1/3">
       <SearchIcon
         size={16}
         className="absolute left-2.5 top-2.5 text-muted-foreground"

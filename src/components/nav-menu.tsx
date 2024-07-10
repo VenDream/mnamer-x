@@ -95,7 +95,11 @@ export function NavMenuForMobile() {
           <MenuIcon size={16} className="text-foreground" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="bottom" className="h-[60vh] w-screen rounded-lg">
+      <SheetContent
+        side="bottom"
+        className="h-[60vh] w-screen rounded-lg"
+        onOpenAutoFocus={e => e.preventDefault()}
+      >
         <SheetTitle>Pages</SheetTitle>
         <div className="mt-6 space-y-2">
           {NAV_ROUTES.map(({ path, label, icon: Icon }) => {
@@ -106,10 +110,12 @@ export function NavMenuForMobile() {
                 href={path}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  'flex w-full items-center gap-1 rounded-md border p-2',
+                  'flex w-full items-center gap-2 rounded-md border px-4 py-2',
                   'rounded-sm shadow-sm',
                   {
-                    'bg-accent': isActive,
+                    'text-white': isActive,
+                    'border-accent': isActive,
+                    'bg-primary': isActive,
                     'cursor-default': isActive,
                   }
                 )}
