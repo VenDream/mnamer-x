@@ -297,10 +297,15 @@ function WebDAVExplorerRenderFunc(
                 ))}
               </div>
             ) : (
-              <p className="flex items-center gap-2 text-sm text-muted-foreground">
-                <InfoIcon size={16} />
-                No WebDAV servers have been added yet. Add one in{' '}
-                <UnderlineLink href={ROUTE.SETTINGS}>settings.</UnderlineLink>
+              <p className="flex gap-2 rounded-sm bg-accent p-2 text-sm text-muted-foreground md:items-center">
+                <InfoIcon
+                  size={16}
+                  className="relative top-0.5 shrink-0 !stroke-2 md:top-0"
+                />
+                <span>
+                  No WebDAV servers have been added yet. Add one in{' '}
+                  <UnderlineLink href={ROUTE.SETTINGS}>settings.</UnderlineLink>
+                </span>
               </p>
             )}
           </ScrollArea>

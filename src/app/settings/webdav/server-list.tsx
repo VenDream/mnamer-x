@@ -67,7 +67,7 @@ export function ServerList() {
         ) : (
           <TableRow>
             <TableCell colSpan={3} className="text-muted-foreground">
-              No WebDAV servers have been added yet.
+              No WebDAV servers.
             </TableCell>
           </TableRow>
         )}

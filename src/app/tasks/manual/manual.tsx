@@ -167,9 +167,10 @@ export function Manual() {
                           <TooltipTrigger asChild>
                             <CircleHelpIcon size={16} className="mr-1" />
                           </TooltipTrigger>
-                          <TooltipContent>
+                          <TooltipContent side="right">
                             <p>
                               additional info helps to improve the media
+                              <br />
                               recognition accuracy
                             </p>
                           </TooltipContent>

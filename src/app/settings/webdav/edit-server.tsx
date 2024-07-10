@@ -19,6 +19,7 @@ import {
 import { testConnection } from '@/lib/webdav-client';
 import { useStore } from '@/store';
 import { zodResolver } from '@hookform/resolvers/zod';
+import dayjs from 'dayjs';
 import { CableIcon, SaveIcon } from 'lucide-react';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -67,7 +68,8 @@ export function EditServer(props: IProps) {
       toast.success('Settings updated');
     } else {
       const id = Date.now();
-      addWebDAV({ ...data, id, name: data.name || `WebDAV Server #${id}` });
+      const name = data.name || `Server #${dayjs().format('HHmm')}`;
+      addWebDAV({ ...data, id, name });
       toast.success('WebDAV server added');
     }
 
@@ -76,16 +78,18 @@ export function EditServer(props: IProps) {
 
   const testServer = async () => {
     const opts = form.getValues();
-    const result = await form.trigger();
-    result &&
+    const isValid = await form.trigger();
+    const loadingMsg = 'Testing WebDAV connection...';
+
+    isValid &&
       toast.promise(
         new Promise<boolean>((resolve, reject) => {
           testConnection(opts).then(r => (r ? resolve(r) : reject()));
         }),
         {
-          loading: 'Testing WebDAV connection...',
-          success: 'Testing WebDAV connection...OK',
-          error: 'Testing WebDAV connection...Failed',
+          loading: loadingMsg,
+          success: loadingMsg + 'OK',
+          error: loadingMsg + 'Failed',
         }
       );
   };

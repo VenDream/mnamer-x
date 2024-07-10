@@ -1,8 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@hookform/resolvers': ^3.7.0
-  '@langchain/core': ^0.2.12
+  '@hookform/resolvers': ^3.9.0
+  '@langchain/core': ^0.2.15
   '@langchain/openai': ^0.2.1
   '@radix-ui/react-accordion': ^1.2.0
   '@radix-ui/react-alert-dialog': ^1.1.1
@@ -59,12 +59,12 @@ specifiers:
   husky: ^9.0.11
   immer: ^10.1.1
   input-otp: ^1.2.4
-  langchain: ^0.2.8
+  langchain: ^0.2.9
   lint-staged: ^15.2.7
   lodash.clonedeep: ^4.5.0
   lodash.isequal: ^4.5.0
   lodash.merge: ^4.6.2
-  lucide-react: ^0.400.0
+  lucide-react: ^0.407.0
   next: 14.2.4
   next-themes: ^0.3.0
   postcss: ^8
@@ -76,7 +76,7 @@ specifiers:
   react-hook-form: ^7.52.1
   react-resizable-panels: ^2.0.20
   sonner: ^1.5.0
-  tailwind-merge: ^2.3.0
+  tailwind-merge: ^2.4.0
   tailwindcss: ^3.4.4
   tailwindcss-animate: ^1.0.7
   tailwindcss-animated: ^1.1.2
@@ -87,9 +87,9 @@ specifiers:
   zustand: ^4.5.4
 
 dependencies:
-  '@hookform/resolvers': 3.7.0_react-hook-form@7.52.1
-  '@langchain/core': 0.2.12_langchain@0.2.8
-  '@langchain/openai': 0.2.1_langchain@0.2.8
+  '@hookform/resolvers': 3.9.0_react-hook-form@7.52.1
+  '@langchain/core': 0.2.15_langchain@0.2.9
+  '@langchain/openai': 0.2.1_langchain@0.2.9
   '@radix-ui/react-accordion': 1.2.0_pririwar4m3afwc3lk45uql2te
   '@radix-ui/react-alert-dialog': 1.1.1_pririwar4m3afwc3lk45uql2te
   '@radix-ui/react-aspect-ratio': 1.1.0_pririwar4m3afwc3lk45uql2te
@@ -133,11 +133,11 @@ dependencies:
   https-proxy-agent: 7.0.5
   immer: 10.1.1
   input-otp: 1.2.4_biqbaboplfbrettd7655fr4n2y
-  langchain: 0.2.8_axios@1.7.2
+  langchain: 0.2.9_axios@1.7.2
   lodash.clonedeep: 4.5.0
   lodash.isequal: 4.5.0
   lodash.merge: 4.6.2
-  lucide-react: 0.400.0_react@18.2.0
+  lucide-react: 0.407.0_react@18.2.0
   next: 14.2.4_biqbaboplfbrettd7655fr4n2y
   next-themes: 0.3.0_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -146,7 +146,7 @@ dependencies:
   react-hook-form: 7.52.1_react@18.2.0
   react-resizable-panels: 2.0.20_biqbaboplfbrettd7655fr4n2y
   sonner: 1.5.0_biqbaboplfbrettd7655fr4n2y
-  tailwind-merge: 2.3.0
+  tailwind-merge: 2.4.0
   tailwindcss-animate: 1.0.7_tailwindcss@3.4.4
   tailwindcss-animated: 1.1.2_tailwindcss@3.4.4
   vaul: 0.9.1_pririwar4m3afwc3lk45uql2te
@@ -346,8 +346,8 @@ packages:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
     dev: false
 
-  /@hookform/resolvers/3.7.0_react-hook-form@7.52.1:
-    resolution: {integrity: sha512-42p5X18noBV3xqOpTlf2V5qJZwzNgO4eLzHzmKGh/w7z4+4XqRw5AsESVkqE+qwAuRRlg2QG12EVEjPkrRIbeg==}
+  /@hookform/resolvers/3.9.0_react-hook-form@7.52.1:
+    resolution: {integrity: sha512-bU0Gr4EepJ/EQsH/IwEzYLsT/PEj5C0ynLQ4m+GSHS+xKH4TfSelhluTgOaoc4kA5s7eCsQbM4wvZLzELmWzUg==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
@@ -410,7 +410,7 @@ packages:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@langchain/core/0.1.63_langchain@0.2.8:
+  /@langchain/core/0.1.63_langchain@0.2.9:
     resolution: {integrity: sha512-+fjyYi8wy6x1P+Ee1RWfIIEyxd9Ee9jksEwvrggPwwI/p45kIDTdYTblXsM13y4mNWTiACyLSdbwnPaxxdoz+w==}
     engines: {node: '>=18'}
     dependencies:
@@ -418,7 +418,7 @@ packages:
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.12
-      langsmith: 0.1.30_425k5vvlowgor73v3pkleptrp4
+      langsmith: 0.1.30_p3vp5hs2qs7ggzknv4bkdgvc5a
       ml-distance: 4.0.1
       mustache: 4.2.0
       p-queue: 6.6.2
@@ -431,20 +431,20 @@ packages:
       - openai
     dev: false
 
-  /@langchain/core/0.2.12_fcujivyn6if3kuh3jzl5g3k3n4:
-    resolution: {integrity: sha512-zaKvUcWU1Cxcpd/fxklygY6iUrxls10KTRzyHZGBAIKJq1JD/B10vX59YlFgBs7nqqVTEvaChfIE0O0e2qBttA==}
+  /@langchain/core/0.2.15_langchain@0.2.9:
+    resolution: {integrity: sha512-L096itIBQ5XNsy5BCCPqIQEk/x4rzI+U4BhYT+fDBYtljESshIi/WzXdmiGfY/6MpVjB76jNuaRgMDmo1m9NeQ==}
     engines: {node: '>=18'}
     dependencies:
       ansi-styles: 5.2.0
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.12
-      langsmith: 0.1.30_6fjvcfxl46tkoghbpg6qy3i52u
+      langsmith: 0.1.30_ibgzd62nkngvyj7qjyv3hcmseu
       ml-distance: 4.0.1
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
-      uuid: 9.0.1
+      uuid: 10.0.0
       zod: 3.23.8
       zod-to-json-schema: 3.22.5_zod@3.23.8
     transitivePeerDependencies:
@@ -452,20 +452,20 @@ packages:
       - openai
     dev: false
 
-  /@langchain/core/0.2.12_langchain@0.2.8:
-    resolution: {integrity: sha512-zaKvUcWU1Cxcpd/fxklygY6iUrxls10KTRzyHZGBAIKJq1JD/B10vX59YlFgBs7nqqVTEvaChfIE0O0e2qBttA==}
+  /@langchain/core/0.2.15_w24w5rzq6yb2llbv54k7e4dfbu:
+    resolution: {integrity: sha512-L096itIBQ5XNsy5BCCPqIQEk/x4rzI+U4BhYT+fDBYtljESshIi/WzXdmiGfY/6MpVjB76jNuaRgMDmo1m9NeQ==}
     engines: {node: '>=18'}
     dependencies:
       ansi-styles: 5.2.0
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.12
-      langsmith: 0.1.30_m5vk6tghnho7r2cnvmoppk7iaq
+      langsmith: 0.1.30_vwxmd6v3dqwbmam7o2d7ps6ebm
       ml-distance: 4.0.1
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
-      uuid: 9.0.1
+      uuid: 10.0.0
       zod: 3.23.8
       zod-to-json-schema: 3.22.5_zod@3.23.8
     transitivePeerDependencies:
@@ -473,11 +473,11 @@ packages:
       - openai
     dev: false
 
-  /@langchain/openai/0.2.1_langchain@0.2.8:
+  /@langchain/openai/0.2.1_langchain@0.2.9:
     resolution: {integrity: sha512-Ti3C6ZIUPaueIPAfMljMnLu3GSGNq5KmrlHeWkIbrLShOBlzj4xj7mRfR73oWgAC0qivfxdkfbB0e+WCY+oRJw==}
     engines: {node: '>=18'}
     dependencies:
-      '@langchain/core': 0.2.12_fcujivyn6if3kuh3jzl5g3k3n4
+      '@langchain/core': 0.2.15_w24w5rzq6yb2llbv54k7e4dfbu
       js-tiktoken: 1.0.12
       openai: 4.51.0
       zod: 3.23.8
@@ -487,11 +487,11 @@ packages:
       - langchain
     dev: false
 
-  /@langchain/textsplitters/0.0.0_langchain@0.2.8:
+  /@langchain/textsplitters/0.0.0_langchain@0.2.9:
     resolution: {integrity: sha512-3hPesWomnmVeYMppEGYbyv0v/sRUugUdlFBNn9m1ueJYHAIKbvCErkWxNUH3guyKKYgJVrkvZoQxcd9faucSaw==}
     engines: {node: '>=18'}
     dependencies:
-      '@langchain/core': 0.1.63_langchain@0.2.8
+      '@langchain/core': 0.1.63_langchain@0.2.9
       js-tiktoken: 1.0.12
     transitivePeerDependencies:
       - langchain
@@ -4467,8 +4467,8 @@ packages:
       json-buffer: 3.0.1
     dev: true
 
-  /langchain/0.2.8_axios@1.7.2:
-    resolution: {integrity: sha512-kb2IOMA71xH8e6EXFg0l4S+QSMC/c796pj1+7mPBkR91HHwoyHZhFRrBaZv4tV+Td+Ba91J2uEDBmySklZLpNQ==}
+  /langchain/0.2.9_axios@1.7.2:
+    resolution: {integrity: sha512-iZ0l7BDVfoifqZlDl1gy3JP5mIdhYjWiToPlDnlmfHD748cw3okvF0gZo0ruT4nbftnQcaM7JzPUiNC43UPfgg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@aws-sdk/client-s3': ^3.310.0
@@ -4623,20 +4623,20 @@ packages:
       youtubei.js:
         optional: true
     dependencies:
-      '@langchain/core': 0.2.12_langchain@0.2.8
-      '@langchain/openai': 0.2.1_langchain@0.2.8
-      '@langchain/textsplitters': 0.0.0_langchain@0.2.8
+      '@langchain/core': 0.2.15_langchain@0.2.9
+      '@langchain/openai': 0.2.1_langchain@0.2.9
+      '@langchain/textsplitters': 0.0.0_langchain@0.2.9
       axios: 1.7.2
       binary-extensions: 2.3.0
       js-tiktoken: 1.0.12
       js-yaml: 4.1.0
       jsonpointer: 5.0.1
       langchainhub: 0.0.8
-      langsmith: 0.1.30_m5vk6tghnho7r2cnvmoppk7iaq
+      langsmith: 0.1.30_ibgzd62nkngvyj7qjyv3hcmseu
       ml-distance: 4.0.1
       openapi-types: 12.1.3
       p-retry: 4.6.2
-      uuid: 9.0.1
+      uuid: 10.0.0
       yaml: 2.4.3
       zod: 3.23.8
       zod-to-json-schema: 3.22.5_zod@3.23.8
@@ -4649,7 +4649,7 @@ packages:
     resolution: {integrity: sha512-Woyb8YDHgqqTOZvWIbm2CaFDGfZ4NTSyXV687AG4vXEfoNo7cGQp7nhl7wL3ehenKWmNEmcxCLgOZzW8jE6lOQ==}
     dev: false
 
-  /langsmith/0.1.30_425k5vvlowgor73v3pkleptrp4:
+  /langsmith/0.1.30_ibgzd62nkngvyj7qjyv3hcmseu:
     resolution: {integrity: sha512-g8f10H1iiRjCweXJjgM3Y9xl6ApCa1OThDvc0BlSDLVrGVPy1on9wT39vAzYkeadC7oG48p7gfpGlYH3kLkJ9Q==}
     peerDependencies:
       '@langchain/core': '*'
@@ -4663,16 +4663,16 @@ packages:
       openai:
         optional: true
     dependencies:
-      '@langchain/core': 0.1.63_langchain@0.2.8
+      '@langchain/core': 0.2.15_langchain@0.2.9
       '@types/uuid': 9.0.8
       commander: 10.0.1
-      langchain: 0.2.8_axios@1.7.2
+      langchain: 0.2.9_axios@1.7.2
       p-queue: 6.6.2
       p-retry: 4.6.2
       uuid: 9.0.1
     dev: false
 
-  /langsmith/0.1.30_6fjvcfxl46tkoghbpg6qy3i52u:
+  /langsmith/0.1.30_p3vp5hs2qs7ggzknv4bkdgvc5a:
     resolution: {integrity: sha512-g8f10H1iiRjCweXJjgM3Y9xl6ApCa1OThDvc0BlSDLVrGVPy1on9wT39vAzYkeadC7oG48p7gfpGlYH3kLkJ9Q==}
     peerDependencies:
       '@langchain/core': '*'
@@ -4686,34 +4686,34 @@ packages:
       openai:
         optional: true
     dependencies:
-      '@langchain/core': 0.2.12_fcujivyn6if3kuh3jzl5g3k3n4
+      '@langchain/core': 0.1.63_langchain@0.2.9
       '@types/uuid': 9.0.8
       commander: 10.0.1
-      langchain: 0.2.8_axios@1.7.2
+      langchain: 0.2.9_axios@1.7.2
+      p-queue: 6.6.2
+      p-retry: 4.6.2
+      uuid: 9.0.1
+    dev: false
+
+  /langsmith/0.1.30_vwxmd6v3dqwbmam7o2d7ps6ebm:
+    resolution: {integrity: sha512-g8f10H1iiRjCweXJjgM3Y9xl6ApCa1OThDvc0BlSDLVrGVPy1on9wT39vAzYkeadC7oG48p7gfpGlYH3kLkJ9Q==}
+    peerDependencies:
+      '@langchain/core': '*'
+      langchain: '*'
+      openai: '*'
+    peerDependenciesMeta:
+      '@langchain/core':
+        optional: true
+      langchain:
+        optional: true
+      openai:
+        optional: true
+    dependencies:
+      '@langchain/core': 0.2.15_w24w5rzq6yb2llbv54k7e4dfbu
+      '@types/uuid': 9.0.8
+      commander: 10.0.1
+      langchain: 0.2.9_axios@1.7.2
       openai: 4.51.0
-      p-queue: 6.6.2
-      p-retry: 4.6.2
-      uuid: 9.0.1
-    dev: false
-
-  /langsmith/0.1.30_m5vk6tghnho7r2cnvmoppk7iaq:
-    resolution: {integrity: sha512-g8f10H1iiRjCweXJjgM3Y9xl6ApCa1OThDvc0BlSDLVrGVPy1on9wT39vAzYkeadC7oG48p7gfpGlYH3kLkJ9Q==}
-    peerDependencies:
-      '@langchain/core': '*'
-      langchain: '*'
-      openai: '*'
-    peerDependenciesMeta:
-      '@langchain/core':
-        optional: true
-      langchain:
-        optional: true
-      openai:
-        optional: true
-    dependencies:
-      '@langchain/core': 0.2.12_langchain@0.2.8
-      '@types/uuid': 9.0.8
-      commander: 10.0.1
-      langchain: 0.2.8_axios@1.7.2
       p-queue: 6.6.2
       p-retry: 4.6.2
       uuid: 9.0.1
@@ -4865,8 +4865,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lucide-react/0.400.0_react@18.2.0:
-    resolution: {integrity: sha512-rpp7pFHh3Xd93KHixNgB0SqThMHpYNzsGUu69UaQbSZ75Q/J3m5t6EhKyMT3m4w2WOxmJ2mY0tD3vebnXqQryQ==}
+  /lucide-react/0.407.0_react@18.2.0:
+    resolution: {integrity: sha512-+dRIu9Sry+E8wPF9+sY5eKld2omrU4X5IKXxrgqBt+o11IIHVU0QOfNoVWFuj0ZRDrxr4Wci26o2mKZqLGE0lA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
@@ -6161,10 +6161,8 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /tailwind-merge/2.3.0:
-    resolution: {integrity: sha512-vkYrLpIP+lgR0tQCG6AP7zZXCTLc1Lnv/CCRT3BqJ9CZ3ui2++GPaGb1x/ILsINIMSYqqvrpqjUFsMNLlW99EA==}
-    dependencies:
-      '@babel/runtime': 7.24.4
+  /tailwind-merge/2.4.0:
+    resolution: {integrity: sha512-49AwoOQNKdqKPd9CViyH5wJoSKsCDjUlzL8DxuGp3P1FsGY36NJDAa18jLZcaHAUUuTj+JB8IAo8zWgBNvBF7A==}
     dev: false
 
   /tailwindcss-animate/1.0.7_tailwindcss@3.4.4:
@@ -6421,6 +6419,11 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  /uuid/10.0.0:
+    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    hasBin: true
+    dev: false
 
   /uuid/9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
