@@ -36,6 +36,7 @@ export function FormatterSettings() {
             <SelectContent>
               <SelectItem value={LOCALE.EN}>English ({LOCALE.EN})</SelectItem>
               <SelectItem value={LOCALE.ZH}>中文 ({LOCALE.ZH})</SelectItem>
+              <SelectItem value={LOCALE.JP}>日本語 ({LOCALE.JP})</SelectItem>
             </SelectContent>
           </Select>
         </div>

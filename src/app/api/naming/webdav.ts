@@ -1,12 +1,18 @@
 import * as tmdb from '@/lib/tmdb-api';
-import { ParsedMeta, ProcessResult, TMDBData, WebDAVInput } from '@/types';
+import {
+  LOCALE,
+  ParsedMeta,
+  ProcessResult,
+  TMDBData,
+  WebDAVInput,
+} from '@/types';
 import PromisePool from '@supercharge/promise-pool';
 
 export async function execWebDAVTask(
-  inputData: WebDAVInput,
+  inputData: WebDAVInput & { locale?: LOCALE },
   data: ParsedMeta[]
 ) {
-  const { files = [] } = inputData;
+  const { files = [], locale } = inputData;
   const output: ProcessResult[] = [];
 
   await PromisePool.withConcurrency(10)
@@ -33,11 +39,11 @@ export async function execWebDAVTask(
       };
 
       if (meta.name) {
-        result = await tmdb.searchMedia(meta.name);
+        result = await tmdb.searchMedia({ keyword: meta.name, locale });
         if (result?.type === 'tv') {
-          mediaDetail = await tmdb.getTvDetail(result?.id);
+          mediaDetail = await tmdb.getTvDetail({ id: result?.id, locale });
         } else if (result?.type === 'movie') {
-          mediaDetail = await tmdb.getMovieDetail(result?.id);
+          mediaDetail = await tmdb.getMovieDetail({ id: result?.id, locale });
         }
 
         output[idx].output.tmdb = mediaDetail;

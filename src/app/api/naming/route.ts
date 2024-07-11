@@ -15,7 +15,7 @@ const prompt = ChatPromptTemplate.fromMessages([
 
 export async function POST(req: Request) {
   const inputData: InputData = await req.json();
-  const { type, files = [] } = inputData;
+  const { type, files = [], llmOptions } = inputData;
   const input = files.map(file => file.filename).join('\n');
   let output: ProcessResult[] = [];
 
@@ -26,7 +26,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    const llm = getOpenAILLM({ prompt, parser: outputParser });
+    const llm = getOpenAILLM({
+      prompt,
+      parser: outputParser,
+      options: llmOptions,
+    });
     const parsedMetas = (await llm.invoke({
       input,
       format_instructions: outputParser.getFormatInstructions(),

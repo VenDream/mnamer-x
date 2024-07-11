@@ -17,13 +17,13 @@ import {
   WebDAVExplorerHandle,
 } from '@/components/webdav-explorer';
 import { VIDEO_FILES } from '@/constants/file-types';
+import { useInputData } from '@/hooks/use-input-data';
 import { useProcessResults } from '@/hooks/use-process-results';
 import { rename } from '@/lib/client-api';
 import { getCurrentDatetime } from '@/lib/utils';
 import { create } from '@/lib/webdav-client';
 import { useStore } from '@/store';
 import {
-  InputData,
   ProcessResult,
   ProcessTask,
   Response,
@@ -55,6 +55,7 @@ export function WebDAV() {
   }));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const addTask = useStore(state => state.addTask);
+  const getInputData = useInputData();
   const results = useProcessResults(tid);
 
   const { dirs = [], files = [] } = fileSource || {};
@@ -71,10 +72,10 @@ export function WebDAV() {
     });
   }, []);
 
-  const getInputData = async () => {
+  const getDavInput = async () => {
     const { clientId = -1, dirs = [], files = [] } = fileSource || {};
 
-    const inputData: InputData = {
+    const inputData: WebDAVInput = {
       type: TASK_TYPE.WEB_DAV,
       clientId,
       files: [],
@@ -129,7 +130,8 @@ export function WebDAV() {
     try {
       setIsSubmitting(true);
       const start = getCurrentDatetime();
-      const inputData = await getInputData();
+      const davInput = await getDavInput();
+      const inputData = getInputData(davInput);
 
       if (inputData.files.length <= 0) {
         toast.error('No video files found, please check the input');

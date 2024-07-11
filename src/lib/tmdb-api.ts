@@ -1,5 +1,5 @@
 import { ENV_CONFIG } from '@/constants';
-import { TMDBBase, TMDBMovie, TMDBTv } from '@/types';
+import { LOCALE, TMDBBase, TMDBMovie, TMDBTv } from '@/types';
 import axios from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { pick } from './utils';
@@ -56,24 +56,30 @@ instance.interceptors.request.use(config => {
   }
   // set default language & api_key
   config.params = {
-    ...config.params,
     language: 'zh-CN',
+    ...config.params,
     api_key: ENV_CONFIG.TMDB_API_KEY,
   };
   return config;
 });
 
+interface SearchMediaParams {
+  keyword: string;
+  year?: string;
+  locale?: LOCALE;
+}
+
 /**
  * search media from tmdb
  *
  * @export
- * @param {string} keyword keyword
- * @param {string} [year] year
+ * @param {SearchMediaParams} params params
  */
-export async function searchMedia(keyword: string, year?: string) {
+export async function searchMedia(params: SearchMediaParams) {
+  const { keyword, year, locale } = params;
   console.log('searching tmdb media info with keyword: %s', keyword);
   const resp = await instance.get('/search/multi', {
-    params: { query: keyword, include_adult: true, page: 1 },
+    params: { query: keyword, language: locale, include_adult: true, page: 1 },
   });
   const results = (resp?.data?.results || []) as TMDBBase[];
   // pick the first result by default
@@ -90,16 +96,23 @@ export async function searchMedia(keyword: string, year?: string) {
   return { id: result.id, type: result.media_type };
 }
 
+interface GetMediaDetailParams {
+  id: number;
+  locale?: LOCALE;
+}
+
 /**
  * get movie detail
  *
  * @export
- * @param {number} id movie id
+ * @param {GetMediaDetailParams} params params
  */
-export async function getMovieDetail(id: number) {
+export async function getMovieDetail(params: GetMediaDetailParams) {
+  const { id, locale } = params;
   console.log('fetching tmdb movie detail with id: %s', id);
   const resp = await instance.get(`/movie/${id}`, {
     params: {
+      language: locale,
       append_to_response: 'releases',
     },
   });
@@ -113,16 +126,20 @@ export async function getMovieDetail(id: number) {
   return movie as TMDBMovie;
 }
 
+type GetTvDetailParams = GetMediaDetailParams;
+
 /**
  * get tv detail
  *
  * @export
- * @param {number} id tv id
+ * @param {GetTvDetailParams} params params
  */
-export async function getTvDetail(id: number) {
+export async function getTvDetail(params: GetTvDetailParams) {
+  const { id, locale } = params;
   console.log('fetching tmdb tv detail with id: %s', id);
   const resp = await instance.get(`/tv/${id}`, {
     params: {
+      language: locale,
       append_to_response: 'content_ratings',
     },
   });

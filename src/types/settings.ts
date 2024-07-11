@@ -5,19 +5,22 @@ export enum LLM_SOURCE {
   CUSTOM = 'custom',
 }
 
+export interface LLMOptions {
+  baseUrl?: string;
+  apiKey?: string;
+  model?: string;
+  temperature?: number;
+}
+
 export interface LLMSettings {
   source: LLM_SOURCE;
-  options?: {
-    baseUrl?: string;
-    apiKey?: string;
-    model?: string;
-    temperature?: number;
-  };
+  options?: LLMOptions;
 }
 
 export enum LOCALE {
   EN = 'en-US',
   ZH = 'zh-CN',
+  JP = 'ja-JP',
 }
 
 export interface FormatterSettings {

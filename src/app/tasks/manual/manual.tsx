@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/tooltip';
 import { ENV_CONFIG } from '@/constants';
 import { VIDEO_FILES } from '@/constants/file-types';
+import { useInputData } from '@/hooks/use-input-data';
 import { useProcessResults } from '@/hooks/use-process-results';
 import { rename } from '@/lib/client-api';
 import { getCurrentDatetime } from '@/lib/utils';
@@ -89,6 +90,8 @@ export function Manual() {
     name: 'files',
   });
 
+  const getInputData = useInputData();
+
   const addFile = () => {
     if (fields.length >= maxFiles) {
       const maxStr = `(${maxFiles} of ${maxFiles})`;
@@ -102,7 +105,8 @@ export function Manual() {
     try {
       setIsSubmitting(true);
       const start = getCurrentDatetime();
-      const response = await rename(values);
+      const inputData = getInputData(values);
+      const response = await rename(inputData);
       const data = response.data as Response<ProcessResult[]>;
       const { code, data: results, errormsg } = data;
 

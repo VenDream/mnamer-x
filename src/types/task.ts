@@ -1,5 +1,6 @@
 import { ManualInput } from '@/app/tasks/manual';
 import { ParsedMeta } from '.';
+import { LLMOptions, LOCALE } from './settings';
 import { TMDBData } from './tmdb';
 
 export interface WebDAVInput {
@@ -11,7 +12,10 @@ export interface WebDAVInput {
   }[];
 }
 
-export type InputData = ManualInput | WebDAVInput;
+export type InputData = (ManualInput | WebDAVInput) & {
+  locale?: LOCALE;
+  llmOptions?: LLMOptions;
+};
 
 export interface ProcessResult {
   input: string;
