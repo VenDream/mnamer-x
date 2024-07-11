@@ -20,6 +20,15 @@ export async function execManualTask(
       let mediaDetail: TMDBData | null = null;
       let result: Awaited<ReturnType<typeof tmdb.searchMedia>> | null = null;
 
+      output[idx] = {
+        input: meta.original,
+        output: {
+          meta,
+          tmdb: mediaDetail,
+        },
+        modified: '',
+      };
+
       // try name first
       if (meta.name) {
         result = await tmdb.searchMedia(meta.name, year);
@@ -35,14 +44,7 @@ export async function execManualTask(
         mediaDetail = await tmdb.getMovieDetail(result?.id);
       }
 
-      output[idx] = {
-        input: meta.original,
-        output: {
-          meta,
-          tmdb: mediaDetail,
-        },
-        modified: '',
-      };
+      output[idx].output.tmdb = mediaDetail;
     });
 
   return output;

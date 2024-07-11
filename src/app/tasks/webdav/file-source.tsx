@@ -13,7 +13,7 @@ import { useWebDAVCtx } from './ctx';
 
 interface ItemListProps {
   label: string;
-  tips?: string;
+  tips?: React.ReactNode;
   list: FileStat[];
 }
 
@@ -33,7 +33,14 @@ function ItemList(props: ItemListProps) {
               <TooltipTrigger>
                 <InfoIcon size={16} className="ml-1" />
               </TooltipTrigger>
-              <TooltipContent>{tips}</TooltipContent>
+              <TooltipContent
+                side="top"
+                align="start"
+                sideOffset={10}
+                alignOffset={-40}
+              >
+                {tips}
+              </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         )}
@@ -80,7 +87,12 @@ export function FileSource() {
       <ItemList
         label="Dirs"
         list={dirs}
-        tips="Automatically select video files within the directory (non-recursive)"
+        tips={
+          <p>
+            Automatically select video files within the directory
+            (non-recursive)
+          </p>
+        }
       />
       <ItemList label="Files" list={files} />
     </div>

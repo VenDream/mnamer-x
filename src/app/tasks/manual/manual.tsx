@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { ENV_CONFIG } from '@/constants';
+import { VIDEO_FILES } from '@/constants/file-types';
 import { useProcessResults } from '@/hooks/use-process-results';
 import { rename } from '@/lib/client-api';
 import { getCurrentDatetime } from '@/lib/utils';
@@ -58,7 +59,12 @@ const formSchema = z.object({
       z.object({
         year: z.string().optional(),
         keyword: z.string().optional(),
-        filename: z.string().min(1, { message: 'Filename is required' }),
+        filename: z
+          .string()
+          .min(1, { message: 'Filename is required' })
+          .refine(str => VIDEO_FILES.some(format => str.endsWith(format)), {
+            message: 'Invalid video file format',
+          }),
       })
     )
     .min(1, { message: 'Please input at least one file.' }),
@@ -118,6 +124,7 @@ export function Manual() {
       addTask(task);
     } catch (err) {
       const error = err as Error;
+      setTid(-1);
       console.error(error);
       toast.error(error.message);
     } finally {
@@ -164,13 +171,17 @@ export function Manual() {
                     <div className="flex items-center text-sm text-muted-foreground">
                       <TooltipProvider delayDuration={100}>
                         <Tooltip>
-                          <TooltipTrigger asChild>
+                          <TooltipTrigger asChild className="hidden md:block">
                             <CircleHelpIcon size={16} className="mr-1" />
                           </TooltipTrigger>
-                          <TooltipContent side="right">
+                          <TooltipContent
+                            side="top"
+                            align="start"
+                            sideOffset={10}
+                            alignOffset={-40}
+                          >
                             <p>
-                              additional info helps to improve the media
-                              <br />
+                              Additional info helps to improve the media
                               recognition accuracy
                             </p>
                           </TooltipContent>
@@ -279,7 +290,13 @@ export function Manual() {
           <CardDescription>task output</CardDescription>
         </CardHeader>
         <CardContent>
-          <ResultTable tid={tid} results={results} />
+          {isSubmitting ? (
+            <p className="text-sm text-muted-foreground">Processing...</p>
+          ) : tid > 0 && results.length > 0 ? (
+            <ResultTable tid={tid} results={results} />
+          ) : (
+            <p className="text-sm text-muted-foreground">No results.</p>
+          )}
         </CardContent>
       </Card>
     </div>

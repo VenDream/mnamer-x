@@ -79,7 +79,7 @@ export function ResultActions(props: IProps) {
             onSelect={e => e.preventDefault()}
           >
             <FilmIcon size={14} className="mr-1" />
-            View TMDB info
+            TMDB info
           </DropdownMenuItem>
         </TmdbInfo>
       </DropdownMenuContent>

@@ -19,16 +19,6 @@ export async function execWebDAVTask(
       let mediaDetail: TMDBData | null = null;
       let result: Awaited<ReturnType<typeof tmdb.searchMedia>> | null = null;
 
-      result = await tmdb.searchMedia(meta.name);
-
-      console.log('[%s] result: %O', idx, result);
-
-      if (result?.type === 'tv') {
-        mediaDetail = await tmdb.getTvDetail(result?.id);
-      } else if (result?.type === 'movie') {
-        mediaDetail = await tmdb.getMovieDetail(result?.id);
-      }
-
       output[idx] = {
         input: meta.original,
         output: {
@@ -41,6 +31,17 @@ export async function execWebDAVTask(
           dirpath,
         },
       };
+
+      if (meta.name) {
+        result = await tmdb.searchMedia(meta.name);
+        if (result?.type === 'tv') {
+          mediaDetail = await tmdb.getTvDetail(result?.id);
+        } else if (result?.type === 'movie') {
+          mediaDetail = await tmdb.getMovieDetail(result?.id);
+        }
+
+        output[idx].output.tmdb = mediaDetail;
+      }
     });
 
   return output;

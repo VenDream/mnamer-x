@@ -94,6 +94,7 @@ export function WebDAV() {
           )) as FileStat[];
           return stats
             .filter(s => isVideoFile(s))
+            .sort((a, b) => a.basename.localeCompare(b.basename))
             .map(v => ({
               dirpath: v.filename,
               filename: v.basename,
@@ -153,6 +154,7 @@ export function WebDAV() {
       addTask(task);
     } catch (err) {
       const error = err as Error;
+      setTid(-1);
       console.error(error);
       toast.error(error.message);
     } finally {
@@ -251,7 +253,13 @@ export function WebDAV() {
             <CardDescription>task output</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResultTable tid={tid} results={results} />
+            {isSubmitting ? (
+              <p className="text-sm text-muted-foreground">Processing...</p>
+            ) : tid > 0 && results.length > 0 ? (
+              <ResultTable tid={tid} results={results} />
+            ) : (
+              <p className="text-sm text-muted-foreground">No results.</p>
+            )}
           </CardContent>
         </Card>
       </div>

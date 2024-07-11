@@ -43,7 +43,7 @@ export const columns: ColumnDef<FileStat>[] = [
     },
   },
   {
-    size: 250,
+    size: 260,
     accessorKey: 'basename',
     header({ column }) {
       return (

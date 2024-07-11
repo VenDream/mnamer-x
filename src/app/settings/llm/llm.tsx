@@ -11,16 +11,14 @@ export function LLMSettings() {
   const { source, options } = useStore(state => state.settings.llm);
   const updateLLMSettings = useStore(state => state.updateLLMSettings);
 
-  const isConfigured = !!options;
-
   return (
     <Card className="rounded">
       <CardHeader>
-        <CardTitle>LLM</CardTitle>
+        <CardTitle className="text-lg">LLM</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-8 md:gap-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
-          <Label className="md:w-1/4 md:max-w-28">Source</Label>
+          <Label className="text-base md:w-1/4 md:max-w-28">Source</Label>
           <RadioGroup
             value={source}
             defaultValue={LLM_SOURCE.BUILTIN}
@@ -51,15 +49,12 @@ export function LLMSettings() {
         </div>
         {source === LLM_SOURCE.CUSTOM && (
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
-            <Label className="md:w-1/4 md:max-w-28">Options</Label>
+            <Label className="text-base md:w-1/4 md:max-w-28">Options</Label>
             <LLMOptions
               options={options}
               onChange={opts => updateLLMSettings({ options: opts })}
             >
-              <Button
-                className="rounded"
-                variant={isConfigured ? 'outline' : 'destructive'}
-              >
+              <Button variant="outline">
                 <WrenchIcon size={16} className="mr-2" />
                 Configure
               </Button>

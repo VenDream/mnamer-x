@@ -14,7 +14,7 @@ export function WebDAVSettings() {
   return (
     <Card className="rounded">
       <CardHeader>
-        <CardTitle>WebDAV</CardTitle>
+        <CardTitle className="text-lg">WebDAV</CardTitle>
       </CardHeader>
       <CardContent>
         <ServerList />
