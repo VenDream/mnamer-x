@@ -1,6 +1,5 @@
 import { UnderlineLink } from '@/components/link';
 import { ContentPage } from '@/components/ui/content-page';
-import { APP_NAME } from '@/constants';
 import { Metadata } from 'next';
 
 interface Scraper {
@@ -28,7 +27,7 @@ const SUPPORTED_SCRAPERS: Scraper[] = [
 ];
 
 export const metadata: Metadata = {
-  title: `Home | ${APP_NAME}`,
+  title: 'Home',
 };
 
 export default function Home() {
