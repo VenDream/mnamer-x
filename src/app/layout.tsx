@@ -8,7 +8,7 @@ import { APP_NAME, GITHUB_REPO, ROUTE, SITE_META } from '@/constants';
 import { cn } from '@/lib/utils';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { FilePenLineIcon } from 'lucide-react';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 import React from 'react';
@@ -18,6 +18,12 @@ import './globals.css';
 const font = localFont({ src: '../fonts/ATCOverlook-Light.woff2' });
 
 export const metadata: Metadata = SITE_META;
+export const viewport: Viewport = {
+  minimumScale: 1,
+  initialScale: 1,
+  width: 'device-width',
+  userScalable: false,
+};
 
 export default function RootLayout({
   children,
