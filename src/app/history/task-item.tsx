@@ -21,7 +21,8 @@ export function TaskItem(props: IProps) {
   const Icon = isSelected ? CircleCheckBigIcon : CircleIcon;
 
   useLongPress(
-    () => {
+    evt => {
+      evt.preventDefault();
       if (!selectMode) {
         toggleSelectMode();
         toggleSelected(task.id);
@@ -29,6 +30,7 @@ export function TaskItem(props: IProps) {
     },
     ref,
     {
+      moveThreshold: { x: 150, y: 150 },
       onClick: () => {
         selectMode && toggleSelected(task.id);
       },
