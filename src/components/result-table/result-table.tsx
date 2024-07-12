@@ -34,13 +34,13 @@ export function ResultTable(props: IProps) {
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
-            <TableRow key={headerGroup.id} className="hover:bg-transparent">
+            <TableRow key={headerGroup.id} className="bg-muted/50">
               {headerGroup.headers.map(header => {
                 return (
                   <TableHead
                     key={header.id}
                     style={{ width: header.getSize() }}
-                    className="h-8 border-r bg-accent/50 last:border-none last:text-center dark:border-accent"
+                    className="last:text-center"
                   >
                     {header.isPlaceholder
                       ? null
@@ -59,13 +59,11 @@ export function ResultTable(props: IProps) {
             table.getRowModel().rows.map(row => (
               <TableRow
                 key={row.id}
+                className="border"
                 data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map(cell => (
-                  <TableCell
-                    key={cell.id}
-                    className="border-r last:border-none"
-                  >
+                  <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

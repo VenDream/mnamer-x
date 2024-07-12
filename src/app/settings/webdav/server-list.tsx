@@ -19,7 +19,7 @@ export function ServerList() {
   return (
     <Table>
       <TableHeader>
-        <TableRow>
+        <TableRow className="border bg-muted/50">
           <TableHead className="w-[80px] md:w-[150px]">Name</TableHead>
           <TableHead>URL</TableHead>
           <TableHead className="w-[80px] text-center md:w-[150px]">
@@ -31,7 +31,7 @@ export function ServerList() {
         {webdavs.length > 0 ? (
           webdavs.map(webdav => (
             <EditServer id={webdav.id} key={webdav.id}>
-              <TableRow className="cursor-pointer">
+              <TableRow className="cursor-pointer !border">
                 <TableCell>
                   <p className="line-clamp-1 break-all">{webdav.name}</p>
                 </TableCell>
@@ -44,9 +44,9 @@ export function ServerList() {
                       variant="ghost"
                       size="icon"
                       title="edit"
-                      className="h-6 w-6 hover:text-primary"
+                      className="h-6 w-6 text-primary hover:text-primary"
                     >
-                      <PencilIcon size={14} />
+                      <PencilIcon size={14} className="!stroke-2" />
                     </Button>
                     <DeleteConfirm onConfirm={() => removeWebDAV(webdav.id)}>
                       <Button
@@ -54,9 +54,9 @@ export function ServerList() {
                         size="icon"
                         title="delete"
                         onClick={e => e.stopPropagation()}
-                        className="h-6 w-6 hover:text-primary"
+                        className="h-6 w-6 text-destructive hover:text-destructive"
                       >
-                        <Trash2Icon size={14} />
+                        <Trash2Icon size={14} className="!stroke-2" />
                       </Button>
                     </DeleteConfirm>
                   </div>
@@ -65,7 +65,7 @@ export function ServerList() {
             </EditServer>
           ))
         ) : (
-          <TableRow>
+          <TableRow className="!border">
             <TableCell colSpan={3} className="text-muted-foreground">
               No WebDAV servers.
             </TableCell>

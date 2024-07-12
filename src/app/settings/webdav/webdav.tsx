@@ -1,32 +1,21 @@
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { CirclePlusIcon } from 'lucide-react';
+import { SettingsCard } from '../settings-card';
 import { EditServer } from './edit-server';
 import { ServerList } from './server-list';
 
 export function WebDAVSettings() {
   return (
-    <Card className="rounded">
-      <CardHeader>
-        <CardTitle className="text-lg">WebDAV</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ServerList />
-      </CardContent>
-      <CardFooter className="flex justify-end">
+    <SettingsCard title="WebDAV" desc="Manage WebDAV servers">
+      <ServerList />
+      <div className="flex flex-col md:flex-row md:justify-end">
         <EditServer>
-          <Button variant="outline" className="w-full md:w-auto">
+          <Button variant="outline">
             <CirclePlusIcon size={16} className="mr-2" />
             Add
           </Button>
         </EditServer>
-      </CardFooter>
-    </Card>
+      </div>
+    </SettingsCard>
   );
 }
