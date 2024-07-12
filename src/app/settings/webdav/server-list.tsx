@@ -10,11 +10,17 @@ import {
 } from '@/components/ui/table';
 import { useStore } from '@/store';
 import { PencilIcon, Trash2Icon } from 'lucide-react';
+import { toast } from 'sonner';
 import { EditServer } from './edit-server';
 
 export function ServerList() {
   const webdavs = useStore(state => Object.values(state.settings.webdav));
   const removeWebDAV = useStore(state => state.removeWebDAV);
+
+  const removeServer = (id: number) => {
+    removeWebDAV(id);
+    toast.success('WebDAV server removed');
+  };
 
   return (
     <Table>
@@ -48,7 +54,7 @@ export function ServerList() {
                     >
                       <PencilIcon size={14} className="!stroke-2" />
                     </Button>
-                    <DeleteConfirm onConfirm={() => removeWebDAV(webdav.id)}>
+                    <DeleteConfirm onConfirm={() => removeServer(webdav.id)}>
                       <Button
                         variant="ghost"
                         size="icon"
