@@ -43,6 +43,17 @@ export type StoreActions = {
     patch: Partial<WebDAVClientOptions>
   ) => void;
   cleanTmdbs: () => void;
+  resetSettings: () => void;
+};
+
+const DEFAULT_SETTINGS: UserSettings = {
+  llm: {
+    source: LLM_SOURCE.BUILTIN,
+  },
+  formatter: {
+    locale: LOCALE.EN,
+  },
+  webdav: {},
 };
 
 const useStore = create<StoreState & StoreActions>()(
@@ -51,15 +62,7 @@ const useStore = create<StoreState & StoreActions>()(
       immer((set, get) => ({
         tmdbs: {},
         tasks: {},
-        settings: {
-          llm: {
-            source: LLM_SOURCE.BUILTIN,
-          },
-          formatter: {
-            locale: LOCALE.EN,
-          },
-          webdav: {},
-        },
+        settings: DEFAULT_SETTINGS,
         addTask: task => {
           set((state: StoreState) => {
             const fTask = flattenProcessTask(state.tmdbs, task);
@@ -120,6 +123,11 @@ const useStore = create<StoreState & StoreActions>()(
               );
               !isReferred && delete state.tmdbs[+id];
             });
+          });
+        },
+        resetSettings: () => {
+          set((state: StoreState) => {
+            state.settings = DEFAULT_SETTINGS;
           });
         },
       })),
